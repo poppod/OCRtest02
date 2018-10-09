@@ -1,23 +1,35 @@
 import cv2
 import numpy as np
 import Text_OCR
-def detect(image):
+from tkinter import *
+
+
+
+
+
+
+
+
+def detect(image,Imin1,Imin2,Imin3):
+
+
+  img=image
   image_center = (image.shape[0] / 2, image.shape[1] / 2)
   gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
   gradX=cv2.Sobel(gray,ddepth=cv2.CV_32F,dx=1,dy=0,ksize=-1)
   gradY=cv2.Sobel(gray,ddepth=cv2.CV_32F,dx=0,dy=1,ksize=-1)
   gradient = cv2.subtract(gradX, gradY)
   gradient = cv2.convertScaleAbs(gradient)
-  Imin = np.array([0, 0,110])
+  Imin = np.array([Imin1, Imin2,Imin3])
   Imax = np.array([255, 255, 255])
   hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
   masks=cv2.inRange(hsv,Imin,Imax)
 
 
-  blurred = cv2.blur(masks, (9, 9))
+  blurred = cv2.blur(masks, (5, 5))
 #  cv2.imshow("blur",blurred)
-  (_, thresh) = cv2.threshold(blurred, 250, 255, cv2.THRESH_BINARY)
- # cv2.imshow("thres",thresh)
+  (_, thresh) = cv2.threshold(blurred,20, 255, cv2.THRESH_BINARY)
+  cv2.imshow("thres",thresh)
 
   #cv2.imshow("close",closed)
   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
@@ -77,5 +89,5 @@ def detect(image):
 
   #print(text)
   cv2.imshow("crop", result)
-  Text_OCR.OCR(result)
+  Text_OCR.OCR(img)
   return box,cnts
