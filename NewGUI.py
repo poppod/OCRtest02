@@ -10,21 +10,13 @@ class App():
 
         self.vs=cv2.VideoCapture(1)
         self.root=tkinter.Tk()
-
+        self.scale()
         self.frame = None
         self.thread = None
         self.stopEvent = None
         self.panel=None
-
-        self.var = IntVar()
-        self.var1 = IntVar()
-        self.var2 = IntVar()
-        self.scale1=tkinter.Scale(self.root, from_=0, to=255, variable=self.var)
-        self.scale1.set(0)
-        self.scale1.pack(side=RIGHT)
-
-
-
+        self.panel2=None
+        self.panel3=None
         self.stopEvent= threading.Event()
         self.thread=threading.Thread(target=self.videoLoop, args=())
         self.thread.start()
@@ -53,15 +45,17 @@ class App():
         self.var = IntVar()
         self.var1 = IntVar()
         self.var2 = IntVar()
-        scale = Scale(self, from_=0, to=255, variable=self.var)
+        scale = Scale(self.root, from_=0, to=255, variable=self.var)
         scale.set(0)
-        scale1 = Scale(self, from_=0, to=255, variable=self.var1)
+        scale1 = Scale(self.root, from_=0, to=255, variable=self.var1)
         scale1.set(0)
-        scale2 = Scale(self, from_=0, to=255, variable=self.var2)
+        scale2 = Scale(self.root, from_=0, to=255, variable=self.var2)
         scale2.set(180)
-        scale.pack(fill=BOTH, expand=1, side=LEFT)
-        scale1.pack(fill=BOTH, expand=1, side=RIGHT)
-        scale2.pack(fill=BOTH, expand=1, side=RIGHT)
+        scale2.pack(fill=BOTH, expand=0, side=RIGHT)
+        scale1.pack(fill=BOTH, expand=0, side=RIGHT)
+        scale.pack(fill=BOTH, expand=0, side=RIGHT)
+
+
 
     def onClose(self):
         self.stopEvent.set()
