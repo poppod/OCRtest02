@@ -10,7 +10,7 @@ from tkinter import *
 
 
 
-def detect(image,Imin1,Imin2,Imin3):
+def detect(image):
 
 
   img=image
@@ -20,7 +20,7 @@ def detect(image,Imin1,Imin2,Imin3):
   gradY=cv2.Sobel(gray,ddepth=cv2.CV_32F,dx=0,dy=1,ksize=-1)
   gradient = cv2.subtract(gradX, gradY)
   gradient = cv2.convertScaleAbs(gradient)
-  Imin = np.array([Imin1, Imin2,Imin3])
+  Imin = np.array([0, 0,180])
   Imax = np.array([255, 255, 255])
   hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
   masks=cv2.inRange(hsv,Imin,Imax)

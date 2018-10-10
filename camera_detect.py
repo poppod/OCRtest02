@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import detect_label
 
-def camera_start(Imin1,Imin2,Imin3):
+def camera_start():
     camera=cv2.VideoCapture(1)
     while True :
         (ret,frame)=camera.read()
@@ -11,7 +11,7 @@ def camera_start(Imin1,Imin2,Imin3):
         if not ret:
           break
   
-        box,contours=detect_label.detect(frame,Imin1,Imin2,Imin3)
+        box,contours=detect_label.detect(frame)
     #image_center = (image.shape[0] / 2, image.shape[1] / 2)
 
 
@@ -25,3 +25,5 @@ def camera_start(Imin1,Imin2,Imin3):
     #cv2.cv2.drawContours()
     camera.release()
     cv2.destroyAllWindows()
+
+camera_start()
