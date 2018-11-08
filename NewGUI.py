@@ -1,4 +1,5 @@
 import tkinter
+import time
 from tkinter import *
 import cv2
 import threading
@@ -37,6 +38,9 @@ class App():
         self.panel2=None
         self.panel3=None
         self.panel4=None
+        self.panel5=None
+        self.panel6=None #not use
+        self.buttom=None
         self.thresh=queue.Queue()
         self.result=queue.Queue()
         self.stopEvent= threading.Event()
@@ -211,7 +215,7 @@ class App():
                 if h <= 0 or w <= 0:
                     result = image
 
-                print(result.shape[:2])
+                #print(result.shape[:2])
 
                 self.imgOrigin=result
 
@@ -231,14 +235,14 @@ class App():
                 if self.panel2 is None:
                     self.panel2 = (tkinter.Label(image=threshShow))
                     self.panel2.image = threshShow
-                    self.panel2.pack(side="left")
+                    self.panel2.pack(side="bottom")
                 else:
                     self.panel2.configure(image=threshShow)
                     self.panel2.image = threshShow
                 if self.panel3 is None:
                     self.panel3 = tkinter.Label(image=result)
                     self.panel3.image = result
-                    self.panel3.pack(side="left")
+                    self.panel3.pack(side="bottom")
 
 
                 else:
@@ -273,6 +277,10 @@ class App():
         self.roi = {}
         for (i, c) in enumerate(refCnt):
             (x, y, w, h) = cv2.boundingRect(c)
+            x -= 12
+            y -= 12
+            w += 20
+            h += 20
             self.roi[i] = ref[y:y + h, x:x + w]
             self.roi[i] = cv2.resize(self.roi[i], (57, 88))
             # cv2.imwrite("roi"+str(i)+'o.png',roi)
@@ -281,32 +289,45 @@ class App():
         clone = np.dstack([ref.copy()] * 3)
         for c in refCnt:
             (x, y, w, h) = cv2.boundingRect(c)
+
             cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # roi = ref[y:y + h, x:x + w]
         #cv2.imshow("Simple Method", clone)
-        #cv2.imshow('roi', roi[1])
+        cv2.imshow('roi', self.roi[10])
         #cv2.imshow("test",ref)
     def TextOCR(self):
-        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 10))
-        sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (8, 8))
+        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (30, 10))
+        sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
         while not self.stopEvent.is_set():
             if not self.imgOrigin is None:
                 imgOrigin=self.imgOrigin
                 #imgOrigin = imutils.resize(imgOrigin, width=150)
 
-                #gray = img
+                gray = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2GRAY)
                 #tophat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, rectKernel)
                 Imin = np.array([self.var.get(), self.var1.get(), self.varMax4.get()], dtype='uint8')
                 Imax = np.array([self.varMax.get(), self.varMax2.get(), self.varMax2.get()], dtype='uint8')
                 hsv = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2HSV)
                 masks = cv2.inRange(hsv, Imin, Imax)
-                blurred = cv2.blur(masks, (3, 3))
-                img = cv2.threshold(masks, 180, 255, cv2.THRESH_BINARY)[1]
+                blurred = cv2.blur(masks, (1, 1))
+                img = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV)[1]
                 #img = cv2.cvtColor(img, cv2.COLOR_HSV2BGR)
                 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                T = threshold_local(img, 25, offset=7, method="gaussian")
-                img = (img > T).astype("uint8") * 255
-                img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV)[1]
+                imgfilter=cv2.bilateralFilter(gray,8, 17, 17)
+                gray=imgfilter
+                #imgfilter = cv2.blur(imgfilter, (1, 1))
+                #img=imgfilter
+                #img= cv2.Canny(img, 30,108)
+
+
+
+
+
+                T = threshold_local(gray, 25, offset=6, method="gaussian")
+                imgWrap = (gray > T).astype("uint8") * 255
+                imgWrap = cv2.threshold(imgWrap, 200, 255, cv2.THRESH_BINARY_INV)[1]
+                #img=imgWrap
+                imgTocrop=imgWrap
                 '''img = imutils.resize(img, width=300, height=200)
                 img = PIL.Image.fromarray(img)
                 img = PIL.ImageTk.PhotoImage(img)
@@ -324,6 +345,7 @@ class App():
                 #cv2.imshow("kk", img)'''
 
                 tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel)
+                img2=img
                 np.seterr(divide='ignore', invalid='ignore')
                 gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0,ksize=7)
                 gradX = np.absolute(gradX)
@@ -343,6 +365,29 @@ class App():
                 locs = []
                 tmpcnts = {}
                 clone01 = np.dstack([thresh.copy()] * 3)
+
+                #cnts2 = cv2.findContours(clone01.copy(), cv2.RETR_EXTERNAL,
+                #                        cv2.CHAIN_APPROX_SIMPLE)
+                #cnts2 = cnts2[0] if imutils.is_cv2() else cnts2[1]
+                #cnts2 = sorted(cnts2, key=cv2.contourArea, reverse=True)
+                font = cv2.FONT_HERSHEY_SIMPLEX
+
+                for (idx, c) in enumerate(cnts):
+                    x, y, w, h = cv2.boundingRect(c)
+                    x-=5
+                    y-=5
+                    w+=5
+                    h+=5
+                    #h=h+5
+                    cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
+                    #
+
+                    locs.append((x, y, w, h))
+
+                locs = sorted(locs, key=lambda X: X[0])
+
+
                 img = clone01
                 img = imutils.resize(img, width=300, height=200)
                 img = PIL.Image.fromarray(img)
@@ -350,45 +395,115 @@ class App():
                 if self.panel4 is None:
                     self.panel4 = tkinter.Label(image=img)
                     self.panel4.image = img
-                    self.panel4.pack(side="left")
+                    self.panel4.pack(side="bottom")
                 else:
                     self.panel4.configure(image=img)
                     self.panel4.image = img
-
-                '''font = cv2.FONT_HERSHEY_SIMPLEX
-                for (idx, c) in enumerate(cnts):
-                    x, y, w, h = cv2.boundingRect(c)
-                    cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                    tmpcnts[idx] = img[y:y + h, x:x + w]
-                    locs.append((x, y, w, h))
-
-                locs = sorted(locs, key=lambda X: X[0])
                 output = []
+                kernel = np.ones((1, 1), np.uint8)
+                kernel2 = np.ones((2, 5), np.uint8)
+                try:
+                    tmpcnts[0] = cv2.blur(tmpcnts[0], (1, 1))
+                    #tmpcnts[0] = cv2.dilate(tmpcnts[0], kernel, iterations=1)
+                    tmpcnts[0] =cv2.morphologyEx(tmpcnts[0], cv2.MORPH_OPEN, kernel)
+                    tmpcnts[0] = cv2.morphologyEx(tmpcnts[0], cv2.MORPH_CLOSE, kernel2)
+                except : print("tmp error");continue
                 img=tmpcnts[0]
+                #print(tmpcnts[1].shape[:2])
+                ##########test#######
+                '''for i in tmpcnts:
+                    if i==0 :
+                        digitCnts=10
+                    elif i== 1 :
+                        digitCnts=8
+                    elif i==2 :
+                        digitCnts=1
+
+                    print(i)
+                    x,y=0,0
+                    for c in range(digitCnts):
+                        #(x, y, w, h) = cv2.boundingRect(c)
+                        h,w=tmpcnts[i].shape[:2]
+                        roi = tmpcnts[i][y:y + h, x:x + int(w/digitCnts)]
+                        #roi = cv2.resize(roi, (57, 88))
+                        img=roi
+                        #img = imutils.resize(img, width=300, height=200)
+                        img = PIL.Image.fromarray(img)
+                        img = PIL.ImageTk.PhotoImage(img)
+                        if self.panel5 is None:
+                            self.panel5 = tkinter.Label(image=img)
+                            self.panel5.image = img
+                            self.panel5.pack(side="left")
+                        else:
+                            self.panel5.configure(image=img)
+                            self.panel5.image = img
+
+                        #y+=h
+                        x+=int(w/digitCnts)
+                        time.sleep(0.5)
+
+
+                ####################'''
+                TestCnts= cv2.findContours(tmpcnts[0].copy(), cv2.RETR_EXTERNAL,
+                                             cv2.CHAIN_APPROX_SIMPLE)
+                TestCnts = TestCnts[0] if imutils.is_cv2() else TestCnts[1]
+                TestCnts = sorted(TestCnts, key=cv2.contourArea, reverse=True)
+                img = np.dstack([tmpcnts[0].copy()] * 3)
+                for (idx, c) in enumerate(TestCnts):
+                    x, y, w, h = cv2.boundingRect(c)
+
+                    #h=h+5
+                    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                #cv2.drawContours(img, TestCnts, -1, (0, 255, 0), 3)
                 img = imutils.resize(img, width=300, height=200)
                 img = PIL.Image.fromarray(img)
                 img = PIL.ImageTk.PhotoImage(img)
-                if self.panel4 is None:
-                    self.panel4 = tkinter.Label(image=img)
-                    self.panel4.image = img
-                    self.panel4.pack(side="left")
+                if self.panel5 is None:
+                    self.panel5 = tkinter.Label(image=img)
+                    self.panel5.image = img
+                    self.panel5.pack(side="left")
                 else:
-                    self.panel4.configure(image=img)
-                    self.panel4.image = img
-                for (i, (gX, gY, gW, gH)) in enumerate(locs):
+                    self.panel5.configure(image=img)
+                    self.panel5.image = img
+
+                '''for (i, (gX, gY, gW, gH)) in enumerate(locs):
 
                     groupOutput = []
-                    digitCnts = cv2.findContours(tmpcnts[i].copy(), cv2.RETR_EXTERNAL,
-                                                 cv2.CHAIN_APPROX_SIMPLE)
-                    digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
-                    digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-
+                    #digitCnts = cv2.findContours(tmpcnts[i].copy(), cv2.RETR_EXTERNAL,
+                    #                             cv2.CHAIN_APPROX_SIMPLE)
+                   # digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+                    #digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+                    if i==0 :
+                        digitCnts=10
+                    elif i== 1 :
+                        digitCnts=8
+                    elif i==2 :
+                        digitCnts=1
 
                     print(i)
-                    for c in digitCnts:
-                        (x, y, w, h) = cv2.boundingRect(c)
-                        roi = tmpcnts[i][y:y + h, x:x + w]
-                        roi = cv2.resize(roi, (57, 88))
+                    x,y=0,0
+                    for c in range(digitCnts):
+                        #(x, y, w, h) = cv2.boundingRect(c)
+                        h,w=tmpcnts[i].shape[:2]
+                        roi = tmpcnts[i][y:y + h, x:x + int(w/digitCnts)]
+                        try: roi = cv2.resize(roi, (57, 88))
+                        except: print("resize error");continue
+                        img=roi
+                        #img = imutils.resize(img, width=300, height=200)
+                        img = PIL.Image.fromarray(img)
+                        img = PIL.ImageTk.PhotoImage(img)
+                        if self.panel5 is None:
+                            self.panel5 = tkinter.Label(image=img)
+                            self.panel5.image = img
+                            self.panel5.pack(side="left")
+                        else:
+                            self.panel5.configure(image=img)
+                            self.panel5.image = img
+
+                        #y+=h
+                        x+=int(w/digitCnts)
+                        time.sleep(0.5)
+
                         #cv2.imshow("roi", roi)
                         scores = []
                         for (digit, digitROI) in self.digits.items():
@@ -409,6 +524,9 @@ class App():
                                 groupOutput.append('C')
                         else:
                             groupOutput.append(str(np.argmax(scores)))
+                        print(groupOutput)
+
+
 
                     cv2.rectangle(imgOrigin, (gX - 5, gY - 5),
                                   (gX + gW + 5, gY + gH + 5), (0, 255, 0), 2)
@@ -416,6 +534,7 @@ class App():
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 2)
 
                     # update the output digits list
+                    #print(output)
                     output.extend(groupOutput)
 
                 print("number  #: {}".format("".join(output)))
