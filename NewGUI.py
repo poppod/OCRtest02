@@ -1,6 +1,8 @@
 import tkinter
 import time
+import os
 from tkinter import *
+import pytesseract
 import cv2
 import threading
 import PIL.Image, PIL.ImageTk
@@ -97,7 +99,7 @@ class App():
         scale1 = Scale(self.root, from_=0, to=255, variable=self.var1)
         scale1.set(0)
         scale2 = Scale(self.root, from_=0, to=255, variable=self.var2)
-        scale2.set(86)
+        scale2.set(80)
         scale2.pack(fill=BOTH, expand=0, side=RIGHT)
         scale1.pack(fill=BOTH, expand=0, side=RIGHT)
         scale.pack(fill=BOTH, expand=0, side=RIGHT)
@@ -208,7 +210,7 @@ class App():
                     d_min = d
                     rect_min = [pt1, (rect3[2], rect3[3])]
 
-                pad = 20
+                pad = 30
                 result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
                          rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]
                 h, w = result.shape[:2]
@@ -268,8 +270,14 @@ class App():
 
     def TextOcrRef(self):
         ref=cv2.imread("./TextRef/temp.png",0)
+        img=ref
+        pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+        config = ('-l eng --oem 1 --psm 10')
+        #config2 = r'--tessdata-dir "C:\\Program Files (x86)\\Tesseract-OCR\\tessdata "'
+        text = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config, lang='eng')
+        print(text)
         ref = cv2.threshold(ref, 200, 255, cv2.THRESH_BINARY_INV)[1]
-        cv2.imshow('ref', ref)
+        #cv2.imshow('ref', ref)
         refCnt = cv2.findContours(ref.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         refCnt = refCnt[0] if imutils.is_cv2() else refCnt[1]
         refCnt = contours.sort_contours(refCnt, method="left-to-right")[0]
@@ -293,11 +301,15 @@ class App():
             cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # roi = ref[y:y + h, x:x + w]
         #cv2.imshow("Simple Method", clone)
-        cv2.imshow('roi', self.roi[10])
+        #cv2.imshow('roi', self.roi[10])
         #cv2.imshow("test",ref)
     def TextOCR(self):
         rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (30, 10))
         sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
+        #pytesseract.pytesseract.tesseract_cmd='C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+        config=('-c tessedit_char_whitelist=0123456789ABC/ -c tessedit_char_blacklist=abcdefghijklmnopqrstuvwxyzDEFGHIJKLMNOPQRSTOUWXYZ\|-()*^><!$ -l eng --oem 1 --psm 7')
+        #whiteList = "ABC0123456789/"
+        #config2= '--tessdata-dir "C:\\Program Files (x86)\\Tesseract-OCR\\tessdata -l eng --oem 1 --psm 7"'
         while not self.stopEvent.is_set():
             if not self.imgOrigin is None:
                 imgOrigin=self.imgOrigin
@@ -313,8 +325,8 @@ class App():
                 img = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV)[1]
                 #img = cv2.cvtColor(img, cv2.COLOR_HSV2BGR)
                 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                imgfilter=cv2.bilateralFilter(gray,8, 17, 17)
-                gray=imgfilter
+                #imgfilter=cv2.bilateralFilter(gray,8, 17, 17)
+                #gray=imgfilter
                 #imgfilter = cv2.blur(imgfilter, (1, 1))
                 #img=imgfilter
                 #img= cv2.Canny(img, 30,108)
@@ -323,12 +335,12 @@ class App():
 
 
 
-                T = threshold_local(gray, 25, offset=6, method="gaussian")
+                '''T = threshold_local(gray, 25, offset=6, method="gaussian")
                 imgWrap = (gray > T).astype("uint8") * 255
                 imgWrap = cv2.threshold(imgWrap, 200, 255, cv2.THRESH_BINARY_INV)[1]
                 #img=imgWrap
                 imgTocrop=imgWrap
-                '''img = imutils.resize(img, width=300, height=200)
+                img = imutils.resize(img, width=300, height=200)
                 img = PIL.Image.fromarray(img)
                 img = PIL.ImageTk.PhotoImage(img)
                 if self.panel4 is None:
@@ -374,13 +386,13 @@ class App():
 
                 for (idx, c) in enumerate(cnts):
                     x, y, w, h = cv2.boundingRect(c)
-                    x-=5
-                    y-=5
-                    w+=5
-                    h+=5
+                    x-=15
+                    y-=8
+                    w+=18
+                    h+=10
                     #h=h+5
                     cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                    tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
+                    tmpcnts[idx] = gray[y:y + h, x:x + w]
                     #
 
                     locs.append((x, y, w, h))
@@ -402,59 +414,59 @@ class App():
                 output = []
                 kernel = np.ones((1, 1), np.uint8)
                 kernel2 = np.ones((2, 5), np.uint8)
-                try:
+                '''try:
                     tmpcnts[0] = cv2.blur(tmpcnts[0], (1, 1))
                     #tmpcnts[0] = cv2.dilate(tmpcnts[0], kernel, iterations=1)
                     tmpcnts[0] =cv2.morphologyEx(tmpcnts[0], cv2.MORPH_OPEN, kernel)
                     tmpcnts[0] = cv2.morphologyEx(tmpcnts[0], cv2.MORPH_CLOSE, kernel2)
-                except : print("tmp error");continue
-                img=tmpcnts[0]
+                except : print("tmp error");continue'''
+
+                #try :
+                for i in range(len(tmpcnts)):
+                    text = []
+                    try:
+                        img=tmpcnts[i]
+                        h, w = img.shape[:2]
+                        img = imutils.resize(img, width=int(w / 2), height=int(h / 2))
+                    except:
+                        img=gray
+
+                    t = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config, lang='eng')
+
+                    print(t)
+                    text.append(t)
+                    (gX, gY, gW, gH)=locs[i]
+                    gX+=15
+                    gY+=8
+                    gW-=18
+                    gH-=10
+
+                    cv2.rectangle(imgOrigin, (gX - 5, gY - 5),
+                                      (gX + gW + 5, gY + gH + 5), (0, 255, 0), 2)
+                    cv2.putText(imgOrigin, "".join(text), (gX, gY - 15),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 2)
+
+                    #except:
+                    #text.append('ERROR')
+                    img=clone01
+
+                output.extend(text)
+                #text="em"
+
+
+                #try:
+                #text = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config,lang='eng')
+
+
+                #except: continue
+
+                #print(text[0])
                 #print(tmpcnts[1].shape[:2])
                 ##########test#######
-                '''for i in tmpcnts:
-                    if i==0 :
-                        digitCnts=10
-                    elif i== 1 :
-                        digitCnts=8
-                    elif i==2 :
-                        digitCnts=1
-
-                    print(i)
-                    x,y=0,0
-                    for c in range(digitCnts):
-                        #(x, y, w, h) = cv2.boundingRect(c)
-                        h,w=tmpcnts[i].shape[:2]
-                        roi = tmpcnts[i][y:y + h, x:x + int(w/digitCnts)]
-                        #roi = cv2.resize(roi, (57, 88))
-                        img=roi
-                        #img = imutils.resize(img, width=300, height=200)
-                        img = PIL.Image.fromarray(img)
-                        img = PIL.ImageTk.PhotoImage(img)
-                        if self.panel5 is None:
-                            self.panel5 = tkinter.Label(image=img)
-                            self.panel5.image = img
-                            self.panel5.pack(side="left")
-                        else:
-                            self.panel5.configure(image=img)
-                            self.panel5.image = img
-
-                        #y+=h
-                        x+=int(w/digitCnts)
-                        time.sleep(0.5)
 
 
-                ####################'''
-                TestCnts= cv2.findContours(tmpcnts[0].copy(), cv2.RETR_EXTERNAL,
-                                             cv2.CHAIN_APPROX_SIMPLE)
-                TestCnts = TestCnts[0] if imutils.is_cv2() else TestCnts[1]
-                TestCnts = sorted(TestCnts, key=cv2.contourArea, reverse=True)
-                img = np.dstack([tmpcnts[0].copy()] * 3)
-                for (idx, c) in enumerate(TestCnts):
-                    x, y, w, h = cv2.boundingRect(c)
 
-                    #h=h+5
-                    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                #cv2.drawContours(img, TestCnts, -1, (0, 255, 0), 3)
+                img=imgOrigin
                 img = imutils.resize(img, width=300, height=200)
                 img = PIL.Image.fromarray(img)
                 img = PIL.ImageTk.PhotoImage(img)
@@ -465,80 +477,8 @@ class App():
                 else:
                     self.panel5.configure(image=img)
                     self.panel5.image = img
-
-                '''for (i, (gX, gY, gW, gH)) in enumerate(locs):
-
-                    groupOutput = []
-                    #digitCnts = cv2.findContours(tmpcnts[i].copy(), cv2.RETR_EXTERNAL,
-                    #                             cv2.CHAIN_APPROX_SIMPLE)
-                   # digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
-                    #digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-                    if i==0 :
-                        digitCnts=10
-                    elif i== 1 :
-                        digitCnts=8
-                    elif i==2 :
-                        digitCnts=1
-
-                    print(i)
-                    x,y=0,0
-                    for c in range(digitCnts):
-                        #(x, y, w, h) = cv2.boundingRect(c)
-                        h,w=tmpcnts[i].shape[:2]
-                        roi = tmpcnts[i][y:y + h, x:x + int(w/digitCnts)]
-                        try: roi = cv2.resize(roi, (57, 88))
-                        except: print("resize error");continue
-                        img=roi
-                        #img = imutils.resize(img, width=300, height=200)
-                        img = PIL.Image.fromarray(img)
-                        img = PIL.ImageTk.PhotoImage(img)
-                        if self.panel5 is None:
-                            self.panel5 = tkinter.Label(image=img)
-                            self.panel5.image = img
-                            self.panel5.pack(side="left")
-                        else:
-                            self.panel5.configure(image=img)
-                            self.panel5.image = img
-
-                        #y+=h
-                        x+=int(w/digitCnts)
-                        time.sleep(0.5)
-
-                        #cv2.imshow("roi", roi)
-                        scores = []
-                        for (digit, digitROI) in self.digits.items():
-                            # apply correlation-based template matching, take the
-                            # score, and update the scores list
-                            result = cv2.matchTemplate(roi, digitROI,
-                                                       cv2.TM_CCOEFF)
-                            (_, score, _, _) = cv2.minMaxLoc(result)
-                            scores.append(score)
-                        if int(np.argmax(scores)) > 9:
-                            if int(np.argmax(scores)) == 10:
-                                groupOutput.append('/')
-                            elif int(np.argmax(scores)) == 11:
-                                groupOutput.append('A')
-                            elif int(np.argmax(scores)) == 12:
-                                groupOutput.append('B')
-                            elif int(np.argmax(scores)) == 13:
-                                groupOutput.append('C')
-                        else:
-                            groupOutput.append(str(np.argmax(scores)))
-                        print(groupOutput)
-
-
-
-                    cv2.rectangle(imgOrigin, (gX - 5, gY - 5),
-                                  (gX + gW + 5, gY + gH + 5), (0, 255, 0), 2)
-                    cv2.putText(imgOrigin, "".join(groupOutput), (gX, gY - 15),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 2)
-
-                    # update the output digits list
-                    #print(output)
-                    output.extend(groupOutput)
-
-                print("number  #: {}".format("".join(output)))
-                #cv2.imshow("Image", imgOrigin)'''
+                print("number  #: {}".format("".join(text)))
+                #cv2.imshow("Image", imgOrigin)
 
 
 
