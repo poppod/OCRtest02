@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="266" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="688" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
+      <change afterPath="$PROJECT_DIR$/TextRef/temp2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/no_detect.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testProcess.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TextRef/temp.png" beforeDir="false" afterPath="$PROJECT_DIR$/TextRef/temp.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,101 +22,66 @@
     <session id="-1000810252">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="19" />
+          <entry key="project.closed" value="33" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="6" />
-          <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="2" />
-          <entry key="project.open.time.12" value="3" />
+          <entry key="project.open.time.1" value="7" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.11" value="4" />
+          <entry key="project.open.time.12" value="6" />
+          <entry key="project.open.time.13" value="3" />
           <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.16" value="2" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.29" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="png" value="5" />
-          <entry key="py" value="17" />
+          <entry key="png" value="14" />
+          <entry key="py" value="20" />
+          <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Image" value="5" />
-          <entry key="Python" value="17" />
+          <entry key="Image" value="14" />
+          <entry key="PLAIN_TEXT" value="21" />
+          <entry key="Python" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="10198" />
-          <entry key="txt" value="5" />
+          <entry key="py" value="19935" />
+          <entry key="txt" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="5" />
-          <entry key="Python" value="10198" />
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Python" value="19935" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/camera_detect.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmeratest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Text_OCR.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GUi.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3230">
-              <caret line="202" column="17" selection-start-line="202" selection-start-column="17" selection-end-line="202" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-                <marker date="1539081772024" expanded="true" signature="281:282" ph="..." />
-                <marker date="1539081772024" expanded="true" signature="302:1478" ph="..." />
-                <marker date="1539081772024" expanded="true" signature="1501:1510" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3645">
-              <caret line="212" column="24" selection-start-line="212" selection-start-column="24" selection-end-line="212" selection-end-column="24" />
+            <state relative-caret-position="85">
+              <caret line="305" column="36" selection-start-line="305" selection-start-column="36" selection-end-line="305" selection-end-column="36" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1541878950612" expanded="true" signature="304:309" ph="..." />
-                <marker date="1541878950612" expanded="true" signature="2731:9728" ph="..." />
-                <marker date="1541878950612" expanded="true" signature="3275:4016" ph="..." />
-                <marker date="1541878950612" expanded="true" signature="4016:4022" ph="..." />
+                <marker date="1543068279833" expanded="true" signature="431:436" ph="..." />
+                <marker date="1543068279833" expanded="true" signature="2606:2637" ph="..." />
+                <marker date="1543068279833" expanded="true" signature="2661:2670" ph="..." />
+                <marker date="1543068279833" expanded="true" signature="2661:2727" ph="..." />
+                <marker date="1543068279833" expanded="true" signature="7043:7106" ph="..." />
               </folding>
             </state>
           </provider>
@@ -132,6 +101,16 @@
       <find>gray</find>
       <find>imshow</find>
       <find>self.result</find>
+      <find>self.box</find>
+      <find>self.cnts</find>
+      <find>panel</find>
+      <find>RS</find>
+      <find>Click</find>
+      <find>put</find>
+      <find>get</find>
+      <find>self.rectY</find>
+      <find>scale3</find>
+      <find>imgOr</find>
     </findStrings>
   </component>
   <component name="Git.Rebase.Settings">
@@ -154,6 +133,7 @@
         <option value="$PROJECT_DIR$/detect_label.py" />
         <option value="$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/contours.py" />
         <option value="$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/convenience.py" />
+        <option value="$PROJECT_DIR$/testProcess.py" />
         <option value="$PROJECT_DIR$/NewGUI.py" />
       </list>
     </option>
@@ -193,29 +173,6 @@
               <item name="OCRtest2" type="b2602c69:ProjectViewProjectNode" />
               <item name="OCRtest2" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="OCRtest2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest2" type="462c0819:PsiDirectoryNode" />
-              <item name="TextRef" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OCRtest2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest2" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OCRtest2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest2" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-              <item name="Lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OCRtest2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest2" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
-              <item name="Lib" type="462c0819:PsiDirectoryNode" />
-              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -235,8 +192,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\PC-26\PycharmProjects\OCRtest2\TextRef" />
       <recent name="C:\Users\PC-26\PycharmProjects\OCRtest2" />
+      <recent name="C:\Users\PC-26\PycharmProjects\OCRtest2\TextRef" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC-26\PycharmProjects\OCRtest2\TextRef" />
@@ -473,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541697503846</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="check">
+      <created>1541879486657</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1541879486657</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -487,20 +451,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25297618" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22023809" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4985119" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7306548" visible="true" weight="0.40589198" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.63095236" weight="0.39934534" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72098213" weight="0.1898527" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.62946427" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4985119" weight="0.32733223" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.43229166" weight="0.20130932" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.26934522" side_tool="true" visible="true" weight="0.40589198" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.27901787" side_tool="true" visible="true" weight="0.1898527" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -533,16 +498,21 @@
     <MESSAGE value="check" />
     <option name="LAST_COMMIT_MESSAGE" value="check" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>383</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/tesseract/__init__.py" />
     <entry file="file://$PROJECT_DIR$/venv/Lib/importlib/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6904.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/7400.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/vvom.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -564,9 +534,6 @@
           <caret line="22" column="26" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TextRef/temp.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/convenience.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -596,6 +563,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/7400.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/6904.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testProcess.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TextRef/Untitled2.png" />
+    <entry file="file://$PROJECT_DIR$/capture.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TextRef/test.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/camera_detect.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -617,29 +600,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TextRef/temp.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3230">
+        <state relative-caret-position="2747">
           <caret line="202" column="17" selection-start-line="202" selection-start-column="17" selection-end-line="202" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <marker date="1539081772024" expanded="true" signature="281:282" ph="..." />
-            <marker date="1539081772024" expanded="true" signature="302:1478" ph="..." />
-            <marker date="1539081772024" expanded="true" signature="1501:1510" ph="..." />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/Code_value.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/B_scale.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/B_scale2.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/R_scale2.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/sqY.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/AreaW.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/sqX.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/rectY.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/rectX.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/AreaH.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/Number_value.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/G_scale.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/G_scale2.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/Date_value.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/R_scale.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../template/venv2/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3645">
-          <caret line="212" column="24" selection-start-line="212" selection-start-column="24" selection-end-line="212" selection-end-column="24" />
+        <state relative-caret-position="85">
+          <caret line="305" column="36" selection-start-line="305" selection-start-column="36" selection-end-line="305" selection-end-column="36" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1541878950612" expanded="true" signature="304:309" ph="..." />
-            <marker date="1541878950612" expanded="true" signature="2731:9728" ph="..." />
-            <marker date="1541878950612" expanded="true" signature="3275:4016" ph="..." />
-            <marker date="1541878950612" expanded="true" signature="4016:4022" ph="..." />
+            <marker date="1543068279833" expanded="true" signature="431:436" ph="..." />
+            <marker date="1543068279833" expanded="true" signature="2606:2637" ph="..." />
+            <marker date="1543068279833" expanded="true" signature="2661:2670" ph="..." />
+            <marker date="1543068279833" expanded="true" signature="2661:2727" ph="..." />
+            <marker date="1543068279833" expanded="true" signature="7043:7106" ph="..." />
           </folding>
         </state>
       </provider>
