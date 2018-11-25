@@ -4,14 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="688" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
-      <change afterPath="$PROJECT_DIR$/TextRef/temp2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/no_detect.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/testProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextRef/temp.png" beforeDir="false" afterPath="$PROJECT_DIR$/TextRef/temp.png" afterDir="false" />
-    </list>
+    <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -437,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541879486657</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="check">
+      <created>1543158352157</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1543158352157</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -451,7 +451,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22023809" />
       <window_info id="Favorites" order="1" side_tool="true" />
