@@ -288,9 +288,9 @@ class App():
             self.scale2()
             self.scale3()
             #self.scale4()
-            self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
+            '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
             self.TextocrThread.daemon = True
-            self.TextocrThread.start()
+            self.TextocrThread.start()'''
             OkNextButton = Button(self.root, text="OK and Next", command=self.page4_To_page5).grid(row=3, column=3)
 
         else:
@@ -500,9 +500,10 @@ class App():
             self.thread.start()
 
             #self.TextOCR()
-            self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
+
+            '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
             self.TextocrThread.daemon = True
-            self.TextocrThread.start()
+            self.TextocrThread.start()'''
         #self.root.destroy()
         #self.root.quit()self.thread.isAlive() == False or
 
@@ -524,7 +525,7 @@ class App():
                 self.ret,self.frame=self.vs.read()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow=image
-                if self.ClickValue==0:
+                if self.ClickValue==0 or self.ClickValue==10:
 
                     self.Show_panel01_0_0(self.frameShow)
         except RuntimeError as e:
@@ -649,13 +650,7 @@ class App():
 
                 clone01 = np.dstack([thresh.copy()] * 3)
                 self.treshImg=clone01
-                '''threshShow = imutils.resize(thresh, width=150)
-                threshShow = PIL.Image.fromarray(threshShow)
-                threshShow = PIL.ImageTk.PhotoImage(threshShow)'''
-                #self.lock.acquire()
-                #self.thresh.put(threshShow)
-                #self.lock.release()
-                # cv2.imshow("thres", thresh)
+
                 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 57))
                 closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
                 closed = cv2.erode(closed, None, iterations=4)
@@ -671,9 +666,7 @@ class App():
                 if len(cnts) == 0:
                     box3 = box2
                     cnts=cnts2
-                    #self.box.put(box2)
-                    #self.cnts.put(cnts2)
-                    # return box2, cnts2
+
                 c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
 
                 rect = cv2.minAreaRect(c)
@@ -709,11 +702,13 @@ class App():
                             self.Detect_flag=1
                         else:
                             self.Detect_flag=0
+
                             result = image
                     else:
                         #print("fu")
                         result = image
                         self.Detect_flag = 0
+
 
                 if self.ClickValue==5:
                     h1, w1 = result.shape[:2]
@@ -726,6 +721,8 @@ class App():
                     self.Show_panel02_0_1(self.treshImg)
                     self.Show_panel03_1_0(self.ImgCap)
 
+                if self.ClickValue==10 and self.Detect_flag == 1 or self.ClickValue==2:
+                    self.TextOCR2_no_loop()
 
 
 
@@ -878,9 +875,12 @@ class App():
                             img = tmpcnts[i]
                         except:
                             img=imgTocrop
+
                         tmpcnts2[i]=img
                         text.append(i)
                     if len(tmpcnts)==0:
+                        self.Detect_flag=0 ##
+
                         tmpcnts2[0]=imgTocrop
                         tmpcnts3[0]=imgWrap
 
@@ -1038,6 +1038,263 @@ class App():
                         Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
                         Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 
+    def TextOCR2_no_loop(self):
+        Noimg = cv2.imread('no_detect.png')
+
+        if not self.imgOrigin is None:
+            if self.Detect_flag == 1:
+                rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY.get(), self.rectX.get()))
+                sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY.get(), self.sqX.get()))
+                imgOrigin = self.imgOrigin
+                # imgOrigin = imutils.resize(imgOrigin, width=150)
+
+                gray = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2GRAY)
+                # tophat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, rectKernel)
+                Imin = np.array([self.var.get(), self.var1.get(), self.varMax4.get()], dtype='uint8')
+                Imin2 = np.array([self.var.get(), self.var1.get(), self.varMax5.get()], dtype='uint8')
+                Imax = np.array([self.varMax.get(), self.varMax2.get(), self.varMax3.get()], dtype='uint8')
+                hsv = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2HSV)
+                masks = cv2.inRange(hsv, Imin, Imax)
+                masks2 = cv2.inRange(hsv, Imin2, Imax)
+                blurred = cv2.blur(masks, (1, 1))
+                blurred2 = cv2.blur(masks2, (1, 1))
+                img = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV)[1]
+                img2 = cv2.threshold(blurred2, 0, 255, cv2.THRESH_BINARY_INV)[1]
+                imgTocrop = img
+                imgWrap = img2
+
+                tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel)
+                img2 = img
+                np.seterr(divide='ignore', invalid='ignore')
+                gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=7)
+                gradX = np.absolute(gradX)
+                (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+                gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+                gradX = gradX.astype("uint8")
+
+                gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
+                thresh = cv2.threshold(gradX, 0, 255,
+                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+                t2 = thresh
+                thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
+                cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                        cv2.CHAIN_APPROX_SIMPLE)
+                cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+                cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+
+                locs = []
+                tmpcnts = {}
+                clone01 = np.dstack([thresh.copy()] * 3)
+
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                tmpcnts3 = {}
+                for (idx, c) in enumerate(cnts):
+                    x, y, w, h = cv2.boundingRect(c)
+                    x -= 15
+                    y -= 8
+                    w += 25
+                    h += 10
+                    # h=h+5
+                    cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
+                    tmpcnts3[idx] = imgWrap[y:y + h, x:x + w]
+                    #
+
+                    locs.append((x, y, w, h))
+
+                locs = sorted(locs, key=lambda X: X[0])
+                # self.lock.acquire()
+                # self.Img.put(tmpcnts)
+                # self.lock.release()
+                # t = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config, lang='eng')
+                # print(t)
+
+                img = clone01
+
+                if self.ClickValue == 2:
+                    self.Show_panel01_0_0(img)
+
+                output = []
+                kernel = np.ones((1, 1), np.uint8)
+                kernel2 = np.ones((2, 2), np.uint8)
+                kernel3 = np.ones((5, 5), np.uint8)
+                imgWrap2 = imgWrap
+
+                text = []
+                tmpcnts2 = {}
+                for i in range(len(tmpcnts)):
+                    # text = []
+                    try:
+                        img = tmpcnts[i]
+                        h, w = img.shape[:2]
+                        img = imutils.resize(img, width=int(w / 2), height=int(h / 2))
+                        img = tmpcnts[i]
+                    except:
+                        img = imgTocrop
+
+                    tmpcnts2[i] = img
+                    text.append(i)
+                if len(tmpcnts) == 0:
+                    self.Detect_flag = 0  ##
+
+                    tmpcnts2[0] = imgTocrop
+                    tmpcnts3[0] = imgWrap
+
+                imgtest = {}
+                imgtest2 = {}
+                charac = 0
+                for (i, (gX, gY, gW, gH)) in enumerate(locs):
+                    groupOutput = []
+                    img = tmpcnts2[i]
+
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+                    sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
+                    tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
+
+                    np.seterr(divide='ignore', invalid='ignore')
+                    gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
+                    gradX = np.absolute(gradX)
+                    (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+                    gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+                    gradX = gradX.astype("uint8")
+
+                    gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
+                    thresh = cv2.threshold(gradX, 0, 255,
+                                           cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+                    thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
+                    digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                                 cv2.CHAIN_APPROX_SIMPLE)
+                    digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+
+                    try:
+                        digitCnts = contours.sort_contours(digitCnts,
+                                                           method="left-to-right")[0]
+                    except:
+                        digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+                    clone02 = np.dstack([thresh.copy()] * 3)
+                    imgtest[i] = clone02
+
+                    for c in digitCnts:
+
+                        (x, y, w, h) = cv2.boundingRect(c)
+                        x -= 3
+
+                        w += 5
+
+                        cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        roi = tmpcnts3[i][y:y + h, x:x + w]
+                        roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
+                        roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
+                        roi = cv2.dilate(roi, kernel, iterations=1)
+                        try:
+                            roi = cv2.resize(roi, (57, 88))
+                        except:
+                            roi = cv2.resize(img, (57, 88))
+
+                        imgtest2[charac] = roi
+                        charac += 1
+
+                        scores = []
+                        DIGITS = {}
+                        if i == 0:
+                            DIGITS = self.digits1
+                        elif i == 1:
+                            DIGITS = self.digits2
+                        elif i == 2:
+                            DIGITS = self.digits3
+                        else:
+                            DIGITS = self.digits
+
+                        for (digit, digitROI) in DIGITS.items():
+                            result = cv2.matchTemplate(roi, digitROI,
+                                                       cv2.TM_SQDIFF)
+                            (_, score, _, _) = cv2.minMaxLoc(result)
+
+                            scores.append(score)
+
+                        try:
+                            if i == 0:
+                                if str(np.argmin(scores)) == '10':
+                                    groupOutput.append('/')
+                                else:
+                                    groupOutput.append(str(np.argmin(scores)))
+
+                            elif i == 2:
+                                if str(np.argmin(scores)) == '0':
+                                    groupOutput.append('A')
+                                elif str(np.argmin(scores)) == '1':
+                                    groupOutput.append('B')
+                                else:
+                                    groupOutput.append('C')
+                            else:
+
+                                groupOutput.append(str(np.argmin(scores)))
+                        except:
+                            pass
+                    gX += 15
+                    gY += 8
+                    gW -= 18
+                    gH -= 10
+
+                    output.append(groupOutput)
+                    '''cv2.rectangle(imgWrap2, (gX - 5, gY - 5),
+                                  (gX + gW + 5, gY + gH + 5), (255, 255, 255), 2)'''
+
+                img = img2
+                if self.ClickValue == 2:
+                    self.Show_panel02_0_1(img)
+                    self.Show_panel03_1_0(imgWrap)
+                    try:
+                        self.Show_panel04_1_1(imgtest2[1])
+                    except:
+                        pass
+                if self.ClickValue == 10:
+                    #self.Show_panel01_0_0(self.frameShow)
+                    self.Show_panel05_2_0(tmpcnts2[0])
+                    self.Show_panel03_1_0(self.ImgCap)
+
+                    try:
+                        Label(self.root, text=output[0], width=20, font=("Helvetica", 20)).grid(row=0, column=1)
+                        Label(self.root, text=output[1], width=20, font=("Helvetica", 20)).grid(row=1, column=1)
+                        Label(self.root, text=output[2], width=20, font=("Helvetica", 20)).grid(row=2, column=1)
+                        if self.DateValue == "".join(str(x) for x in output[0]):
+                            # fg = "red"
+
+                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=0, column=2,
+                                                                                                    sticky=W)
+                        else:
+                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=0, column=2,
+                                                                                                  sticky=W)
+                        if self.NcodeValue == "".join(str(x) for x in output[1]):
+                            # fg = "red"
+                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=1, column=2,
+                                                                                                    sticky=W)
+                        else:
+                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=1, column=2,
+                                                                                                  sticky=W)
+                        if str(self.CcodeValue) == "".join(str(x) for x in output[2]):
+                            # fg = "red"
+                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=2, column=2,
+                                                                                                    sticky=W)
+                        else:
+                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=2, column=2,
+                                                                                                  sticky=W)
+                    except:
+                        pass
+
+            else:
+                # img=cv2.imread('no_detect.png')
+                if self.ClickValue == 2:
+                    self.Show_panel02_0_1(Noimg)
+                    self.Show_panel03_1_0(Noimg)
+                    self.Show_panel04_1_1(Noimg)
+                if self.ClickValue == 10:
+                    #self.Show_panel01_0_0(self.frameShow)
+                    self.Show_panel03_1_0(Noimg)
+                    self.Show_panel05_2_0(Noimg)
+                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
+                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
+                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 def tesseract(idx,imgQ):
         img = imgQ.get()
         #l.acquire()
