@@ -500,7 +500,7 @@ class App():
             self.thread.start()
 
             #self.TextOCR()
-
+            self.make_tempplate()
             '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
             self.TextocrThread.daemon = True
             self.TextocrThread.start()'''
@@ -774,6 +774,9 @@ class App():
         area01 = PIL.Image.fromarray(area01)
         area02 = PIL.Image.fromarray(area02)
         area03 = PIL.Image.fromarray(area03)
+        cv2.imwrite('./TextRef/Area1.png',area01)
+        cv2.imwrite('./TextRef/Area2.png', area02)
+        cv2.imwrite('./TextRef/Area3.png', area03)
     def TextOcrRef(self):
         ref=cv2.imread("./TextRef/temp.png",0)
         img=ref
