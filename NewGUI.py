@@ -735,7 +735,45 @@ class App():
         #self.root.q
         #exit()
         #self.root.destroy()
+    def make_tempplate(self):
+        make01 = {}
+        make02 = {}
+        make03 = {}
+        for idx, digi in enumerate(self.DateValue):
+            if digi == '/' :
+                make01[idx]= self.digits[10]
+            else:
+                for i,img in enumerate(self.digits):
+                    if int(digi)==int(i):
+                        make01[idx]=img
 
+        area01 = np.hstack(make01)
+        for idx,digi in enumerate(self.NcodeValue):
+            if digi=='/':
+                make02[idx]=self.digits[10]
+            else:
+                for i,img in enumerate(self.digits):
+                    if int(digi)==int(i):
+                        make02[idx]=img
+        area02 = np.hstack(make02)
+        for idx, digi in enumerate(self.CcodeValue):
+            if digi == '/':
+                make03[idx]=self.digits[10]
+            elif digi == 'A':
+                make03[idx] = self.digits[11]
+            elif digi == 'B':
+                make03[idx] = self.digits[12]
+            elif digi == 'C':
+                make03[idx] = self.digits[13]
+            else:
+                for i,img in enumerate(self.digits):
+                    if int(digi) == int(i):
+                        make03[idx] = img
+        area03 = np.hstack(make03)
+
+        area01 = PIL.Image.fromarray(area01)
+        area02 = PIL.Image.fromarray(area02)
+        area03 = PIL.Image.fromarray(area03)
     def TextOcrRef(self):
         ref=cv2.imread("./TextRef/temp.png",0)
         img=ref
@@ -1315,9 +1353,7 @@ def multi_run_wrapper(args):
             return tesseract(*args)
 
 
-        #t="empty"
-        #Txq.put(t)
-        #l.release()
+
 
 
 
