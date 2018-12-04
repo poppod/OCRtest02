@@ -74,11 +74,20 @@ class App():
         self.panel5=None
         self.panel6=None #not use
         self.buttom=None
+
+        self.make01=None
+        self.make02=None
+        self.make03=None
+        self.area01=None
+        self.area02=None
+        self.area03=None
         self.thresh=queue.Queue()
         self.result=queue.Queue()
         self.stopEvent= threading.Event()
+        self.load_all_value()
 
         self.page1_selectOption()
+
 
         '''self.thread=threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon=True
@@ -425,12 +434,27 @@ class App():
         self.root.title("Solution 1 Process")
         self.ClickValue=10
         self.TextOcrRef()
+        self.load_all_value()
 
-        H=open('./Configure/AreaH.txt','r')
-        self.HeightBbox=int(H.read())
+        self.make_tempplate()
+        if self.thread==None:
+            self.thread=threading.Thread(target=self.videoLoop, args=())
+            self.thread.daemon=True
+            self.thread.start()
+
+            #self.TextOCR()
+
+            '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
+            self.TextocrThread.daemon = True
+            self.TextocrThread.start()'''
+        #self.root.destroy()
+        #self.root.quit()self.thread.isAlive() == False or
+    def load_all_value(self):
+        H = open('./Configure/AreaH.txt', 'r')
+        self.HeightBbox = int(H.read())
         H.close()
-        W = open('./Configure/AreaW.txt','r')
-        self.WeightBbox =int(W.read())
+        W = open('./Configure/AreaW.txt', 'r')
+        self.WeightBbox = int(W.read())
         W.close()
 
         B_scale = open('./Configure/B_scale.txt', "r")
@@ -460,13 +484,13 @@ class App():
         R_scale2_min_for_ImgWarp.close()
 
         Date_value = open('./Configure/Date_value.txt', "r")
-        self.DateValue=str(Date_value.read())
+        self.DateValue = str(Date_value.read())
         Date_value.close()
         Number_value = open('./Configure/Number_value.txt', "r")
-        self.NcodeValue=str(Number_value.read())
+        self.NcodeValue = str(Number_value.read())
         Number_value.close()
         Code_value = open('./Configure/Code_value.txt', "r")
-        self.CcodeValue=str(Code_value.read())
+        self.CcodeValue = str(Code_value.read())
         Code_value.close()
 
         rectY = open('./Configure/rectY.txt', 'r')
@@ -494,19 +518,6 @@ class App():
         sqX2 = open('./Configure/sqX2.txt', 'r')
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
-        self.make_tempplate()
-        if self.thread==None:
-            self.thread=threading.Thread(target=self.videoLoop, args=())
-            self.thread.daemon=True
-            self.thread.start()
-
-            #self.TextOCR()
-
-            '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
-            self.TextocrThread.daemon = True
-            self.TextocrThread.start()'''
-        #self.root.destroy()
-        #self.root.quit()self.thread.isAlive() == False or
 
     def page2_selectFile(self):
         for ele in self.root.winfo_children():
@@ -604,6 +615,7 @@ class App():
         '''self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()'''
+        self.make_tempplate()
         while not self.stopEvent.is_set():
                 #ret,img= self.vs.read()
                 #img=self.frame
@@ -663,7 +675,8 @@ class App():
                 _,cnts2,hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
                 rect2 = cv2.minAreaRect(c2)
-                box2 = np.intp(cv2.boxPoints(rect2))
+                box2=cv2.boxPoints(rect2)
+                box2 = np.int0(box2)
                 if len(cnts) == 0:
                     box3 = box2
                     cnts=cnts2
@@ -671,14 +684,30 @@ class App():
                 c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
 
                 rect = cv2.minAreaRect(c)
-                box = np.intp(cv2.boxPoints(rect))
-                res = cv2.bitwise_and(image, image, mask=closed)
+                box=cv2.boxPoints(rect)
+                box = np.int0(box)
+                #res = cv2.bitwise_and(image, image, mask=closed)
                 if len(cnts) == 0:
                     box3 = box2
-                if len(cnts) != 0: box3 = box
+                if len(cnts) != 0:
+                    box3 = box
                 d_min = 1000
                 rect_min = [[0, 0], [0, 0]]
                 rect3 = cv2.boundingRect(box3)
+                #screenCnt=[]
+                for c in cnts:
+                    # approximate the contour
+                    peri = cv2.arcLength(c, True)
+                    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
+                    # if our approximated contour has four points, then we
+                    # can assume that we have found our screen
+                    if len(approx) == 4:
+                        screenCnt = approx
+                        break
+
+
+                #print(str(box3)+"end")
                 pt1 = (rect3[0], rect3[1])
                 c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
                 d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
@@ -688,13 +717,17 @@ class App():
 
 
                 pad = 30
+
+
                 result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
                          rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]
                 h, w = result.shape[:2]
+
                 if h <= 0 or w <= 0: #fixed box to tracking
                     result = image
 
-
+                #M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
+                #result = cv2.warpPerspective(result, M, (h, w))
                 #print(result.shape[:2])
                 if not self.HeightBbox is None or not  self.WeightBbox is None:
                     if self.HeightBbox >= h-40 and self.HeightBbox <= h+40:
@@ -724,6 +757,8 @@ class App():
 
                 if self.ClickValue==10 and self.Detect_flag == 1 or self.ClickValue==2:
                     self.TextOCR2_no_loop()
+                else:
+                    self.no_detect()
 
 
 
@@ -751,12 +786,8 @@ class App():
                     if int(digi)==int(i):
                         make01[idx]=self.digits[i]
 
-        area01 = np.hstack((make01[0],make01[1]))
-        #area01 = np.hstack(make01[idx]) (57, 88)
-       # area01 = PIL.Image.fromarray(make01)
-        cv2.imshow("test",area01)
-        print(make01)
-        #area01 = PIL.Image.fromarray(area01)
+
+        area01 = np.hstack((np.asarray(img) for (ik,img) in make01.items()))
 
         for idx,digi in enumerate(self.NcodeValue):
             if digi=='/':
@@ -764,8 +795,10 @@ class App():
             else:
                 for i,img in enumerate(self.digits):
                     if int(digi)==int(i):
-                        make02[idx]=img
-        area02 = np.hstack(make02)
+                        make02[idx]=self.digits[i]
+
+        area02 = np.hstack((np.asarray(img) for (ik,img) in make02.items()))
+
         for idx, digi in enumerate(self.CcodeValue):
             if digi == '/':
                 make03[idx]=self.digits[10]
@@ -778,8 +811,8 @@ class App():
             else:
                 for i,img in enumerate(self.digits):
                     if int(digi) == int(i):
-                        make03[idx] = img
-        area03 = np.hstack(make03)
+                        make03[idx] = self.digits[i]
+        area03 =np.hstack((np.asarray(img) for (ik,img) in make03.items()))
 
 
         #area02 = PIL.Image.fromarray(area02)
@@ -787,9 +820,16 @@ class App():
         '''area01.save('./TextRef/Area1.png')
         area02.save('./TextRef/Area2.png')
         area03.save('./TextRef/Area3.png')'''
-        '''cv2.imwrite('./TextRef/Area1.png',area01)
+        self.area01=area01
+        self.area02=area02
+        self.area03=area03
+        self.make01=make01
+        self.make02=make02
+        self.make03=make03
+        cv2.imwrite('./TextRef/Area1.png',area01)
         cv2.imwrite('./TextRef/Area2.png', area02)
-        cv2.imwrite('./TextRef/Area3.png', area03)'''
+        cv2.imwrite('./TextRef/Area3.png', area03)
+
     def TextOcrRef(self):
         ref=cv2.imread("./TextRef/temp.png",0)
         img=ref
@@ -883,7 +923,9 @@ class App():
 
                     font = cv2.FONT_HERSHEY_SIMPLEX
                     tmpcnts3 = {}
+
                     for (idx, c) in enumerate(cnts):
+
                         x, y, w, h = cv2.boundingRect(c)
                         x-=15
                         y-=8
@@ -1142,6 +1184,8 @@ class App():
 
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 tmpcnts3 = {}
+
+
                 for (idx, c) in enumerate(cnts):
                     x, y, w, h = cv2.boundingRect(c)
                     x -= 15
@@ -1197,11 +1241,36 @@ class App():
                 imgtest = {}
                 imgtest2 = {}
                 charac = 0
+                scores=[]
+                total=0
                 for (i, (gX, gY, gW, gH)) in enumerate(locs):
                     groupOutput = []
+                    total2=0
                     img = tmpcnts2[i]
+                    if i == 0:
+                        DIGITS = self.area01
+                    elif i == 1:
+                        DIGITS = self.area02
+                    elif i == 2:
+                        DIGITS = self.area03
+                    else:
+                        DIGITS = self.area01
 
-                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+                    h,w=DIGITS.shape[:2]
+                    img = cv2.resize(img, (w, h))
+
+                    result = cv2.matchTemplate(img, DIGITS,
+                                               cv2.TM_CCORR_NORMED)
+                    (_, score, _, _) = cv2.minMaxLoc(result)
+
+
+                    gX += 15
+                    gY += 8
+                    gW -= 18
+                    gH -= 10
+                    output.append(int(score * 100))
+
+                    '''rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
                     sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
                     tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
@@ -1247,51 +1316,34 @@ class App():
 
                         imgtest2[charac] = roi
                         charac += 1
-
+                        total = 0
                         scores = []
                         DIGITS = {}
                         if i == 0:
-                            DIGITS = self.digits1
+                            DIGITS = self.make01
                         elif i == 1:
-                            DIGITS = self.digits2
+                            DIGITS = self.make02
                         elif i == 2:
-                            DIGITS = self.digits3
+                            DIGITS = self.make03
                         else:
                             DIGITS = self.digits
 
                         for (digit, digitROI) in DIGITS.items():
                             result = cv2.matchTemplate(roi, digitROI,
-                                                       cv2.TM_SQDIFF)
+                                                       cv2.TM_CCOEFF_NORMED)
                             (_, score, _, _) = cv2.minMaxLoc(result)
 
-                            scores.append(score)
-
-                        try:
-                            if i == 0:
-                                if str(np.argmin(scores)) == '10':
-                                    groupOutput.append('/')
-                                else:
-                                    groupOutput.append(str(np.argmin(scores)))
-
-                            elif i == 2:
-                                if str(np.argmin(scores)) == '0':
-                                    groupOutput.append('A')
-                                elif str(np.argmin(scores)) == '1':
-                                    groupOutput.append('B')
-                                else:
-                                    groupOutput.append('C')
-                            else:
-
-                                groupOutput.append(str(np.argmin(scores)))
-                        except:
-                            pass
+                            scores.append(int(score*100))
+                            total+=int(score*100)
+                        groupOutput.append(int(total/int(len(scores))))
+                        total2+=(total/int(len(scores)))
                     gX += 15
                     gY += 8
                     gW -= 18
                     gH -= 10
-
                     output.append(groupOutput)
-                    '''cv2.rectangle(imgWrap2, (gX - 5, gY - 5),
+                    #output.append(int(total2/int(len(groupOutput))))
+                    cv2.rectangle(imgWrap2, (gX - 5, gY - 5),
                                   (gX + gW + 5, gY + gH + 5), (255, 255, 255), 2)'''
 
                 img = img2
@@ -1308,47 +1360,28 @@ class App():
                     self.Show_panel03_1_0(self.ImgCap)
 
                     try:
-                        Label(self.root, text=output[0], width=20, font=("Helvetica", 20)).grid(row=0, column=1)
-                        Label(self.root, text=output[1], width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-                        Label(self.root, text=output[2], width=20, font=("Helvetica", 20)).grid(row=2, column=1)
-                        if self.DateValue == "".join(str(x) for x in output[0]):
-                            # fg = "red"
-
-                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=0, column=2,
-                                                                                                    sticky=W)
-                        else:
-                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=0, column=2,
-                                                                                                  sticky=W)
-                        if self.NcodeValue == "".join(str(x) for x in output[1]):
-                            # fg = "red"
-                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=1, column=2,
-                                                                                                    sticky=W)
-                        else:
-                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=1, column=2,
-                                                                                                  sticky=W)
-                        if str(self.CcodeValue) == "".join(str(x) for x in output[2]):
-                            # fg = "red"
-                            Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=2, column=2,
-                                                                                                    sticky=W)
-                        else:
-                            Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=2, column=2,
-                                                                                                  sticky=W)
+                        Label(self.root, text=output[0], width=40, font=("Helvetica", 20)).grid(row=0, column=1)
+                        Label(self.root, text=output[1], width=40, font=("Helvetica", 20)).grid(row=1, column=1)
+                        Label(self.root, text=output[2], width=40, font=("Helvetica", 20)).grid(row=2, column=1)
                     except:
                         pass
 
-            else:
-                # img=cv2.imread('no_detect.png')
-                if self.ClickValue == 2:
-                    self.Show_panel02_0_1(Noimg)
-                    self.Show_panel03_1_0(Noimg)
-                    self.Show_panel04_1_1(Noimg)
-                if self.ClickValue == 10:
-                    #self.Show_panel01_0_0(self.frameShow)
-                    self.Show_panel03_1_0(Noimg)
-                    self.Show_panel05_2_0(Noimg)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
+
+
+
+    def no_detect(self):
+        Noimg = cv2.imread('no_detect.png')
+        if self.ClickValue == 2:
+            self.Show_panel02_0_1(Noimg)
+            self.Show_panel03_1_0(Noimg)
+            self.Show_panel04_1_1(Noimg)
+        if self.ClickValue == 10:
+            # self.Show_panel01_0_0(self.frameShow)
+            self.Show_panel03_1_0(Noimg)
+            self.Show_panel05_2_0(Noimg)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 def tesseract(idx,imgQ):
         img = imgQ.get()
         #l.acquire()
