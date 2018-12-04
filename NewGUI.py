@@ -13,6 +13,7 @@ import imutils
 import multiprocessing
 import numpy as np
 import queue
+
 from itertools import product
 from imutils import contours
 from multiprocessing.pool import ThreadPool
@@ -493,14 +494,14 @@ class App():
         sqX2 = open('./Configure/sqX2.txt', 'r')
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
-
+        self.make_tempplate()
         if self.thread==None:
             self.thread=threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon=True
             self.thread.start()
 
             #self.TextOCR()
-            self.make_tempplate()
+
             '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
             self.TextocrThread.daemon = True
             self.TextocrThread.start()'''
@@ -739,15 +740,24 @@ class App():
         make01 = {}
         make02 = {}
         make03 = {}
+        area01={}
+        area02={}
+        area03={}
         for idx, digi in enumerate(self.DateValue):
             if digi == '/' :
                 make01[idx]= self.digits[10]
             else:
-                for i,img in enumerate(self.digits):
+                for (i,img) in enumerate(self.digits):
                     if int(digi)==int(i):
-                        make01[idx]=img
+                        make01[idx]=self.digits[i]
 
-        area01 = np.hstack(make01)
+        area01 = np.hstack((make01[0],make01[1]))
+        #area01 = np.hstack(make01[idx]) (57, 88)
+       # area01 = PIL.Image.fromarray(make01)
+        cv2.imshow("test",area01)
+        print(make01)
+        #area01 = PIL.Image.fromarray(area01)
+
         for idx,digi in enumerate(self.NcodeValue):
             if digi=='/':
                 make02[idx]=self.digits[10]
@@ -771,12 +781,15 @@ class App():
                         make03[idx] = img
         area03 = np.hstack(make03)
 
-        area01 = PIL.Image.fromarray(area01)
-        area02 = PIL.Image.fromarray(area02)
-        area03 = PIL.Image.fromarray(area03)
-        cv2.imwrite('./TextRef/Area1.png',area01)
+
+        #area02 = PIL.Image.fromarray(area02)
+        #area03 = PIL.Image.fromarray(area03)
+        '''area01.save('./TextRef/Area1.png')
+        area02.save('./TextRef/Area2.png')
+        area03.save('./TextRef/Area3.png')'''
+        '''cv2.imwrite('./TextRef/Area1.png',area01)
         cv2.imwrite('./TextRef/Area2.png', area02)
-        cv2.imwrite('./TextRef/Area3.png', area03)
+        cv2.imwrite('./TextRef/Area3.png', area03)'''
     def TextOcrRef(self):
         ref=cv2.imread("./TextRef/temp.png",0)
         img=ref
