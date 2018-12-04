@@ -603,6 +603,7 @@ class App():
         '''self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()'''
+
         while not self.stopEvent.is_set():
                 #ret,img= self.vs.read()
                 #img=self.frame
@@ -722,8 +723,11 @@ class App():
                     self.Show_panel03_1_0(self.ImgCap)
 
                 if self.ClickValue==10 and self.Detect_flag == 1 or self.ClickValue==2:
-                    self.TextOCR2_no_loop()
 
+
+                    self.TextOCR2_no_loop()
+                else:
+                    self.no_detect()
 
 
 
@@ -1039,7 +1043,7 @@ class App():
                         Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 
     def TextOCR2_no_loop(self):
-        Noimg = cv2.imread('no_detect.png')
+
 
         if not self.imgOrigin is None:
             if self.Detect_flag == 1:
@@ -1282,19 +1286,23 @@ class App():
                     except:
                         pass
 
-            else:
+
                 # img=cv2.imread('no_detect.png')
-                if self.ClickValue == 2:
-                    self.Show_panel02_0_1(Noimg)
-                    self.Show_panel03_1_0(Noimg)
-                    self.Show_panel04_1_1(Noimg)
-                if self.ClickValue == 10:
-                    #self.Show_panel01_0_0(self.frameShow)
-                    self.Show_panel03_1_0(Noimg)
-                    self.Show_panel05_2_0(Noimg)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-                    Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
+
+
+    def no_detect(self):
+        Noimg = cv2.imread('no_detect.png')
+        if self.ClickValue == 2:
+            self.Show_panel02_0_1(Noimg)
+            self.Show_panel03_1_0(Noimg)
+            self.Show_panel04_1_1(Noimg)
+        if self.ClickValue == 10:
+            # self.Show_panel01_0_0(self.frameShow)
+            self.Show_panel03_1_0(Noimg)
+            self.Show_panel05_2_0(Noimg)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 def tesseract(idx,imgQ):
         img = imgQ.get()
         #l.acquire()
