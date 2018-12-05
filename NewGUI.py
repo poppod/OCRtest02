@@ -1360,7 +1360,8 @@ class App():
                     groupOutput = []
                     total2=0
                     img = tmpcnts2[i]
-                    if i == 0:
+                    ####algorithm2.1
+                    '''if i == 0:
                         DIGITS = self.area01
                     elif i == 1:
                         DIGITS = self.area02
@@ -1381,9 +1382,9 @@ class App():
                     gY += 8
                     gW -= 18
                     gH -= 10
-                    output.append(int(score * 100))
-
-                    '''rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+                    output.append(int(score * 100))'''
+                    ####algorithm2.1 don't remove
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
                     sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
                     tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
@@ -1457,7 +1458,7 @@ class App():
                     output.append(groupOutput)
                     #output.append(int(total2/int(len(groupOutput))))
                     cv2.rectangle(imgWrap2, (gX - 5, gY - 5),
-                                  (gX + gW + 5, gY + gH + 5), (255, 255, 255), 2)'''
+                                  (gX + gW + 5, gY + gH + 5), (255, 255, 255), 2)
 
                 img = img2
                 if self.ClickValue == 2:
