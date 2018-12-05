@@ -592,9 +592,11 @@ class App():
     def videoLoop(self):
         self.ret, self.frame = self.vs.read()
         self.detectThread = threading.Thread(target=self.detect, args=())
+
         self.detectThread.daemon = True
         self.detectThread.start()
-
+        #self.detectThread.join()
+        #self.detect()
         try:
             while not self.stopEvent.is_set():
                 self.ret,self.frame=self.vs.read()
@@ -792,7 +794,7 @@ class App():
                     pts = screenCnt.reshape(4, 2)
 
 
-                rect = np.zeros((4, 2), dtype="float32")
+                '''rect = np.zeros((4, 2), dtype="float32")
 
                 s = pts.sum(axis=1)
                 rect[0] = pts[np.argmin(s)]
@@ -821,12 +823,13 @@ class App():
                     [0, maxHeight - 1]], dtype="float32")
 
                 M = cv2.getPerspectiveTransform(rect, dst)
-                warp = cv2.warpPerspective(orig, M, (maxWidth, maxHeight))
+                warp = cv2.warpPerspective(orig, M, (maxWidth, maxHeight))'''
 
 
 
                 pad = 30
-                result=warp
+                result=pool_perspective(orig,pts,ratio,2)
+                    #perspactive_transform(orig,pts,ratio)
                 #cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 3)
                 '''result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
                          rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]'''
@@ -865,7 +868,8 @@ class App():
                     self.Show_panel03_1_0(self.ImgCap)
 
                 if self.ClickValue==10 and self.Detect_flag == 1 or self.ClickValue==2:
-                    self.TextOCR2_no_loop()
+                    #self.TextOCR2_no_loop()
+                    self.ocr_thread()
                 else:
                     self.no_detect()
 
@@ -1476,7 +1480,11 @@ class App():
                         pass
 
 
-
+    def ocr_thread(self):
+        ocrthread=threading.Thread(target=self.TextOCR2_no_loop,args=())
+        ocrthread.daemon=True
+        ocrthread.start()
+        ocrthread.join()
 
     def no_detect(self):
         Noimg = cv2.imread('no_detect.png')
@@ -1491,6 +1499,55 @@ class App():
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
+def perspactive_transform(orig,cnts,ratio):
+        pts=cnts
+
+        rect = np.zeros((4, 2), dtype="float32")
+
+        s = pts.sum(axis=1)
+        rect[0] = pts[np.argmin(s)]
+        rect[2] = pts[np.argmax(s)]
+
+        diff = np.diff(pts, axis=1)
+        rect[1] = pts[np.argmin(diff)]
+        rect[3] = pts[np.argmax(diff)]
+
+        rect *= ratio
+
+        (tl, tr, br, bl) = rect
+        widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
+        widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
+
+        heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
+        heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
+
+        maxWidth = max(int(widthA), int(widthB))
+        maxHeight = max(int(heightA), int(heightB))
+
+        dst = np.array([
+            [0, 0],
+            [maxWidth - 1, 0],
+            [maxWidth - 1, maxHeight - 1],
+            [0, maxHeight - 1]], dtype="float32")
+
+        M = cv2.getPerspectiveTransform(rect, dst)
+        warp = cv2.warpPerspective(orig, M, (maxWidth, maxHeight))
+
+        #warp=PIL.Image.fromarray(warp)
+
+        return warp
+def pool_perspective(orig,cnts,ratio,threads=2):
+    pool = ThreadPool(threads)
+    results = pool.map(multi_run_wrapper,[(orig,cnts,ratio)])
+    pool.close()
+    pool.join()
+    results=np.asarray((results[0]),dtype='uint8')
+    #cv2.imshow("rrt", results)
+
+    #results=PIL.Image.fromarray(results)
+    #print(len(results))
+    return results
+
 def tesseract(idx,imgQ):
         img = imgQ.get()
         #l.acquire()
@@ -1508,7 +1565,8 @@ def tesseract(idx,imgQ):
         return t
                 #print(t)
 def multi_run_wrapper(args):
-            return tesseract(*args)
+    warp=perspactive_transform(*args)
+    return warp
 
 
 
@@ -1516,10 +1574,7 @@ def multi_run_wrapper(args):
 
 
 if __name__ == '__main__':
-    reciv,sendtoo=multiprocessing.Pipe()
-    arr=multiprocessing.Array('i',range(10))
-    TextQ = multiprocessing.Queue()
-    ImgQ = multiprocessing.Queue(maxsize=3)
+
     t=App()
     t.root.mainloop()
 
