@@ -84,7 +84,8 @@ class App():
         self.thresh=queue.Queue()
         self.result=queue.Queue()
         self.stopEvent= threading.Event()
-        self.load_all_value()
+        self.load_all_except_target()
+        #self.load_all_value()
 
         self.page1_selectOption()
 
@@ -518,6 +519,68 @@ class App():
         sqX2 = open('./Configure/sqX2.txt', 'r')
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
+    def load_all_except_target(self):
+        B_scale = open('./Configure/B_scale.txt', "r")
+        self.var.set(int(B_scale.read()))
+        B_scale.close()
+        G_scale = open('./Configure/G_scale.txt', "r")
+        self.var1.set(int(G_scale.read()))
+        G_scale.close()
+        R_scale = open('./Configure/R_scale.txt', "r")
+        self.var2.set(int(R_scale.read()))
+        R_scale.close()
+
+        B_scale2 = open('./Configure/B_scale2.txt', "r")
+        self.varMax.set(int(B_scale2.read()))
+        B_scale2.close()
+        G_scale2 = open('./Configure/G_scale2.txt', "r")
+        self.varMax2.set(int(G_scale2.read()))
+        G_scale2.close()
+        R_scale2 = open('./Configure/R_scale2.txt', "r")
+        self.varMax3.set(int(R_scale2.read()))
+        R_scale2.close()
+        R_scale2_min_for_Imgtocrop = open('./Configure/R_scale2_for_Imgtocrop.txt', "r")
+        self.varMax4.set(int(R_scale2_min_for_Imgtocrop.read()))
+        R_scale2_min_for_Imgtocrop.close()
+        R_scale2_min_for_ImgWarp = open('./Configure/R_scale2_for_ImgWarp.txt', "r")
+        self.varMax5.set(int(R_scale2_min_for_ImgWarp.read()))
+        R_scale2_min_for_ImgWarp.close()
+
+        Date_value = open('./Configure/Date_value.txt', "r")
+        self.DateValue = str(Date_value.read())
+        Date_value.close()
+        Number_value = open('./Configure/Number_value.txt', "r")
+        self.NcodeValue = str(Number_value.read())
+        Number_value.close()
+        Code_value = open('./Configure/Code_value.txt', "r")
+        self.CcodeValue = str(Code_value.read())
+        Code_value.close()
+
+        rectY = open('./Configure/rectY.txt', 'r')
+        self.rectY.set(int(rectY.read()))
+        rectY.close()
+        rectX = open('./Configure/rectX.txt', 'r')
+        self.rectX.set(int(rectX.read()))
+        rectX.close()
+        sqY = open('./Configure/sqY.txt', 'r')
+        self.sqY.set(int(sqY.read()))
+        sqY.close()
+        sqX = open('./Configure/sqX.txt', 'r')
+        self.sqX.set(int(sqX.read()))
+        sqX.close()
+
+        rectY2 = open('./Configure/rectY2.txt', 'r')
+        self.rectY2.set(int(rectY2.read()))
+        rectY2.close()
+        rectX2 = open('./Configure/rectX2.txt', 'r')
+        self.rectX2.set(int(rectX2.read()))
+        rectX2.close()
+        sqY2 = open('./Configure/sqY2.txt', 'r')
+        self.sqY2.set(int(sqY2.read()))
+        sqY2.close()
+        sqX2 = open('./Configure/sqX2.txt', 'r')
+        self.sqX.set(int(sqX2.read()))
+        sqX2.close()
 
     def page2_selectFile(self):
         for ele in self.root.winfo_children():
@@ -621,6 +684,10 @@ class App():
                 #img=self.frame
 
                 image = self.frame
+                orig=image.copy()
+                ratio = image.shape[0]/300.0
+                image = imutils.resize(image, height=300)
+                #chang resolution for fix
                 image_center = (image.shape[0] / 2, image.shape[1] / 2)
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 gradX = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
@@ -666,8 +733,10 @@ class App():
 
                 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 57))
                 closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+                kernelp = np.ones((15, 15), np.uint8)
                 closed = cv2.erode(closed, None, iterations=4)
-                closed = cv2.dilate(closed, None, iterations=4)
+                closed = cv2.dilate(closed, kernelp, iterations=4)
 
 
 
@@ -685,46 +754,86 @@ class App():
 
                 rect = cv2.minAreaRect(c)
                 box=cv2.boxPoints(rect)
+                cntsRRT=c2.copy()
                 box = np.int0(box)
                 #res = cv2.bitwise_and(image, image, mask=closed)
                 if len(cnts) == 0:
                     box3 = box2
                 if len(cnts) != 0:
                     box3 = box
-                d_min = 1000
+                d_min = 500
                 rect_min = [[0, 0], [0, 0]]
                 rect3 = cv2.boundingRect(box3)
-                #screenCnt=[]
-                for c in cnts:
-                    # approximate the contour
-                    peri = cv2.arcLength(c, True)
-                    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-
-                    # if our approximated contour has four points, then we
-                    # can assume that we have found our screen
-                    if len(approx) == 4:
-                        screenCnt = approx
-                        break
-
-
-                #print(str(box3)+"end")
                 pt1 = (rect3[0], rect3[1])
                 c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
                 d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
+                screenCnt = None
                 if d < d_min:
                     d_min = d
                     rect_min = [pt1, (rect3[2], rect3[3])]
+                #screenCnt=[]
+                    cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+                    for c in cnts:
+                        # approximate the contour
+                        peri = cv2.arcLength(c, True)
+                        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
+                        # if our approximated contour has four points, then we
+                        # can assume that we have found our screen
+                        if len(approx) == 4:
+                            screenCnt = approx
+                            break
+
+                #screenCnt[1]=screenCnt[1]+20
+                if screenCnt is None:
+                    screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
+                    pts = screenCnt.reshape(4, 2)
+                else:
+                    pts = screenCnt.reshape(4, 2)
+
+
+                rect = np.zeros((4, 2), dtype="float32")
+
+                s = pts.sum(axis=1)
+                rect[0] = pts[np.argmin(s)]
+                rect[2] = pts[np.argmax(s)]
+
+                diff = np.diff(pts, axis=1)
+                rect[1] = pts[np.argmin(diff)]
+                rect[3] = pts[np.argmax(diff)]
+
+                rect *= ratio
+
+                (tl, tr, br, bl) = rect
+                widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
+                widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
+
+                heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
+                heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
+
+                maxWidth = max(int(widthA), int(widthB))
+                maxHeight = max(int(heightA), int(heightB))
+
+                dst = np.array([
+                    [0, 0],
+                    [maxWidth - 1, 0],
+                    [maxWidth - 1, maxHeight - 1],
+                    [0, maxHeight - 1]], dtype="float32")
+
+                M = cv2.getPerspectiveTransform(rect, dst)
+                warp = cv2.warpPerspective(orig, M, (maxWidth, maxHeight))
+
 
 
                 pad = 30
-
-
-                result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
-                         rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]
+                result=warp
+                #cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 3)
+                '''result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
+                         rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]'''
                 h, w = result.shape[:2]
 
                 if h <= 0 or w <= 0: #fixed box to tracking
-                    result = image
+                   result = image
 
                 #M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
                 #result = cv2.warpPerspective(result, M, (h, w))
