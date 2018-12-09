@@ -35,6 +35,7 @@ class App():
         # self.scale()
         # self.scale2()
         self.Detect_flag = 0
+        self.algorithm_flag=1
         self.frameShow = None
         self.frame1 = None
         self.frame = None
@@ -478,6 +479,9 @@ class App():
         self.load_all_value()
 
         self.make_tempplate()
+        Button(self.root,text="Algorithm 1",).grid(row=0,column=4)
+        Button(self.root, text="Algorithm 2", ).grid(row=1, column=4)
+        Button(self.root, text="Algorithm 3", ).grid(row=2, column=4)
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
@@ -490,7 +494,13 @@ class App():
             self.TextocrThread.start()'''
         # self.root.destroy()
         # self.root.quit()self.thread.isAlive() == False or
+    def add_algorithm1_flag(self):
+        self.algorithm_flag=1
 
+    def add_algorithm2_flag(self):
+        self.algorithm_flag = 2
+    def add_algorithm3_flag(self):
+        self.algorithm_flag = 3
     def load_all_value(self):
         H = open('./Configure/AreaH.txt', 'r')
         self.HeightBbox = int(H.read())
@@ -635,16 +645,21 @@ class App():
         self.TextOcrRef()
         self.page3_setting_vscap()
     def videoLoop(self):
-        # self.ret, self.frame = self.vs.read()
+
+        self.ret, self.frame = self.vs.read() #temp for fix
         self.detectThread = threading.Thread(target=self.detect, args=())
 
         self.detectThread.daemon = True
         self.detectThread.start()
-        # self.detectThread.join()
+        #self.detectThread.join()
         #self.detect()
         try:
             while not self.stopEvent.is_set():
+
+
                 self.ret, self.frame = self.vs.read()
+
+                #self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
                 if self.ClickValue == 0 or self.ClickValue == 10:
@@ -774,13 +789,16 @@ class App():
         '''self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()'''
+
+
         self.make_tempplate()
         while not self.stopEvent.is_set():
             # ret,img= self.vs.read()
             # img=self.frame
             start_time = time.time()
+            result,image=self.calculate_detect()
+            #result, image = self.calculate_detect_multithread()
 
-            result, image = self.calculate_detect_multithread()
             h, w = result.shape[:2]
 
             if h <= 0 or w <= 0:  # fixed box to tracking
@@ -789,7 +807,7 @@ class App():
             # M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
             # result = cv2.warpPerspective(result, M, (h, w))
             # print(result.shape[:2])
-            result = self.check_target_area(result, image, h, w)
+            #result = self.check_target_area(result, image, h, w)
 
             if self.ClickValue == 5:
                 h1, w1 = result.shape[:2]
@@ -805,10 +823,15 @@ class App():
             else:
                 pass
             if self.ClickValue == 10 and self.Detect_flag == 1 or self.ClickValue == 2:
-                # self.TextOCR2_no_loop()
-                self.ocr_thread()
+                #self.TextOCR2_no_loop()
+                #self.ocr_thread()
+                self.ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
+                self.ocrthread.daemon = False
+                self.ocrthread.run()
+
             else:
                 self.no_detect()
+
 
             print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -817,6 +840,7 @@ class App():
 
         async_result = pool.apply_async(self.calculate_detect, )  # tuple of args for foo
         pool.close()
+
         pool.join()
         # do some other stuff in the main process
 
@@ -824,18 +848,17 @@ class App():
         return return_val
 
     def calculate_detect(self):
-        self.ret, self.frame = self.vs.read()
+
+
+        #self.ret, self.frame = self.vs.read()##change or disble when use picamera
+
         image = self.frame
         orig = image.copy()
         ratio = image.shape[0] / 300.0
         image = imutils.resize(image, height=300)
         # chang resolution for fix
         image_center = (image.shape[0] / 2, image.shape[1] / 2)
-        '''gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        gradX = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
-        gradY = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=-1)
-        gradient = cv2.subtract(gradX, gradY)
-        gradient = cv2.convertScaleAbs(gradient)'''
+
 
         Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
         Imax = np.array([255, 255, 255], dtype='uint8')
@@ -889,7 +912,7 @@ class App():
             cnts=np.float32([[[0, 0], [400, 0], [0, 300], [400, 400]]])
         else:pass
         c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
-
+        #self.cnt_area_check(c)
         rect = cv2.minAreaRect(c)
         box = cv2.boxPoints(rect)
 
@@ -910,8 +933,11 @@ class App():
             rect_min = [pt1, (rect3[2], rect3[3])]
             # screenCnt=[]
             cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+
             for c in cnts:
                 # approximate the contour
+
+                self.cnt_area_check(c)
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
@@ -928,10 +954,40 @@ class App():
             pts = screenCnt.reshape(4, 2)
         else:
             pts = screenCnt.reshape(4, 2)
-        result = pool_perspective(orig, pts, ratio, 2)
+
+        if self.ClickValue ==10:
+            if self.Detect_flag==0 :
+                result=image
+            elif self.Detect_flag==1:
+                result=perspactive_transform(orig,pts,ratio)
+                self.imgOrigin = result
+        else:
+            result = perspactive_transform(orig, pts, ratio)
+            self.imgOrigin = result
+        #result = pool_perspective(orig, pts, ratio, 2)
         return result, image
 
+    def cnt_area_check(self,c):
+        x, y, w, h = cv2.boundingRect(c)
+        #print(str(w)+" "+str(h))
+        if self.ClickValue == 5:
+            #h1, w1 = result.shape[:2]
+            self.Save_Bbox(h, w)
+            self.ClickValue = 0
+        if not self.HeightBbox is None or not self.WeightBbox is None:
+            if h - 40 <= self.HeightBbox <= h + 40:
+                if w - 40 <= self.WeightBbox <= w + 40:
+                    self.Detect_flag = 1
+                else:
+                    self.Detect_flag = 0
+            else:
+                # print("fu")
+                self.Detect_flag = 0
+        else:
+            pass
+
     def check_target_area(self, result, image, h, w):
+
         if not self.HeightBbox is None or not self.WeightBbox is None:
             if h - 40 <= self.HeightBbox <= h + 40:
                 if w - 40 <= self.WeightBbox <= w + 40:
@@ -1318,7 +1374,7 @@ class App():
     def TextOCR2_no_loop(self):
 
         if not self.imgOrigin is None:
-            if self.Detect_flag == 1:
+
                 start_time = time.time()
                 rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY.get(), self.rectX.get()))
                 sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY.get(), self.sqX.get()))
@@ -1541,9 +1597,9 @@ class App():
                     self.Show_panel03_1_0(self.ImgCap)
 
                     try:
-                        Label(self.root, text=output[0], width=40, font=("Helvetica", 20)).grid(row=0, column=1)
-                        Label(self.root, text=output[1], width=40, font=("Helvetica", 20)).grid(row=1, column=1)
-                        Label(self.root, text=output[2], width=40, font=("Helvetica", 20)).grid(row=2, column=1)
+                        Label(self.root, text=output[0], width=20, font=("Helvetica", 16)).grid(row=0, column=1)
+                        Label(self.root, text=output[1], width=20, font=("Helvetica", 16)).grid(row=1, column=1)
+                        Label(self.root, text=output[2], width=20, font=("Helvetica", 16)).grid(row=2, column=1)
                     except:
                         pass
                 print("---OCR %s seconds ---" % (time.time() - start_time))
