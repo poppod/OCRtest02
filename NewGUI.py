@@ -20,12 +20,17 @@ from multiprocessing.pool import ThreadPool
 from skimage.filters import threshold_local
 
 
+####enable when use picamera module
+# from picamera.array import PiRGBArray
+# from picamera import PiCamera
+####enable when use picamera module
 # import imu
 
 class App():
     def __init__(self, ):
-
+        #####disble when use videoloop_picamera
         self.vs = cv2.VideoCapture(0)
+        #####
         self.root = tkinter.Tk()
         # self.scale()
         # self.scale2()
@@ -35,7 +40,11 @@ class App():
         self.frame = None
         self.thread = None
         self.stopEvent = None
+
+        #####disble when use videoloop_picamera
         self.ret, self.frameTemp = self.vs.read()
+        #####
+        self.Noimg = cv2.imread('no_detect.png')
         self.MultiOcr = None
         self.ClickValue = 0
 
@@ -122,6 +131,7 @@ class App():
     def Click_ValueBbox(self):
         self.ClickValue = 5
         print(5)
+
     def settingButton(self):
         # self.ClickValue+=1
         self.page2_selectFile()
@@ -622,13 +632,13 @@ class App():
         print(self.ClickValue)
 
     def videoLoop(self):
-        self.ret, self.frame = self.vs.read()
+        # self.ret, self.frame = self.vs.read()
         self.detectThread = threading.Thread(target=self.detect, args=())
 
         self.detectThread.daemon = True
         self.detectThread.start()
         # self.detectThread.join()
-        # self.detect()
+        #self.detect()
         try:
             while not self.stopEvent.is_set():
                 self.ret, self.frame = self.vs.read()
@@ -639,6 +649,58 @@ class App():
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
+
+    def videoLoop_picamera(self):
+        self.frame_temp()
+        camera = PiCamera()
+        camera.resolution = (640, 480)
+        camera.framerate = 60
+        camera.rotation = 180
+        rawCapture = PiRGBArray(camera, size=(640, 480))
+
+        # time.sleep(0.1)
+        stream = camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)
+
+        # self.frame=f2.array
+        # self.frame=stream[0].array
+
+        self.detectThread = threading.Thread(target=self.detect, args=())
+        self.detectThread.daemon = True
+        self.detectThread.start()
+        try:
+            while not self.stopEvent.is_set():
+
+                for (i, f) in enumerate(stream):
+                    self.frame = f.array
+                    image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+
+                    self.frameShow = image
+                    if self.ClickValue == 0 or self.ClickValue == 10:
+                        self.Show_panel01_0_0(self.frameShow)
+                    rawCapture.truncate(0)
+
+        except RuntimeError:
+            print("error runtime")
+
+        stream.close()
+        rawCapture.close()
+        camera.close()
+
+    def frame_temp(self):  # frame temp when use videoloop_picamera
+        camera = PiCamera()
+        camera.resolution = (640, 480)
+        camera.framerate = 30
+        camera.rotation = 180
+        rawCapture = PiRGBArray(camera, size=(640, 480))
+
+        time.sleep(0.1)
+        stream = camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)
+        for (i, f) in enumerate(stream):
+            self.frame = np.asarray(f.array)
+            break
+        stream.close()
+        rawCapture.close()
+        camera.close()
 
     def scale(self):
 
@@ -663,15 +725,15 @@ class App():
         scale1.set(self.varMax2.get())
         scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3)
         scale2.set(self.varMax3.get())
-        scale3=Scale(self.root,from_=0,to=255,variable=self.varMax4,orient=tkinter.HORIZONTAL)
+        scale3 = Scale(self.root, from_=0, to=255, variable=self.varMax4, orient=tkinter.HORIZONTAL)
         scale3.set(self.varMax4.get())
         scale4 = Scale(self.root, from_=0, to=255, variable=self.varMax5, orient=tkinter.HORIZONTAL)
         scale4.set(self.varMax5.get())
         scale.grid(row=0, column=4)
         scale1.grid(row=0, column=5)
         scale2.grid(row=0, column=6)
-        scale3.grid(row=0,column=7)
-        scale4.grid(row=0,column=8)
+        scale3.grid(row=0, column=7)
+        scale4.grid(row=0, column=8)
 
     def scale3(self):
         # moregrap scale 20 10 18 10
@@ -713,117 +775,9 @@ class App():
         while not self.stopEvent.is_set():
             # ret,img= self.vs.read()
             # img=self.frame
+            start_time = time.time()
 
-            image = self.frame
-            orig = image.copy()
-            ratio = image.shape[0] / 300.0
-            image = imutils.resize(image, height=300)
-            # chang resolution for fix
-            image_center = (image.shape[0] / 2, image.shape[1] / 2)
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            gradX = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
-            gradY = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=-1)
-            gradient = cv2.subtract(gradX, gradY)
-            gradient = cv2.convertScaleAbs(gradient)
-
-            Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
-            Imax = np.array([255, 255, 255], dtype='uint8')
-            hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-            masks = cv2.inRange(hsv, Imin, Imax)
-            blurred = cv2.blur(masks, (1, 1))
-
-            (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
-
-            rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY2.get(), self.rectX2.get()))
-            try:
-
-                sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY2.get(), self.sqX2.get()))
-            except:
-                sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (34, 11))
-
-            tophat = cv2.morphologyEx(thresh, cv2.MORPH_TOPHAT, rectKernel)
-            np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0,
-                              ksize=7)
-            gradX = np.absolute(gradX)
-            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-            gradX = gradX.astype("uint8")
-
-            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
-            thresh = cv2.threshold(gradX, 0, 255,
-                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-
-            clone01 = np.dstack([thresh.copy()] * 3)
-            self.treshImg = clone01
-
-            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 57))
-            closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-
-            kernelp = np.ones((15, 15), np.uint8)
-            closed = cv2.erode(closed, None, iterations=4)
-            closed = cv2.dilate(closed, kernelp, iterations=4)
-
-            _, cnts, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
-            rect2 = cv2.minAreaRect(c2)
-            box2 = cv2.boxPoints(rect2)
-            box2 = np.int0(box2)
-            if len(cnts) == 0:
-                box3 = box2
-                cnts = cnts2
-
-            c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
-
-            rect = cv2.minAreaRect(c)
-            box = cv2.boxPoints(rect)
-            cntsRRT = c2.copy()
-            box = np.int0(box)
-            # res = cv2.bitwise_and(image, image, mask=closed)
-            if len(cnts) == 0:
-                box3 = box2
-            if len(cnts) != 0:
-                box3 = box
-            d_min = 500
-            rect_min = [[0, 0], [0, 0]]
-            rect3 = cv2.boundingRect(box3)
-            pt1 = (rect3[0], rect3[1])
-            c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
-            d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
-            screenCnt = None
-            if d < d_min:
-                d_min = d
-                rect_min = [pt1, (rect3[2], rect3[3])]
-                # screenCnt=[]
-                cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-                for c in cnts:
-                    # approximate the contour
-                    peri = cv2.arcLength(c, True)
-                    approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-
-                    # if our approximated contour has four points, then we
-                    # can assume that we have found our screen
-                    if len(approx) == 4:
-                        screenCnt = approx
-                        break
-
-            # screenCnt[1]=screenCnt[1]+20
-            if screenCnt is None:
-                screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
-                pts = screenCnt.reshape(4, 2)
-            else:
-                pts = screenCnt.reshape(4, 2)
-
-
-
-            pad = 30
-            result = pool_perspective(orig, pts, ratio, 2)
-            # perspactive_transform(orig,pts,ratio)
-            # cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 3)
-            '''result = image[rect_min[0][1] - pad:rect_min[0][1] + rect_min[1][1] + pad,
-                         rect_min[0][0] - pad:rect_min[0][0] + rect_min[1][0] + pad]'''
+            result, image = self.calculate_detect_multithread()
             h, w = result.shape[:2]
 
             if h <= 0 or w <= 0:  # fixed box to tracking
@@ -832,36 +786,164 @@ class App():
             # M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
             # result = cv2.warpPerspective(result, M, (h, w))
             # print(result.shape[:2])
-            if not self.HeightBbox is None or not self.WeightBbox is None:
-                if self.HeightBbox >= h - 40 and self.HeightBbox <= h + 40:
-                    if self.WeightBbox >= w - 40 and self.WeightBbox <= w + 40:
-                        self.imgOrigin = result
-                        self.Detect_flag = 1
-                    else:
-                        self.Detect_flag = 0
-
-                        result = image
-                else:
-                    # print("fu")
-                    result = image
-                    self.Detect_flag = 0
+            result = self.check_target_area(result, image, h, w)
 
             if self.ClickValue == 5:
                 h1, w1 = result.shape[:2]
                 self.Save_Bbox(h1, w1)
                 self.ClickValue = 0
-
+            else:
+                pass
             self.imgOrigin = result
             self.ImgCap = result
             if self.ClickValue == 0:
                 self.Show_panel02_0_1(self.treshImg)
                 self.Show_panel03_1_0(self.ImgCap)
-
+            else:
+                pass
             if self.ClickValue == 10 and self.Detect_flag == 1 or self.ClickValue == 2:
                 # self.TextOCR2_no_loop()
                 self.ocr_thread()
             else:
                 self.no_detect()
+
+            print("--- %s seconds ---" % (time.time() - start_time))
+
+    def calculate_detect_multithread(self):
+        pool = ThreadPool(processes=5)
+
+        async_result = pool.apply_async(self.calculate_detect, )  # tuple of args for foo
+        pool.close()
+        pool.join()
+        # do some other stuff in the main process
+
+        return_val = async_result.get()
+        return return_val
+
+    def calculate_detect(self):
+        self.ret, self.frame = self.vs.read()
+        image = self.frame
+        orig = image.copy()
+        ratio = image.shape[0] / 300.0
+        image = imutils.resize(image, height=300)
+        # chang resolution for fix
+        image_center = (image.shape[0] / 2, image.shape[1] / 2)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gradX = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
+        gradY = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=-1)
+        gradient = cv2.subtract(gradX, gradY)
+        gradient = cv2.convertScaleAbs(gradient)
+
+        Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
+        Imax = np.array([255, 255, 255], dtype='uint8')
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        masks = cv2.inRange(hsv, Imin, Imax)
+        blurred = cv2.blur(masks, (1, 1))
+
+        (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
+
+        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY2.get(), self.rectX2.get()))
+        try:
+
+            sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY2.get(), self.sqX2.get()))
+        except:
+
+            sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (34, 11))
+
+        tophat = cv2.morphologyEx(thresh, cv2.MORPH_TOPHAT, rectKernel)
+        np.seterr(divide='ignore', invalid='ignore')
+        gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,
+                          ksize=7)
+        gradX = np.absolute(gradX)
+        (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+        gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+        gradX = gradX.astype("uint8")
+
+        gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
+        thresh = cv2.threshold(gradX, 0, 255,
+                               cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
+
+        clone01 = np.dstack([thresh.copy()] * 3)
+        self.treshImg = clone01
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 57))
+        closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+        kernelp = np.ones((15, 15), np.uint8)
+        closed = cv2.erode(closed, None, iterations=4)
+        closed = cv2.dilate(closed, kernelp, iterations=4)
+
+        _, cnts, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
+        rect2 = cv2.minAreaRect(c2)
+        box2 = cv2.boxPoints(rect2)
+        box2 = np.int0(box2)
+        if len(cnts) == 0:
+            box3 = box2
+            cnts = cnts2
+
+        c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
+
+        rect = cv2.minAreaRect(c)
+        box = cv2.boxPoints(rect)
+
+        box = np.int0(box)
+        # res = cv2.bitwise_and(image, image, mask=closed)
+        if len(cnts) == 0:
+            box3 = box2
+        if len(cnts) != 0:
+            box3 = box
+        d_min = 500
+        rect_min = [[0, 0], [0, 0]]
+        rect3 = cv2.boundingRect(box3)
+        pt1 = (rect3[0], rect3[1])
+        c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
+        d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
+        screenCnt = None
+        if d < d_min:
+            d_min = d
+            rect_min = [pt1, (rect3[2], rect3[3])]
+            # screenCnt=[]
+            cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+            for c in cnts:
+                # approximate the contour
+                peri = cv2.arcLength(c, True)
+                approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
+                # if our approximated contour has four points, then we
+                # can assume that we have found our screen
+                if len(approx) == 4:
+                    screenCnt = approx
+                    break
+
+        # screenCnt[1]=screenCnt[1]+20
+        if screenCnt is None:
+            screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
+            pts = screenCnt.reshape(4, 2)
+        else:
+            pts = screenCnt.reshape(4, 2)
+        result = pool_perspective(orig, pts, ratio, 2)
+        return result, image
+
+    def check_target_area(self, result, image, h, w):
+        if not self.HeightBbox is None or not self.WeightBbox is None:
+            if h - 40 <= self.HeightBbox <= h + 40:
+                if w - 40 <= self.WeightBbox <= w + 40:
+                    self.imgOrigin = result
+                    self.Detect_flag = 1
+                else:
+                    self.Detect_flag = 0
+
+                    result = image
+            else:
+                # print("fu")
+                result = image
+                self.Detect_flag = 0
+        else:
+            pass
+        return result
 
     def onClose(self):
         cv2.imwrite("capture.png", self.imgOrigin)
@@ -1233,6 +1315,7 @@ class App():
 
         if not self.imgOrigin is None:
             if self.Detect_flag == 1:
+                start_time = time.time()
                 rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY.get(), self.rectX.get()))
                 sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY.get(), self.sqX.get()))
                 imgOrigin = self.imgOrigin
@@ -1458,6 +1541,7 @@ class App():
                         Label(self.root, text=output[2], width=40, font=("Helvetica", 20)).grid(row=2, column=1)
                     except:
                         pass
+                print("---OCR %s seconds ---" % (time.time() - start_time))
 
     def ocr_thread(self):
         ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
@@ -1466,15 +1550,15 @@ class App():
         ocrthread.join()
 
     def no_detect(self):
-        Noimg = cv2.imread('no_detect.png')
+
         if self.ClickValue == 2:
-            self.Show_panel02_0_1(Noimg)
-            self.Show_panel03_1_0(Noimg)
-            self.Show_panel04_1_1(Noimg)
-        if self.ClickValue == 10:
+            self.Show_panel02_0_1(self.Noimg)
+            self.Show_panel03_1_0(self.Noimg)
+            self.Show_panel04_1_1(self.Noimg)
+        elif self.ClickValue == 10:
             # self.Show_panel01_0_0(self.frameShow)
-            self.Show_panel03_1_0(Noimg)
-            self.Show_panel05_2_0(Noimg)
+            self.Show_panel03_1_0(self.Noimg)
+            self.Show_panel05_2_0(self.Noimg)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
