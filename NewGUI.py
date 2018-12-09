@@ -146,7 +146,7 @@ class App():
 
     def openDialog(self):
         self.filename = filedialog.askopenfilename(initialdir="/", title="Select file",
-                                                   filetypes=(("*jpg files", "*.jpg"), ("*png files", "*.png")))
+                                                   filetypes=(("*png files", "*.png"),("*jpg files", "*.jpg")))
         self.importImg()
 
     def Show_panel01_0_0(self, img):
@@ -628,9 +628,12 @@ class App():
         for ele in self.root.winfo_children():
             ele.destroy()
         fileOpenButtun = Button(self.root, text="Open File", command=self.openDialog).grid(row=0, column=1)
+        defauil_bnt=Button(self.root,text="Use default",command=self.page2_default_selection).grid(row=0,column=2)
         self.root.title("Select File")
         print(self.ClickValue)
-
+    def page2_default_selection(self):
+        self.TextOcrRef()
+        self.page3_setting_vscap()
     def videoLoop(self):
         # self.ret, self.frame = self.vs.read()
         self.detectThread = threading.Thread(target=self.detect, args=())
@@ -828,17 +831,17 @@ class App():
         image = imutils.resize(image, height=300)
         # chang resolution for fix
         image_center = (image.shape[0] / 2, image.shape[1] / 2)
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        '''gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gradX = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
         gradY = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=-1)
         gradient = cv2.subtract(gradX, gradY)
-        gradient = cv2.convertScaleAbs(gradient)
+        gradient = cv2.convertScaleAbs(gradient)'''
 
         Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
         Imax = np.array([255, 255, 255], dtype='uint8')
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         masks = cv2.inRange(hsv, Imin, Imax)
-        blurred = cv2.blur(masks, (1, 1))
+        blurred = cv2.blur(masks, (5, 5))
 
         (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
 
@@ -846,8 +849,8 @@ class App():
         try:
 
             sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY2.get(), self.sqX2.get()))
-        except:
-
+        except cv2.error as e :
+            #print("error"+str(e))
             sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (34, 11))
 
         tophat = cv2.morphologyEx(thresh, cv2.MORPH_TOPHAT, rectKernel)
@@ -864,26 +867,27 @@ class App():
                                cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
 
-        clone01 = np.dstack([thresh.copy()] * 3)
-        self.treshImg = clone01
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (55, 57))
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
         closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 
         kernelp = np.ones((15, 15), np.uint8)
         closed = cv2.erode(closed, None, iterations=4)
-        closed = cv2.dilate(closed, kernelp, iterations=4)
+        closed = cv2.dilate(closed, kernelp, iterations=5)
 
         _, cnts, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
-        rect2 = cv2.minAreaRect(c2)
-        box2 = cv2.boxPoints(rect2)
-        box2 = np.int0(box2)
-        if len(cnts) == 0:
-            box3 = box2
-            cnts = cnts2
+       # _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        #c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
 
+        clone01 = np.dstack([closed.copy()] * 3)
+        self.treshImg = clone01
+        #rect2 = cv2.minAreaRect(c2)
+        #box2 = cv2.boxPoints(rect2)
+        #box2 = np.int0(box2)
+        if len(cnts) == 0:
+            cnts=np.float32([[[0, 0], [400, 0], [0, 300], [400, 400]]])
+        else:pass
         c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
 
         rect = cv2.minAreaRect(c)
@@ -891,10 +895,9 @@ class App():
 
         box = np.int0(box)
         # res = cv2.bitwise_and(image, image, mask=closed)
-        if len(cnts) == 0:
-            box3 = box2
-        if len(cnts) != 0:
-            box3 = box
+
+        box3 = box
+
         d_min = 500
         rect_min = [[0, 0], [0, 0]]
         rect3 = cv2.boundingRect(box3)
@@ -917,7 +920,8 @@ class App():
                 if len(approx) == 4:
                     screenCnt = approx
                     break
-
+                else:pass
+        else:pass
         # screenCnt[1]=screenCnt[1]+20
         if screenCnt is None:
             screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
@@ -1419,6 +1423,7 @@ class App():
                 charac = 0
                 scores = []
                 total = 0
+                ###
                 for (i, (gX, gY, gW, gH)) in enumerate(locs):
                     groupOutput = []
                     total2 = 0
@@ -1542,6 +1547,214 @@ class App():
                     except:
                         pass
                 print("---OCR %s seconds ---" % (time.time() - start_time))
+
+    def algorithm1_original_ocr(self,tmpcnts2,tmpcnts3,locs,output):
+        kernel = np.ones((1, 1), np.uint8)
+        for (i, (gX, gY, gW, gH)) in enumerate(locs):
+            groupOutput = []
+            img = tmpcnts2[i]
+
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
+            tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
+
+            np.seterr(divide='ignore', invalid='ignore')
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
+            gradX = np.absolute(gradX)
+            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+            gradX = gradX.astype("uint8")
+
+            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
+            thresh = cv2.threshold(gradX, 0, 255,
+                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
+            digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                         cv2.CHAIN_APPROX_SIMPLE)
+            digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+
+            try:
+                digitCnts = contours.sort_contours(digitCnts,
+                                                   method="left-to-right")[0]
+            except:
+                digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+            clone02 = np.dstack([thresh.copy()] * 3)
+            #imgtest[i] = clone02
+
+            for c in digitCnts:
+
+                (x, y, w, h) = cv2.boundingRect(c)
+                x -= 3
+
+                w += 5
+
+                cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                roi = tmpcnts3[i][y:y + h, x:x + w]
+                roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
+                roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
+                roi = cv2.dilate(roi, kernel, iterations=1)
+                try:
+                    roi = cv2.resize(roi, (57, 88))
+                except:
+                    roi = cv2.resize(img, (57, 88))
+
+                #imgtest2[charac] = roi
+                #charac += 1
+
+                scores = []
+                DIGITS = {}
+                if i == 0:
+                    DIGITS = self.digits1
+                elif i == 1:
+                    DIGITS = self.digits2
+                elif i == 2:
+                    DIGITS = self.digits3
+                else:
+                    DIGITS = self.digits
+
+                for (digit, digitROI) in DIGITS.items():
+                    result = cv2.matchTemplate(roi, digitROI,
+                                               cv2.TM_SQDIFF)
+                    (_, score, _, _) = cv2.minMaxLoc(result)
+
+                    scores.append(score)
+
+                try:
+                    if i == 0:
+                        if str(np.argmin(scores)) == '10':
+                            groupOutput.append('/')
+                        else:
+                            groupOutput.append(str(np.argmin(scores)))
+
+                    elif i == 2:
+                        if str(np.argmin(scores)) == '0':
+                            groupOutput.append('A')
+                        elif str(np.argmin(scores)) == '1':
+                            groupOutput.append('B')
+                        else:
+                            groupOutput.append('C')
+                    else:
+
+                        groupOutput.append(str(np.argmin(scores)))
+                except:
+                    pass
+            gX += 15
+            gY += 8
+            gW -= 18
+            gH -= 10
+
+            output.append(groupOutput)
+        return output
+
+
+    def algorithm2_1(self,tmpcnts2,locs,output):
+        #tmpcnts2 input is tmpcnts3
+        for (i, (gX, gY, gW, gH)) in enumerate(locs):
+            groupOutput = []
+            total2 = 0
+            img = tmpcnts2[i]
+            ####algorithm2.1
+            if i == 0:
+                DIGITS = self.area01
+            elif i == 1:
+                DIGITS = self.area02
+            elif i == 2:
+                DIGITS = self.area03
+            else:
+                DIGITS = self.area01
+
+            h, w = DIGITS.shape[:2]
+            img = cv2.resize(img, (w, h))
+
+            result = cv2.matchTemplate(img, DIGITS,
+                                       cv2.TM_CCORR_NORMED)
+            (_, score, _, _) = cv2.minMaxLoc(result)
+
+            gX += 15
+            gY += 8
+            gW -= 18
+            gH -= 10
+            output.append(int(score * 100))
+            return output
+    def algorithm2_2(self,tmpcnts2,tmpcnts3,locs,output):
+        kernel = np.ones((1, 1), np.uint8)
+        for (i, (gX, gY, gW, gH)) in enumerate(locs):
+            groupOutput = []
+            total2 = 0
+            img = tmpcnts2[i]
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
+            tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
+
+            np.seterr(divide='ignore', invalid='ignore')
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
+            gradX = np.absolute(gradX)
+            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+            gradX = gradX.astype("uint8")
+
+            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
+            thresh = cv2.threshold(gradX, 0, 255,
+                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
+            digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                         cv2.CHAIN_APPROX_SIMPLE)
+            digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+
+            try:
+                digitCnts = contours.sort_contours(digitCnts,
+                                                   method="left-to-right")[0]
+            except:
+                digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+            clone02 = np.dstack([thresh.copy()] * 3)
+            #imgtest[i] = clone02
+
+            for c in digitCnts:
+
+                (x, y, w, h) = cv2.boundingRect(c)
+                x -= 3
+
+                w += 5
+
+                cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                roi = tmpcnts3[i][y:y + h, x:x + w]
+                roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
+                roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
+                roi = cv2.dilate(roi, kernel, iterations=1)
+                try:
+                    roi = cv2.resize(roi, (57, 88))
+                except:
+                    roi = cv2.resize(img, (57, 88))
+
+                #imgtest2[charac] = roi
+                #charac += 1
+                total = 0
+                scores = []
+                DIGITS = {}
+                if i == 0:
+                    DIGITS = self.make01
+                elif i == 1:
+                    DIGITS = self.make02
+                elif i == 2:
+                    DIGITS = self.make03
+                else:
+                    DIGITS = self.digits
+
+                for (digit, digitROI) in DIGITS.items():
+                    result = cv2.matchTemplate(roi, digitROI,
+                                               cv2.TM_CCOEFF_NORMED)
+                    (_, score, _, _) = cv2.minMaxLoc(result)
+
+                    scores.append(int(score * 100))
+                    total += int(score * 100)
+                groupOutput.append(int(total / int(len(scores))))
+                total2 += (total / int(len(scores)))
+            gX += 15
+            gY += 8
+            gW -= 18
+            gH -= 10
+            output.append(groupOutput)
+        return output
 
     def ocr_thread(self):
         ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())

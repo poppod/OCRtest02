@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="952" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="956" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
@@ -9,10 +9,10 @@
       <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/sqX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/sqX.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/capture.png" beforeDir="false" afterPath="$PROJECT_DIR$/capture.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,26 +92,26 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="3333" />
+          <entry key="py" value="3832" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="3333" />
+          <entry key="Python" value="3832" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="png" value="9" />
           <entry key="py" value="3" />
-          <entry key="txt" value="4" />
+          <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="9" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="PLAIN_TEXT" value="6" />
           <entry key="Python" value="3" />
         </counts>
       </usages-collector>
@@ -122,8 +122,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="639" column="34" lean-forward="true" selection-start-line="639" selection-start-column="34" selection-end-line="639" selection-end-column="34" />
+            <state relative-caret-position="393">
+              <caret line="1549" column="16" selection-start-line="1549" selection-start-column="16" selection-end-line="1549" selection-end-column="16" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#3065#3112#0" />
@@ -150,24 +150,39 @@
                 <element signature="e#16840#17744#0" />
                 <element signature="e#17784#20444#0" />
                 <element signature="e#20492#22941#0" />
-                <element signature="e#22983#23225#0" />
+                <element signature="e#23300#23657#0" />
+                <element signature="e#23705#23761#0" />
+                <element signature="e#23578#24271#0" />
                 <element signature="e#24255#25381#0" />
                 <element signature="e#25507#25974#0" />
                 <element signature="e#23981#24598#0" />
                 <element signature="e#24631#25413#0" />
                 <element signature="e#25445#26047#0" />
                 <element signature="e#26096#26706#0" />
+                <element signature="e#28773#30252#0" />
+                <element signature="e#30306#30585#0" />
+                <element signature="e#30837#35231#0" />
+                <element signature="e#35414#35937#0" />
                 <element signature="e#36113#36306#0" />
                 <element signature="e#36346#38310#0" />
-                <element signature="e#38346#39912#0" />
+                <element signature="e#38203#39769#0" />
                 <element signature="e#39945#53445#0" />
-                <element signature="e#58006#68403#0" />
                 <element signature="e#68438#68588#0" />
                 <element signature="e#68624#69260#0" />
                 <element signature="e#62051#63040#0" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Configure/sqX2.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Configure/sqY2.txt">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -672,7 +687,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544213643578</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="check">
+      <created>1544355362399</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1544355362399</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -693,13 +715,13 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49627978" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7098214" visible="true" weight="0.25204584" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7098214" visible="true" weight="0.022913257" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6279762" weight="0.04418985" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4985119" weight="0.32733223" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4985119" weight="0.062193125" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.29017857" side_tool="true" visible="true" weight="0.25204584" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.29017857" side_tool="true" visible="true" weight="0.022913257" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.43080357" weight="0.20130932" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -732,6 +754,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="check" />
     <option name="LAST_COMMIT_MESSAGE" value="check" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>626</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/tesseract/__init__.py" />
@@ -919,8 +952,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="639" column="34" lean-forward="true" selection-start-line="639" selection-start-column="34" selection-end-line="639" selection-end-column="34" />
+        <state relative-caret-position="393">
+          <caret line="1549" column="16" selection-start-line="1549" selection-start-column="16" selection-end-line="1549" selection-end-column="16" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#3065#3112#0" />
@@ -947,18 +980,23 @@
             <element signature="e#16840#17744#0" />
             <element signature="e#17784#20444#0" />
             <element signature="e#20492#22941#0" />
-            <element signature="e#22983#23225#0" />
+            <element signature="e#23300#23657#0" />
+            <element signature="e#23705#23761#0" />
+            <element signature="e#23578#24271#0" />
             <element signature="e#24255#25381#0" />
             <element signature="e#25507#25974#0" />
             <element signature="e#23981#24598#0" />
             <element signature="e#24631#25413#0" />
             <element signature="e#25445#26047#0" />
             <element signature="e#26096#26706#0" />
+            <element signature="e#28773#30252#0" />
+            <element signature="e#30306#30585#0" />
+            <element signature="e#30837#35231#0" />
+            <element signature="e#35414#35937#0" />
             <element signature="e#36113#36306#0" />
             <element signature="e#36346#38310#0" />
-            <element signature="e#38346#39912#0" />
+            <element signature="e#38203#39769#0" />
             <element signature="e#39945#53445#0" />
-            <element signature="e#58006#68403#0" />
             <element signature="e#68438#68588#0" />
             <element signature="e#68624#69260#0" />
             <element signature="e#62051#63040#0" />
