@@ -51,6 +51,9 @@ class App():
         self.count_sum = 0
         self.pass_value=0
         self.fail_value=0
+
+        self.pass_count=0
+        self.fail_count=0
         self.varMax = IntVar()
         self.varMax2 = IntVar()
         self.varMax3 = IntVar()
@@ -485,6 +488,7 @@ class App():
         Button(self.root, text="Algorithm 1", command=self.add_algorithm1_flag).grid(row=0, column=4)
         Button(self.root, text="Algorithm 2", command=self.add_algorithm2_flag).grid(row=1, column=4)
         Button(self.root, text="Algorithm 3", command=self.add_algorithm3_flag).grid(row=2, column=4)
+
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
@@ -834,12 +838,20 @@ class App():
             if self.ClickValue == 10 and self.Detect_flag == 1 or self.ClickValue == 2:
                 # self.TextOCR2_no_loop()
                 # self.ocr_thread()
-                self.ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
-                self.ocrthread.daemon = False
-                self.ocrthread.run()
+                ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
+                ocrthread.daemon = True
+                ocrthread.run()
 
             else:
                 self.no_detect()
+            if self.ClickValue == 10:
+                sum_string = "Total :"+str(self.count_sum)
+                Label(self.root, text=sum_string, font=("Helvetica", 16)).grid(row=3, column=2)
+                pass_string="Pass :"+str(self.pass_count)
+                Label(self.root, text=pass_string, font=("Helvetica", 16), fg="green").grid(row=3, column=3)
+                fail_string="Fail :"+str(self.fail_count)
+                Label(self.root, text=fail_string, font=("Helvetica", 16), fg="red").grid(row=3, column=4)
+                #self.sum_state.update()
 
             # print(threading.enumerate())
             print("--- %s seconds ---" % (time.time() - start_time))
@@ -989,16 +1001,25 @@ class App():
                     self.Detect_flag = 1
                 else:
                     if self.Detect_flag == 1:
-                        self.count_sum += 1
+                        #self.count_sum += 1
+                        self.change_state()
 
                     self.Detect_flag = 0
             else:
                 if self.Detect_flag == 1:
-                    self.count_sum += 1
+                    #self.count_sum += 1
+                    self.change_state()
                 self.Detect_flag = 0
         else:
             pass
-
+    def change_state(self):
+        self.count_sum += 1
+        if self.pass_value==1:
+            self.pass_count+=1
+        else:
+            self.fail_count+=1
+        self.pass_value = 0
+        self.fail_value = 0
     def check_target_area(self, result, image, h, w):
 
         if not self.HeightBbox is None or not self.WeightBbox is None:
@@ -1666,8 +1687,10 @@ class App():
                 DIGITS = self.area01
 
             h, w = DIGITS.shape[:2]
-            img = cv2.resize(img, (w, h))
-
+            try:
+                img = cv2.resize(img, (w, h))
+            except:
+                pass
             result = cv2.matchTemplate(img, DIGITS,
                                        cv2.TM_CCORR_NORMED)
             (_, score, _, _) = cv2.minMaxLoc(result)
@@ -1783,17 +1806,22 @@ class App():
 
     def check_algorithm2_2(self, output):
         all_carec = []
+        e=0
+        e1=1
         try:
             for (idx,i) in enumerate(output) :
 
-                all_carec.append(i)
+                for j in i:
+                    all_carec.append(j)
                 #print(all_carec)
-            if (c >= 10 for c in all_carec):
-                return 1
-            else:
-                return 0
+            for (dx,i) in  enumerate(all_carec):
+                if i>= 10 :
+                    e=1
+                else:
+                    e1=0
+            return e1
         except BaseException as e:
-            #print(all_carec)
+            print(all_carec)
             print(str(e))
             return 0
 
