@@ -48,6 +48,7 @@ class App():
         self.Noimg = cv2.imread('no_detect.png')
         self.MultiOcr = None
         self.ClickValue = 0
+        self.count_sum=0
 
         self.varMax = IntVar()
         self.varMax2 = IntVar()
@@ -205,6 +206,7 @@ class App():
         if self.panel4 is None:
             self.panel4 = tkinter.Label(image=img)
             self.panel4.image = img
+
             self.panel4.grid(row=1, column=1)
         else:
             self.panel4.configure(image=img)
@@ -479,13 +481,14 @@ class App():
         self.load_all_value()
 
         self.make_tempplate()
-        Button(self.root,text="Algorithm 1",).grid(row=0,column=4)
-        Button(self.root, text="Algorithm 2", ).grid(row=1, column=4)
-        Button(self.root, text="Algorithm 3", ).grid(row=2, column=4)
+        Button(self.root,text="Algorithm 1",command=self.add_algorithm1_flag).grid(row=0,column=4)
+        Button(self.root, text="Algorithm 2",command=self.add_algorithm2_flag ).grid(row=1, column=4)
+        Button(self.root, text="Algorithm 3",command=self.add_algorithm3_flag ).grid(row=2, column=4)
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
             self.thread.start()
+
 
             # self.TextOCR()
 
@@ -647,10 +650,7 @@ class App():
     def videoLoop(self):
 
         self.ret, self.frame = self.vs.read() #temp for fix
-        self.detectThread = threading.Thread(target=self.detect, args=())
-
-        self.detectThread.daemon = True
-        self.detectThread.start()
+        self.start_thread_detect()
         #self.detectThread.join()
         #self.detect()
         try:
@@ -667,7 +667,11 @@ class App():
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
+    def start_thread_detect(self):
+        self.detectThread = threading.Thread(target=self.detect, args=())
 
+        self.detectThread.daemon = True
+        self.detectThread.start()
     def videoLoop_picamera(self):
         self.frame_temp()
         camera = PiCamera()
@@ -808,7 +812,7 @@ class App():
             # result = cv2.warpPerspective(result, M, (h, w))
             # print(result.shape[:2])
             #result = self.check_target_area(result, image, h, w)
-
+            self.imgOrigin = result
             if self.ClickValue == 5:
                 h1, w1 = result.shape[:2]
                 self.Save_Bbox(h1, w1)
@@ -832,7 +836,7 @@ class App():
             else:
                 self.no_detect()
 
-
+            #print(threading.enumerate())
             print("--- %s seconds ---" % (time.time() - start_time))
 
     def calculate_detect_multithread(self):
@@ -960,10 +964,11 @@ class App():
                 result=image
             elif self.Detect_flag==1:
                 result=perspactive_transform(orig,pts,ratio)
-                self.imgOrigin = result
+                #result=pool_perspective(orig,pts,ratio,2)
+
         else:
             result = perspactive_transform(orig, pts, ratio)
-            self.imgOrigin = result
+            #result = pool_perspective(orig, pts, ratio, 2)
         #result = pool_perspective(orig, pts, ratio, 2)
         return result, image
 
@@ -975,13 +980,17 @@ class App():
             self.Save_Bbox(h, w)
             self.ClickValue = 0
         if not self.HeightBbox is None or not self.WeightBbox is None:
-            if h - 40 <= self.HeightBbox <= h + 40:
-                if w - 40 <= self.WeightBbox <= w + 40:
+            if h - 20 <= self.HeightBbox <= h + 20:
+                if w - 20 <= self.WeightBbox <= w + 20:
                     self.Detect_flag = 1
                 else:
+                    if self.Detect_flag==1:
+                        self.count_sum+=1
+
                     self.Detect_flag = 0
             else:
-                # print("fu")
+                if self.Detect_flag == 1:
+                    self.count_sum += 1
                 self.Detect_flag = 0
         else:
             pass
@@ -1480,7 +1489,21 @@ class App():
                 scores = []
                 total = 0
                 ###
-                for (i, (gX, gY, gW, gH)) in enumerate(locs):
+
+                if self.algorithm_flag==1:
+                    output = []
+                    output=self.algorithm1_original_ocr(tmpcnts2,tmpcnts3,locs,output)
+                elif self.algorithm_flag==2 :
+                    output = []
+                    output=self.algorithm2_1(tmpcnts3,locs,output)
+                elif self.algorithm_flag==3:
+                    output = []
+                    self.algorithm2_2(tmpcnts2,tmpcnts3,locs,output)
+                else :
+                    pass
+
+                ###
+                '''for (i, (gX, gY, gW, gH)) in enumerate(locs):
                     groupOutput = []
                     total2 = 0
                     img = tmpcnts2[i]
@@ -1505,9 +1528,11 @@ class App():
                     gY += 8
                     gW -= 18
                     gH -= 10
-                    output.append(int(score * 100))
-                    ####algorithm2.1 don't remove
-                    '''rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+                    output.append(int(score * 100))'''
+
+                #####algorithm2.1 don't remove
+
+                '''rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
                     sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
                     tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
@@ -1597,10 +1622,11 @@ class App():
                     self.Show_panel03_1_0(self.ImgCap)
 
                     try:
-                        Label(self.root, text=output[0], width=20, font=("Helvetica", 16)).grid(row=0, column=1)
-                        Label(self.root, text=output[1], width=20, font=("Helvetica", 16)).grid(row=1, column=1)
-                        Label(self.root, text=output[2], width=20, font=("Helvetica", 16)).grid(row=2, column=1)
-                    except:
+                        Label(self.root, text=output[0], width=25, font=("Helvetica", 16)).grid(row=0, column=1)
+                        Label(self.root, text=output[1], width=25, font=("Helvetica", 16)).grid(row=1, column=1)
+                        Label(self.root, text=output[2], width=25, font=("Helvetica", 16)).grid(row=2, column=1)
+                    except BaseException as e:
+                        print(str(e))
                         pass
                 print("---OCR %s seconds ---" % (time.time() - start_time))
 
@@ -1731,7 +1757,7 @@ class App():
             gW -= 18
             gH -= 10
             output.append(int(score * 100))
-            return output
+        return output
     def algorithm2_2(self,tmpcnts2,tmpcnts3,locs,output):
         kernel = np.ones((1, 1), np.uint8)
         for (i, (gX, gY, gW, gH)) in enumerate(locs):
