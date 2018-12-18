@@ -230,7 +230,20 @@ class App():
         else:
             self.panel5.configure(image=img)
             self.panel5.image = img
-
+    def Show_panel06_3_0(self, img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel6 is None:
+            self.panel6 = tkinter.Label(image=img)###fix w,h
+            self.panel6.image = img
+            self.panel6.grid(row=3, column=0)
+        else:
+            self.panel6.configure(image=img)
+            self.panel6.image = img
     def importImg(self):
         # img=PIL.Image.open(self.filename)
         MegLabel = StringVar()
@@ -996,8 +1009,8 @@ class App():
             self.Save_Bbox(h, w)
             self.ClickValue = 0
         if not self.HeightBbox is None or not self.WeightBbox is None:
-            if h - 20 <= self.HeightBbox <= h + 20:
-                if w - 20 <= self.WeightBbox <= w + 20:
+            if h - 20 <= self.HeightBbox <= h + 30:
+                if w - 20 <= self.WeightBbox <= w + 30:
                     self.Detect_flag = 1
                 else:
                     if self.Detect_flag == 1:
@@ -1121,10 +1134,12 @@ class App():
         self.roi = {}
         for (i, c) in enumerate(refCnt):
             (x, y, w, h) = cv2.boundingRect(c)
-            x -= 5
-            y -= 13
-            w += 10
-            h += 18
+            ######PAD
+            x -= 4
+            y -= 8
+            w += 8
+            h += 13
+            #######PAD
             self.roi[i] = ref[y:y + h, x:x + w]
             self.roi[i] = cv2.resize(self.roi[i], (57, 88))
             # cv2.imwrite("roi"+str(i)+'o.png',roi)
@@ -1143,8 +1158,9 @@ class App():
             cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # roi = ref[y:y + h, x:x + w]
         # cv2.imshow("Simple Method", clone)
-        # cv2.imshow('roi', self.roi[8])
+        cv2.imshow('roi', self.roi[2])
         # cv2.imshow("test",ref)
+
 
     def TextOCR(self):
         Noimg = cv2.imread('no_detect.png')
@@ -1459,7 +1475,7 @@ class App():
             for (idx, c) in enumerate(cnts):
                 x, y, w, h = cv2.boundingRect(c)
                 x -= 15
-                y -= 8
+                y -= 5
                 w += 25
                 h += 10
                 # h=h+5
@@ -1529,7 +1545,7 @@ class App():
                     Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
             elif self.algorithm_flag == 2:
                 output = []
-                output = self.algorithm2_1(tmpcnts3, locs, output)
+                output = self.algorithm2_1(tmpcnts2, locs, output)
                 value=self.check_algorithm2_1(output)
                 if value==1:
                     self.pass_value=1
@@ -1560,7 +1576,7 @@ class App():
                     pass
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
-                self.Show_panel05_2_0(tmpcnts2[0])
+                self.Show_panel05_2_0(tmpcnts2[1])
                 self.Show_panel03_1_0(self.ImgCap)
 
                 try:
@@ -1573,12 +1589,14 @@ class App():
             print("---OCR %s seconds ---" % (time.time() - start_time))
 
     def algorithm1_original_ocr(self, tmpcnts2, tmpcnts3, locs, output):
+        imgtest2 = {}
+        charac = 0
         kernel = np.ones((1, 1), np.uint8)
         for (i, (gX, gY, gW, gH)) in enumerate(locs):
             groupOutput = []
             img = tmpcnts2[i]
 
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
@@ -1608,10 +1626,16 @@ class App():
             for c in digitCnts:
 
                 (x, y, w, h) = cv2.boundingRect(c)
+                ####pad
                 x -= 3
 
                 w += 5
 
+                ###pad
+                '''x -= 15
+                y -= 8
+                w += 25
+                h += 10'''
                 cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 roi = tmpcnts3[i][y:y + h, x:x + w]
                 roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
@@ -1622,8 +1646,8 @@ class App():
                 except:
                     roi = cv2.resize(img, (57, 88))
 
-                # imgtest2[charac] = roi
-                # charac += 1
+                imgtest2[charac] = roi
+                charac += 1
 
                 scores = []
                 DIGITS = {}
@@ -1668,6 +1692,8 @@ class App():
             gH -= 10
 
             output.append(groupOutput)
+        imgout=self.digit_cnt_sobel(imgtest2[7])
+        self.Show_panel06_3_0(imgout)
         return output
 
     def algorithm2_1(self, tmpcnts2, locs, output):
@@ -1703,6 +1729,8 @@ class App():
         return output
 
     def algorithm2_2(self, tmpcnts2, tmpcnts3, locs, output):
+        imgtest2={}
+        charac=0
         kernel = np.ones((1, 1), np.uint8)
         for (i, (gX, gY, gW, gH)) in enumerate(locs):
             groupOutput = []
@@ -1738,9 +1766,11 @@ class App():
             for c in digitCnts:
 
                 (x, y, w, h) = cv2.boundingRect(c)
+                ####pad
                 x -= 3
 
                 w += 5
+                ###pad
 
                 cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 roi = tmpcnts3[i][y:y + h, x:x + w]
@@ -1752,8 +1782,8 @@ class App():
                 except:
                     roi = cv2.resize(img, (57, 88))
 
-                # imgtest2[charac] = roi
-                # charac += 1
+                imgtest2[charac] = roi
+                charac += 1
                 total = 0
                 scores = []
                 DIGITS = {}
@@ -1780,6 +1810,8 @@ class App():
             gW -= 18
             gH -= 10
             output.append(groupOutput)
+            #cv2.imshow("test2",imgtest2[0])
+        self.Show_panel06_3_0(imgtest2[8])
         return output
 
     def check_algrithm1(self, output):
@@ -1845,7 +1877,27 @@ class App():
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
 
-
+    def digit_cnt_sobel(self,img):
+        thresh=img
+        digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                     cv2.CHAIN_APPROX_SIMPLE)
+        digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+        digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+        cntt=digitCnts[0]
+        leftmost = tuple(cntt[cntt[:, :, 0].argmin()][0])
+        rightmost = tuple(cntt[cntt[:, :, 0].argmax()][0])
+        topmost = tuple(cntt[cntt[:, :, 1].argmin()][0])
+        bottommost = tuple(cntt[cntt[:, :, 1].argmax()][0])
+        for cnt in digitCnts:
+            leftmostT = tuple(cnt[cnt[:, :, 0].argmin()][0])
+            rightmostT = tuple(cnt[cnt[:, :, 0].argmax()][0])
+            topmostT = tuple(cnt[cnt[:, :, 1].argmin()][0])
+            bottommostT = tuple(cnt[cnt[:, :, 1].argmax()][0])
+        cv2.circle(thresh, leftmost, 2, (0, 0, 255), -1)
+        cv2.circle(thresh, rightmost, 2, (0, 255, 0), -1)
+        cv2.circle(thresh, topmost, 2, (255, 0, 0), -1)
+        cv2.circle(thresh, bottommost, 2, (255, 255, 0), -1)
+        return thresh
 def perspactive_transform(orig, cnts, ratio):
     pts = cnts
 
