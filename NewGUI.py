@@ -1832,8 +1832,18 @@ class App():
                 digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
             clone02 = np.dstack([thresh.copy()] * 3)
             # imgtest[i] = clone02
+            DIGITS = {}
+            if i == 0:
+                DIGITS = self.make01
+            elif i == 1:
+                DIGITS = self.make02
+            elif i == 2:
+                DIGITS = self.make03
+            else:
+                DIGITS = self.digits
 
-            for c in digitCnts:
+            #j=0
+            for (j,c) in enumerate(digitCnts):
 
                 (x, y, w, h) = cv2.boundingRect(c)
                 ####pad
@@ -1857,25 +1867,24 @@ class App():
                 charac += 1
                 total = 0
                 scores = []
-                DIGITS = {}
-                if i == 0:
-                    DIGITS = self.make01
-                elif i == 1:
-                    DIGITS = self.make02
-                elif i == 2:
-                    DIGITS = self.make03
-                else:
-                    DIGITS = self.digits
 
-                for (digit, digitROI) in DIGITS.items():
+                try :
+                    digitROI=DIGITS[j]
+
+                    #digitROI=DIGITS[0]
+                #digitROI = cv2.resize(digitROI, (57, 88))
+                #for (digit, digitROI) in DIGITS.items():
                     result = cv2.matchTemplate(roi, digitROI,
                                                cv2.TM_CCOEFF_NORMED)
                     (_, score, _, _) = cv2.minMaxLoc(result)
 
                     scores.append(int(score * 100))
                     total += int(score * 100)
-                groupOutput.append(int(total / int(len(scores))))
-                total2 += (total / int(len(scores)))
+                    groupOutput.append(int(total / int(len(scores))))
+                    total2 += (total / int(len(scores)))
+                except:
+                    pass
+                #j+=1
             gX += 15
             gY += 8
             gW -= 18

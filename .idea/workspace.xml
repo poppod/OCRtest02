@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +70,7 @@
     <session id="480488181">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="4" />
           <entry key="project.open.time.11" value="2" />
@@ -74,11 +79,12 @@
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.18" value="2" />
+          <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="21" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -89,13 +95,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="6996" />
+          <entry key="py" value="7080" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="6996" />
+          <entry key="Python" value="7080" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -119,59 +125,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="1646" selection-start-line="1646" selection-end-line="1646" />
+            <state relative-caret-position="-323">
+              <caret line="1885" column="24" selection-start-line="1885" selection-start-column="24" selection-end-line="1885" selection-end-column="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#3545#3592#0" />
-                <element signature="e#3633#3669#0" />
-                <element signature="e#3708#3760#0" />
-                <element signature="e#3804#4325#0" />
-                <element signature="e#4361#4578#0" />
-                <element signature="e#4625#5086#0" />
-                <element signature="e#5133#5600#0" />
-                <element signature="e#5647#6114#0" />
-                <element signature="e#6161#6629#0" />
-                <element signature="e#6676#7143#0" />
-                <element signature="e#7189#7643#0" />
-                <element signature="e#7677#8581#0" />
-                <element signature="e#8624#9683#0" />
-                <element signature="e#9719#9772#0" />
-                <element signature="e#9817#10469#0" />
-                <element signature="e#10509#12004#0" />
-                <element signature="e#12048#12703#0" />
-                <element signature="e#12744#14411#0" />
-                <element signature="e#14455#14905#0" />
-                <element signature="e#14949#16159#0" />
-                <element signature="e#16202#17425#0" />
-                <element signature="e#17467#17884#0" />
-                <element signature="e#17959#19183#0" />
-                <element signature="e#19192#19215#0" />
-                <element signature="e#19260#19283#0" />
-                <element signature="e#19328#19351#0" />
-                <element signature="e#19391#22051#0" />
-                <element signature="e#22099#24548#0" />
-                <element signature="e#24590#24952#0" />
-                <element signature="e#25089#25724#0" />
-                <element signature="e#25769#25909#0" />
-                <element signature="e#25953#27069#0" />
-                <element signature="e#27147#27614#0" />
-                <element signature="e#27646#28263#0" />
-                <element signature="e#28296#29086#0" />
-                <element signature="e#29118#29720#0" />
-                <element signature="e#29769#30379#0" />
-                <element signature="e#30411#32750#0" />
-                <element signature="e#32804#33084#0" />
-                <element signature="e#33127#37790#0" />
-                <element signature="e#37932#38953#0" />
-                <element signature="e#38703#38885#0" />
-                <element signature="e#39214#39627#0" />
-                <element signature="e#39505#39698#0" />
-                <element signature="e#39768#42148#0" />
-                <element signature="e#39738#41702#0" />
-                <element signature="e#41763#43640#0" />
-                <element signature="e#43379#56879#0" />
-                <element signature="e#63969#67989#0" />
+                <element signature="e#45576#59076#0" />
+                <element signature="e#59119#66158#0" />
+                <element signature="e#66241#70358#0" />
               </folding>
             </state>
           </provider>
@@ -267,7 +227,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="59" />
+    <option name="x" value="36" />
+    <option name="y" value="-18" />
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
@@ -293,7 +254,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -315,6 +275,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -730,7 +691,21 @@
       <option name="project" value="LOCAL" />
       <updated>1545207529898</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="check">
+      <created>1545208219133</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1545208219133</updated>
+    </task>
+    <task id="LOCAL-00034" summary="check">
+      <created>1545208471289</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1545208471289</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -751,13 +726,13 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49627978" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7016369" visible="true" weight="0.29787233" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70089287" visible="true" weight="0.18821605" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8058036" weight="0.502455" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49776787" weight="0.32569557" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49776787" weight="0.062193125" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.2983631" side_tool="true" visible="true" weight="0.29787233" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.29910713" side_tool="true" visible="true" weight="0.18821605" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.42857143" weight="0.3289689" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -991,79 +966,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configure/sqX2.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/Area3.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/Area2.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/TextRef/Area1.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/NewGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-323">
+          <caret line="1885" column="24" selection-start-line="1885" selection-start-column="24" selection-end-line="1885" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#45576#59076#0" />
+            <element signature="e#59119#66158#0" />
+            <element signature="e#66241#70358#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configure/sqX2.txt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Configure/sqY2.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/NewGUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="1646" selection-start-line="1646" selection-end-line="1646" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#3545#3592#0" />
-            <element signature="e#3633#3669#0" />
-            <element signature="e#3708#3760#0" />
-            <element signature="e#3804#4325#0" />
-            <element signature="e#4361#4578#0" />
-            <element signature="e#4625#5086#0" />
-            <element signature="e#5133#5600#0" />
-            <element signature="e#5647#6114#0" />
-            <element signature="e#6161#6629#0" />
-            <element signature="e#6676#7143#0" />
-            <element signature="e#7189#7643#0" />
-            <element signature="e#7677#8581#0" />
-            <element signature="e#8624#9683#0" />
-            <element signature="e#9719#9772#0" />
-            <element signature="e#9817#10469#0" />
-            <element signature="e#10509#12004#0" />
-            <element signature="e#12048#12703#0" />
-            <element signature="e#12744#14411#0" />
-            <element signature="e#14455#14905#0" />
-            <element signature="e#14949#16159#0" />
-            <element signature="e#16202#17425#0" />
-            <element signature="e#17467#17884#0" />
-            <element signature="e#17959#19183#0" />
-            <element signature="e#19192#19215#0" />
-            <element signature="e#19260#19283#0" />
-            <element signature="e#19328#19351#0" />
-            <element signature="e#19391#22051#0" />
-            <element signature="e#22099#24548#0" />
-            <element signature="e#24590#24952#0" />
-            <element signature="e#25089#25724#0" />
-            <element signature="e#25769#25909#0" />
-            <element signature="e#25953#27069#0" />
-            <element signature="e#27147#27614#0" />
-            <element signature="e#27646#28263#0" />
-            <element signature="e#28296#29086#0" />
-            <element signature="e#29118#29720#0" />
-            <element signature="e#29769#30379#0" />
-            <element signature="e#30411#32750#0" />
-            <element signature="e#32804#33084#0" />
-            <element signature="e#33127#37790#0" />
-            <element signature="e#37932#38953#0" />
-            <element signature="e#38703#38885#0" />
-            <element signature="e#39214#39627#0" />
-            <element signature="e#39505#39698#0" />
-            <element signature="e#39768#42148#0" />
-            <element signature="e#39738#41702#0" />
-            <element signature="e#41763#43640#0" />
-            <element signature="e#43379#56879#0" />
-            <element signature="e#63969#67989#0" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/TextRef/Area1.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
   <component name="masterDetails">
