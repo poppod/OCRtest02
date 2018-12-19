@@ -93,7 +93,7 @@ class App():
         self.panel3 = None
         self.panel4 = None
         self.panel5 = None
-        self.panel6 = None  # not use
+        self.panel6 = None  # use
         self.buttom = None
 
         self.make01 = None
@@ -102,6 +102,7 @@ class App():
         self.area01 = None
         self.area02 = None
         self.area03 = None
+        self.digits_pad={}
         self.thresh = queue.Queue()
         self.result = queue.Queue()
         self.stopEvent = threading.Event()
@@ -498,6 +499,7 @@ class App():
         self.load_all_value()
 
         self.make_tempplate()
+        self.make_tempplate2_no_pad()
         Button(self.root, text="Algorithm 1", command=self.add_algorithm1_flag).grid(row=0, column=4)
         Button(self.root, text="Algorithm 2", command=self.add_algorithm2_flag).grid(row=1, column=4)
         Button(self.root, text="Algorithm 3", command=self.add_algorithm3_flag).grid(row=2, column=4)
@@ -818,6 +820,7 @@ class App():
         self.thread.start()'''
 
         self.make_tempplate()
+        self.make_tempplate2_no_pad()
         while not self.stopEvent.is_set():
             # ret,img= self.vs.read()
             # img=self.frame
@@ -952,7 +955,7 @@ class App():
 
         box3 = box
 
-        d_min = 500
+        d_min = 1000
         rect_min = [[0, 0], [0, 0]]
         rect3 = cv2.boundingRect(box3)
         pt1 = (rect3[0], rect3[1])
@@ -964,17 +967,18 @@ class App():
             rect_min = [pt1, (rect3[2], rect3[3])]
             # screenCnt=[]
             cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-
+            #self.cnt_area_check(cnts[0])
             for c in cnts:
                 # approximate the contour
 
-                self.cnt_area_check(c)
+                #self.cnt_area_check(c)
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
                 # if our approximated contour has four points, then we
                 # can assume that we have found our screen
                 if len(approx) == 4:
+                    self.cnt_area_check(c)
                     screenCnt = approx
                     break
                 else:
@@ -1009,20 +1013,15 @@ class App():
             self.Save_Bbox(h, w)
             self.ClickValue = 0
         if not self.HeightBbox is None or not self.WeightBbox is None:
-            if h - 20 <= self.HeightBbox <= h + 30:
-                if w - 20 <= self.WeightBbox <= w + 30:
-                    self.Detect_flag = 1
-                else:
-                    if self.Detect_flag == 1:
-                        #self.count_sum += 1
-                        self.change_state()
-
-                    self.Detect_flag = 0
+            if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40 :
+                self.Detect_flag = 1
             else:
                 if self.Detect_flag == 1:
-                    #self.count_sum += 1
+
                     self.change_state()
+
                 self.Detect_flag = 0
+
         else:
             pass
     def change_state(self):
@@ -1033,24 +1032,24 @@ class App():
             self.fail_count+=1
         self.pass_value = 0
         self.fail_value = 0
-    def check_target_area(self, result, image, h, w):
+    def check_target_area(self):
+        image=self.imgOrigin
+        h,w =image.shape[:2]
 
         if not self.HeightBbox is None or not self.WeightBbox is None:
-            if h - 40 <= self.HeightBbox <= h + 40:
-                if w - 40 <= self.WeightBbox <= w + 40:
-                    self.imgOrigin = result
-                    self.Detect_flag = 1
-                else:
-                    self.Detect_flag = 0
+            if h - 20 <= self.HeightBbox <= h + 40:
+                if w - 20 <= self.WeightBbox <= w + 40:
+                    return 1
 
-                    result = image
+                else:
+                   return 0
             else:
                 # print("fu")
-                result = image
-                self.Detect_flag = 0
+                return 0
         else:
-            pass
-        return result
+            return 0
+            #pass
+
 
     def onClose(self):
         cv2.imwrite("capture.png", self.imgOrigin)
@@ -1060,8 +1059,7 @@ class App():
         # self.root.q
         # exit()
         # self.root.destroy()
-
-    def make_tempplate(self):
+    def make_tempplate2_no_pad(self):
         make01 = {}
         make02 = {}
         make03 = {}
@@ -1074,7 +1072,7 @@ class App():
                     if int(digi) == int(i):
                         make01[idx] = self.digits[i]
 
-        area01 = np.hstack((np.asarray(img) for (ik, img) in make01.items()))
+        #area01 = np.hstack((np.asarray(img) for (ik, img) in make01.items()))
 
         for idx, digi in enumerate(self.NcodeValue):
             if digi == '/':
@@ -1084,7 +1082,7 @@ class App():
                     if int(digi) == int(i):
                         make02[idx] = self.digits[i]
 
-        area02 = np.hstack((np.asarray(img) for (ik, img) in make02.items()))
+        #area02 = np.hstack((np.asarray(img) for (ik, img) in make02.items()))
 
         for idx, digi in enumerate(self.CcodeValue):
             if digi == '/':
@@ -1099,6 +1097,60 @@ class App():
                 for i, img in enumerate(self.digits):
                     if int(digi) == int(i):
                         make03[idx] = self.digits[i]
+        #area03 = np.hstack((np.asarray(img) for (ik, img) in make03.items()))
+
+        # area02 = PIL.Image.fromarray(area02)
+        # area03 = PIL.Image.fromarray(area03)
+        '''area01.save('./TextRef/Area1.png')
+        area02.save('./TextRef/Area2.png')
+        area03.save('./TextRef/Area3.png')'''
+        #self.area01 = area01
+        #self.area02 = area02
+        #self.area03 = area03
+        self.make01 = make01
+        self.make02 = make02
+        self.make03 = make03
+        #cv2.imwrite('./TextRef/Area1.png', area01)
+        #cv2.imwrite('./TextRef/Area2.png', area02)
+        #cv2.imwrite('./TextRef/Area3.png', area03)
+    def make_tempplate(self):
+        make01 = {}
+        make02 = {}
+        make03 = {}
+
+        for idx, digi in enumerate(self.DateValue):
+            if digi == '/':
+                make01[idx] = self.digits_pad[10]
+            else:
+                for (i, img) in enumerate(self.digits_pad):
+                    if int(digi) == int(i):
+                        make01[idx] = self.digits_pad[i]
+
+        area01 = np.hstack((np.asarray(img) for (ik, img) in make01.items()))
+
+        for idx, digi in enumerate(self.NcodeValue):
+            if digi == '/':
+                make02[idx] = self.digits_pad[10]
+            else:
+                for i, img in enumerate(self.digits_pad):
+                    if int(digi) == int(i):
+                        make02[idx] = self.digits_pad[i]
+
+        area02 = np.hstack((np.asarray(img) for (ik, img) in make02.items()))
+
+        for idx, digi in enumerate(self.CcodeValue):
+            if digi == '/':
+                make03[idx] = self.digits_pad[10]
+            elif digi == 'A':
+                make03[idx] = self.digits_pad[11]
+            elif digi == 'B':
+                make03[idx] = self.digits_pad[12]
+            elif digi == 'C':
+                make03[idx] = self.digits_pad[13]
+            else:
+                for i, img in enumerate(self.digits_pad):
+                    if int(digi) == int(i):
+                        make03[idx] = self.digits_pad[i]
         area03 = np.hstack((np.asarray(img) for (ik, img) in make03.items()))
 
         # area02 = PIL.Image.fromarray(area02)
@@ -1127,23 +1179,35 @@ class App():
         refCnt = cv2.findContours(ref.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         refCnt = refCnt[0] if imutils.is_cv2() else refCnt[1]
         refCnt = contours.sort_contours(refCnt, method="left-to-right")[0]
+        self.digits_pad={}
         self.digits = {}
         self.digits1 = {}
         self.digits2 = {}
         self.digits3 = {}
         self.roi = {}
+        roi2={}
         for (i, c) in enumerate(refCnt):
             (x, y, w, h) = cv2.boundingRect(c)
+            ######PAD
+            '''x -= 4
+            y -= 8
+            w += 8
+            h += 13'''
+            #######PAD
+            self.roi[i] = ref[y:y + h, x:x + w]
+            self.roi[i] = cv2.resize(self.roi[i], (57, 88))
+            self.digits[i] = self.roi[i]
             ######PAD
             x -= 4
             y -= 8
             w += 8
             h += 13
             #######PAD
-            self.roi[i] = ref[y:y + h, x:x + w]
-            self.roi[i] = cv2.resize(self.roi[i], (57, 88))
             # cv2.imwrite("roi"+str(i)+'o.png',roi)
-            self.digits[i] = self.roi[i]
+            roi2[i] = ref[y:y + h, x:x + w]
+            roi2[i] = cv2.resize(roi2[i], (57, 88))
+            self.digits_pad[i]=roi2[i]
+
         for idx in range(11):
             self.digits1[idx] = self.digits[idx]
         for idx in range(10):
@@ -1576,7 +1640,11 @@ class App():
                     pass
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
-                self.Show_panel05_2_0(tmpcnts2[1])
+                try:
+                    self.Show_panel05_2_0(tmpcnts2[1])
+                except:
+                    pass
+
                 self.Show_panel03_1_0(self.ImgCap)
 
                 try:
@@ -1645,8 +1713,10 @@ class App():
                     roi = cv2.resize(roi, (57, 88))
                 except:
                     roi = cv2.resize(img, (57, 88))
-
                 imgtest2[charac] = roi
+                roi=self.digit_cnt_sobel(roi)
+                roi = cv2.resize(roi, (57, 88))
+
                 charac += 1
 
                 scores = []
@@ -1692,8 +1762,8 @@ class App():
             gH -= 10
 
             output.append(groupOutput)
-        imgout=self.digit_cnt_sobel(imgtest2[7])
-        self.Show_panel06_3_0(imgout)
+        #imgout=self.digit_cnt_sobel(imgtest2[11])
+        #self.Show_panel06_3_0(imgout)
         return output
 
     def algorithm2_1(self, tmpcnts2, locs, output):
@@ -1781,7 +1851,8 @@ class App():
                     roi = cv2.resize(roi, (57, 88))
                 except:
                     roi = cv2.resize(img, (57, 88))
-
+                roi = self.digit_cnt_sobel(roi)
+                roi = cv2.resize(roi, (57, 88))
                 imgtest2[charac] = roi
                 charac += 1
                 total = 0
@@ -1811,7 +1882,7 @@ class App():
             gH -= 10
             output.append(groupOutput)
             #cv2.imshow("test2",imgtest2[0])
-        self.Show_panel06_3_0(imgtest2[8])
+        #self.Show_panel06_3_0(imgtest2[8])
         return output
 
     def check_algrithm1(self, output):
@@ -1883,20 +1954,50 @@ class App():
                                      cv2.CHAIN_APPROX_SIMPLE)
         digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
         digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-        cntt=digitCnts[0]
-        leftmost = tuple(cntt[cntt[:, :, 0].argmin()][0])
-        rightmost = tuple(cntt[cntt[:, :, 0].argmax()][0])
-        topmost = tuple(cntt[cntt[:, :, 1].argmin()][0])
-        bottommost = tuple(cntt[cntt[:, :, 1].argmax()][0])
-        for cnt in digitCnts:
-            leftmostT = tuple(cnt[cnt[:, :, 0].argmin()][0])
-            rightmostT = tuple(cnt[cnt[:, :, 0].argmax()][0])
-            topmostT = tuple(cnt[cnt[:, :, 1].argmin()][0])
-            bottommostT = tuple(cnt[cnt[:, :, 1].argmax()][0])
-        cv2.circle(thresh, leftmost, 2, (0, 0, 255), -1)
+        #print(digitCnts)
+        try :
+            cntt=digitCnts[0]
+        #for cntt in digitCnts:
+            leftmost = tuple(cntt[cntt[:, :, 0].argmin()][0])
+            rightmost = tuple(cntt[cntt[:, :, 0].argmax()][0])
+            topmost = tuple(cntt[cntt[:, :, 1].argmin()][0])
+            bottommost = tuple(cntt[cntt[:, :, 1].argmax()][0])
+            for cnt in digitCnts:
+                leftmostT = tuple(cnt[cnt[:, :, 0].argmin()][0])
+                rightmostT = tuple(cnt[cnt[:, :, 0].argmax()][0])
+                topmostT = tuple(cnt[cnt[:, :, 1].argmin()][0])
+                bottommostT = tuple(cnt[cnt[:, :, 1].argmax()][0])
+                #print(leftmost[0])
+                if(leftmostT[0]<leftmost[0]):
+                    leftmost=list(leftmost)
+                    leftmost[0]= leftmostT[0]
+                    leftmost=tuple(leftmost)
+                if(rightmostT[0]>rightmost[0]):
+                    rightmost=list(rightmost)
+                    rightmost[0]=rightmostT[0]
+                    rightmost=tuple(rightmost)
+                if(topmostT[1]<topmost[1]):
+                    topmost=list(topmost)
+                    topmost[1]=topmostT[1]
+                    topmost=tuple(topmost)
+                if(bottommostT[1]>bottommost[1]):
+                    bottommost=list(bottommost)
+                    bottommost[1]=bottommostT[1]
+                    bottommost=tuple(bottommost)
+            x=leftmost[0]
+            y=topmost[1]
+            w=rightmost[0]-leftmost[0]
+            h=bottommost[1]-topmost[1]
+            thresh = thresh[y:y + h, x:x + w]
+        except:
+            pass
+
+        #cv2.rectangle(thresh, (x, y), (x + w, y + h), (255, 255, 255), 2)
+        '''cv2.circle(thresh, leftmost, 2, (0, 0, 255), -1)
         cv2.circle(thresh, rightmost, 2, (0, 255, 0), -1)
         cv2.circle(thresh, topmost, 2, (255, 0, 0), -1)
-        cv2.circle(thresh, bottommost, 2, (255, 255, 0), -1)
+        cv2.circle(thresh, bottommost, 2, (255, 255, 0), -1)'''
+
         return thresh
 def perspactive_transform(orig, cnts, ratio):
     pts = cnts
