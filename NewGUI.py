@@ -1161,9 +1161,9 @@ class App():
         self.area01 = area01
         self.area02 = area02
         self.area03 = area03
-        self.make01 = make01
-        self.make02 = make02
-        self.make03 = make03
+        #self.make01 = make01
+        #self.make02 = make02
+        #self.make03 = make03
         cv2.imwrite('./TextRef/Area1.png', area01)
         cv2.imwrite('./TextRef/Area2.png', area02)
         cv2.imwrite('./TextRef/Area3.png', area03)
