@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +120,7 @@
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="168">
-              <caret line="1646" column="16" selection-start-line="1646" selection-start-column="16" selection-end-line="1646" selection-end-column="16" />
+              <caret line="1646" selection-start-line="1646" selection-end-line="1646" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#3545#3592#0" />
@@ -724,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545132230839</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="check">
+      <created>1545207529898</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1545207529898</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1003,7 +1009,7 @@
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="1646" column="16" selection-start-line="1646" selection-start-column="16" selection-end-line="1646" selection-end-column="16" />
+          <caret line="1646" selection-start-line="1646" selection-end-line="1646" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#3545#3592#0" />
