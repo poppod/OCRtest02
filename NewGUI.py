@@ -4,7 +4,7 @@ import os
 import io
 from tkinter import *
 from tkinter import filedialog, messagebox
-
+from  tkinter.font import Font
 import pytesseract
 import cv2
 import threading
@@ -13,6 +13,8 @@ import imutils
 import multiprocessing
 import numpy as np
 import queue
+import datetime
+
 
 from itertools import product
 from imutils import contours
@@ -32,8 +34,14 @@ class App():
         self.vs = cv2.VideoCapture(0)
         #####
         self.root = tkinter.Tk()
+        self.THsarabun=tkinter.Text(self.root)
+        self.now=datetime.datetime.now()
+        self.date_time=str(self.now.strftime("%Y-%m-%d %H:%M"))
+        myfont= Font(family="THSarabunNew",size=14)
+        self.THsarabun.configure(font=myfont)
         # self.scale()
         # self.scale2()
+        self.root.iconbitmap("./Drawable/icon.ico")
         self.Detect_flag = 0
         self.algorithm_flag = 1
         self.frameShow = None
@@ -51,6 +59,7 @@ class App():
         self.count_sum = 0
         self.pass_value=0
         self.fail_value=0
+        self.user=None
 
         self.pass_count=0
         self.fail_count=0
@@ -109,8 +118,8 @@ class App():
         self.load_all_except_target()
         # self.load_all_value()
 
-        self.page1_selectOption()
-
+        #self.page1_selectOption()
+        self.well_com_page()
         '''self.thread=threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon=True
         self.thread.start()'''
@@ -130,7 +139,44 @@ class App():
         # self.TextOCR()
 
         self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
+    def well_com_page(self):
 
+        self.root.geometry('800x480')
+        self.root.title("ยินดีต้อนรับ")
+
+        info_btn=Button(self.root,text="เกี่ยวกับโปรแกรม",font=("THSarabunNew", 8))##command
+        info_btn.grid(row=0,column=3)
+        help_btn=Button(self.root,text="วิธีใช้",font=("THSarabunNew", 8))##command
+        help_btn.grid(row=0,column=4)
+        well_btn=Label(self.root,text="โปรแกรม ตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์",font=("THSarabunNew",16))
+        well_btn.grid(row=2,column=1,sticky=W+E+N+S, padx=5, pady=5)
+        #print(well_btn.winfo_reqwidth())
+        Label(self.root, text="ชื่อผู้ใช้งาน หรือผู้ควบคุม", font=("THSarabunNew", 10)).grid(row=3, column=1,
+                                                                                                      sticky=W + E + N + S,
+                                                                                                 padx=5, pady=5)
+        X=int(((800-int(well_btn.winfo_reqwidth()))/15))
+        #print(X)
+        Label(self.root,width=X+2).grid(row=0,column=0)
+        X=int(X/3)
+        Label(self.root, width=X).grid(row=0, column=2)
+        X=int(X-3)
+        Label(self.root, height=X).grid(row=1, column=0)
+        vartx=""
+        self.user =Entry(self.root,width=15,textvariable=vartx)##data in user no self.user
+        self.user.grid(row=4,column=1,sticky=N+S, pady=5)
+        login_btn=Button(self.root,text="เข้าสู่โปรแกรม",command=self.well_to_page1)##command
+        login_btn.grid(row=5,column=1,sticky=N+S, pady=5)
+
+        date=Label(self.root,text=self.date_time,textvariable=self.date_time,font=("THSarabunNew", 8))
+        Label(self.root, height=12).grid(row=7, column=0)
+        date.grid(row=8,column=3,sticky=E,columnspan=2)
+    def well_to_page1(self):
+        user = self.user.get()
+        if (user):
+            self.user=user
+            self.page1_selectOption()
+        else:
+            messagebox.showerror("Insert Eror", "No Value , Please insert value")
     def Save_Bbox(self, h, w):
         self.HeightBbox = h
         self.WeightBbox = w
@@ -144,13 +190,30 @@ class App():
         self.page2_selectFile()
 
     def page1_selectOption(self):
+        for ele in self.root.winfo_children():
+            ele.destroy()
         self.root.geometry('800x480')
         self.root.title("Start page")
-        Button(self.root, text='Default', command=self.default_process_solution_1).grid(row=1, column=1, columnspan=2,
-                                                                                        rowspan=2, sticky=W + N + E + S)
-        Button(self.root, text='Setting', command=self.settingButton).grid(row=1, column=3, columnspan=2, rowspan=2,
-                                                                           sticky=W + N + E + S)
-
+        user=self.user
+        Label(self.root,text="ชื่อผู้ใช้ : "+str(user),font=("THSarabunNew", 12)).grid(row=0,column=1,sticky=W,padx=5,pady=5,columnspan=2)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=6)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=7)
+        Label(self.root, text="เริ่มต้นการทำงาน", font=("THSarabunNew", 14)).grid(row=2, column=2,sticky=W + E + N + S,
+                                                                                             padx=5, pady=5)
+        Label(self.root, text="เริ่มต้นการทำงาน โดยใช้ค่าเดิม(ไม่แนะนำ)", font=("THSarabunNew", 10)).grid(row=3, column=2, sticky=W + E + N + S,
+                                                                                  padx=5, pady=5)
+        Button(self.root, text='Default', command=self.default_process_solution_1).grid(row=4, column=2,sticky=W + N + E + S)
+        Label(self.root, text="ตั้งค่าใหม่", font=("THSarabunNew", 14)).grid(row=2, column=4, sticky=W + E + N + S,
+                                                                                  padx=5, pady=5)
+        Label(self.root, text="ตั้งค่าใหม่ ใช้ข้อมูลใหม่(แนะนำ)", font=("THSarabunNew", 10)).grid(row=3,column=4,sticky=W + E + N + S,padx=5,pady=5)
+        Button(self.root, text='Setting', command=self.settingButton).grid(row=4, column=4,sticky=W + N + E + S)
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date.grid(row=8, column=6, sticky=E, columnspan=2)
+        Label(self.root,width=20,height=8).grid(row=1,column=1)
+        Label(self.root, width=10, height=8).grid(row=1, column=3)
+        Label(self.root, width=10, height=10).grid(row=5, column=5)
     def openDialog(self):
         self.filename = filedialog.askopenfilename(initialdir="/", title="Select file",
                                                    filetypes=(("*png files", "*.png"), ("*jpg files", "*.jpg")))
