@@ -119,7 +119,10 @@ class App():
         # self.load_all_value()
 
         #self.page1_selectOption()
-        self.well_com_page()
+        #self.well_com_page()
+        self.page2_selectFile()
+
+
         '''self.thread=threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon=True
         self.thread.start()'''
@@ -310,27 +313,42 @@ class App():
             self.panel6.image = img
     def importImg(self):
         # img=PIL.Image.open(self.filename)
+        def Show_panel_select_page(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel is None:
+                self.panel = tkinter.Label(image=img, width=160, height=120)
+                self.panel.image = img
+                self.panel.grid(row=6, column=2,columnspan=2,rowspan=2)
+            else:
+                self.panel.configure(image=img)
+                self.panel.image = img
         MegLabel = StringVar()
 
         img = cv2.imread(self.filename)
 
         try:
             img2 = img
-            self.Show_panel01_0_0(img)
+            #self.Show_panel01_0_0(img)
+            Show_panel_select_page(img)
         except:
             self.panel = None
-            Nonelabel = Label(self.root, text="<<<<None Image Choose file(agian) Please>>>").grid(row=0, column=0)
+            Nonelabel = Label(self.root, text="None Image").grid(row=6, column=2,columnspan=2,rowspan=2)
 
         if self.panel is None:
 
-            Nonelabel = Label(self.root, textvariable=MegLabel).grid(row=1, column=1)
+            Nonelabel = Label(self.root, textvariable=MegLabel).grid(row=9, column=2)
             MegLabel.set("None")
         else:
-            fileImportButton = Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2)).grid(row=0,
+            fileImportButton = Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2)).grid(row=8,
                                                                                                               column=2)
             MegLabel.set("Get Image")
             # Nonelabel.destroy()
-            Getlabel = Label(self.root, textvariable=MegLabel).grid(row=1, column=1)
+            Getlabel = Label(self.root, textvariable=MegLabel).grid(row=9, column=2)
 
     def Save_tempImg(self, img):
         error = 0
@@ -338,7 +356,7 @@ class App():
         if Msg == True:
             if img is None:
                 NoImportLabel = Label(self.root, text="You do not import Image and install ROI(use default)").grid(
-                    row=1, column=1)
+                    row=6, column=3, columnspan=2)
             else:
                 cv2.imwrite('./TextRef/temp.png', img=img)  # chang to temp.png
             try:
@@ -349,11 +367,10 @@ class App():
                 error = 1
 
         else:
-            NoImportLabel = Label(self.root, text="You do not import Image and install ROI(use default)").grid(row=1,
-                                                                                                               column=1)
+            NoImportLabel = Label(self.root, text="You do not import Image and install ROI(use default)").grid(row=6, column=3,columnspan=2)
             self.TextOcrRef()
         if error == 0:
-            OkNextButton = Button(self.root, text="OK and Next", command=self.page3_setting_vscap).grid(row=2, column=2)
+            OkNextButton = Button(self.root, text="OK and Next", command=self.page3_setting_vscap).grid(row=8, column=4)
 
     def reset_bbox(self):
         self.HeightBbox = None
@@ -364,15 +381,28 @@ class App():
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Setting Video Capture")
+
+        user = self.user
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0, sticky=W,
+                                                                                           padx=5, pady=5, columnspan=2)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=13)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=14)
+        Label(self.root, text="ตั้งค่าคัดกรองสีพื้นหลัง", font=("THSarabunNew", 10)).grid(row=2, column=4,sticky=W + E + N + S,
+                                                                                                  padx=5, pady=5,columnspan=3)
+        Label(self.root, text="ตั้งค่า contours", font=("THSarabunNew", 10)).grid(row=2, column=8,
+                                                                                          sticky=W + E + N + S,
+                                                                                          padx=5, pady=5, columnspan=4)
         self.scale()
         self.scale4()
         self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()
-
-        BboxSaveButton = Button(self.root, text="Target Area", command=self.Click_ValueBbox).grid(row=1, column=2)
-        ResetBboxSaveButton = Button(self.root, text="Reset", command=self.reset_bbox).grid(row=2, column=2)
-        OkNextButton = Button(self.root, text="OK and Next", command=self.page3_To_page4).grid(row=3, column=3)
+        Label(self.root, width=10, height=2).grid(row=1, column=0)
+        #BboxSaveButton = Button(self.root, text="Target Area", command=self.Click_ValueBbox).grid(row=1, column=2)
+        #ResetBboxSaveButton = Button(self.root, text="Reset", command=self.reset_bbox).grid(row=2, column=2)
+        #OkNextButton = Button(self.root, text="OK and Next", command=self.page3_To_page4).grid(row=3, column=3)
 
     def page3_To_page4(self):
         self.ClickValue = 5
@@ -725,9 +755,29 @@ class App():
     def page2_selectFile(self):
         for ele in self.root.winfo_children():
             ele.destroy()
-        fileOpenButtun = Button(self.root, text="Open File", command=self.openDialog).grid(row=0, column=1)
-        defauil_bnt = Button(self.root, text="Use default", command=self.page2_default_selection).grid(row=0, column=2)
+        self.root.geometry('800x480')
         self.root.title("Select File")
+        user = self.user
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=1, sticky=W,
+                                                                                           padx=5, pady=5, columnspan=2)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=6)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=7)
+        Label(self.root, text="นำเข้าภาพฟอนต์", font=("THSarabunNew", 14)).grid(row=2, column=2, sticky=W + E + N + S,
+                                                                                  padx=5, pady=5,columnspan=2)
+        Label(self.root, text="นำเข้าใหม่", font=("THSarabunNew", 10)).grid(row=3, column=2, sticky=W + E + N + S,
+                                                                             padx=5, pady=5)
+        Label(self.root, text="ใช้ค่าเดิม", font=("THSarabunNew", 10)).grid(row=3, column=4, sticky=W + E + N + S,
+                                                                            padx=5, pady=5)
+        fileOpenButtun = Button(self.root, text="Open File", command=self.openDialog).grid(row=4, column=2,sticky=N + S)
+        defauil_bnt = Button(self.root, text="Use default", command=self.page2_default_selection).grid(row=4, column=4,sticky=N + S)
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date.grid(row=10, column=6, sticky=E, columnspan=2)
+        Label(self.root, width=38, height=4).grid(row=1, column=1)
+        Label(self.root, width=10, height=4).grid(row=1, column=3)
+        Label(self.root, width=20, height=0).grid(row=9, column=5)
+        Label(self.root, width=20, height=8).grid(row=6, column=5)
         print(self.ClickValue)
 
     def page2_default_selection(self):
@@ -735,7 +785,20 @@ class App():
         self.page3_setting_vscap()
 
     def videoLoop(self):
-
+        def Show_panel_vloop(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel is None:
+                self.panel = tkinter.Label(image=img, width=160, height=120)
+                self.panel.image = img
+                self.panel.grid(row=2, column=1,rowspan=2,columnspan=1,padx=15)
+            else:
+                self.panel.configure(image=img)
+                self.panel.image = img
         self.ret, self.frame = self.vs.read()  # temp for fix
         self.start_thread_detect()
         # self.detectThread.join()
@@ -748,7 +811,9 @@ class App():
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
-                if self.ClickValue == 0 or self.ClickValue == 10:
+                if self.ClickValue == 0  :
+                    Show_panel_vloop(self.frameShow)
+                if self.ClickValue == 10:
                     self.Show_panel01_0_0(self.frameShow)
         except RuntimeError as e:
             print("error runtime")
@@ -814,15 +879,15 @@ class App():
 
     def scale(self):
 
-        scale = Scale(self.root, from_=0, to=255, variable=self.var, label="B")
+        scale = Scale(self.root, from_=0, to=255, variable=self.var, label="B",sliderlength=50,length=250)
         scale.set(self.var.get())
-        scale1 = Scale(self.root, from_=0, to=255, variable=self.var1, label="G")
+        scale1 = Scale(self.root, from_=0, to=255, variable=self.var1, label="G",sliderlength=50,length=250)
         scale1.set(self.var1.get())
-        scale2 = Scale(self.root, from_=0, to=255, variable=self.var2, label="R")
+        scale2 = Scale(self.root, from_=0, to=255, variable=self.var2, label="R",sliderlength=50,length=250)
         scale2.set(self.var2.get())
-        scale.grid(row=0, column=4, )
-        scale1.grid(row=0, column=5)
-        scale2.grid(row=0, column=6)
+        scale.grid(row=3, column=4,rowspan=6 ,sticky=W+N)
+        scale1.grid(row=3, column=5,rowspan=6 ,sticky=W+N)
+        scale2.grid(row=3, column=6,rowspan=6 ,sticky=W+N)
         '''scale2.pack(fill=BOTH, expand=0, side=RIGHT)
         scale1.pack(fill=BOTH, expand=0, side=RIGHT)
         scale.pack(fill=BOTH, expand=0, side=RIGHT)'''
@@ -864,24 +929,51 @@ class App():
     def scale4(self):  # use vssetting
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=1, to=100, variable=self.rectY2)
+        scale = Scale(self.root, from_=1, to=100, variable=self.rectY2,sliderlength=50,length=250)
         scale.set(self.rectY2.get())
-        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX2)
+        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX2,sliderlength=50,length=250)
         scale1.set(self.rectX2.get())
-        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY2)
+        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY2,sliderlength=50,length=250)
         scale2.set(self.sqY2.get())
-        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX2)
+        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX2,sliderlength=50,length=250)
         scale3.set(self.sqX2.get())
-        scale.grid(row=2, column=4)
-        scale1.grid(row=2, column=5)
-        scale2.grid(row=2, column=6)
-        scale3.grid(row=2, column=7)
+        scale.grid(row=3, column=8,rowspan=6 ,sticky=W+N)
+        scale1.grid(row=3, column=9,rowspan=6 ,sticky=W+N)
+        scale2.grid(row=3, column=10,rowspan=6 ,sticky=W+N)
+        scale3.grid(row=3, column=11,rowspan=6 ,sticky=W+N)
 
     def detect(self):
         '''self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()'''
-
+        def Show_panel_vcap02(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel2 is None:
+                self.panel2 = tkinter.Label(image=img, width=160, height=120)
+                self.panel2.image = img
+                self.panel2.grid(row=5, column=1,rowspan=2,columnspan=1,padx=15)
+            else:
+                self.panel2.configure(image=img)
+                self.panel2.image = img
+        def Show_panel_vcap03(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel3 is None:
+                self.panel3 = tkinter.Label(image=img, width=160, height=100)
+                self.panel3.image = img
+                self.panel3.grid(row=8, column=1,rowspan=2,columnspan=1,padx=15)
+            else:
+                self.panel3.configure(image=img)
+                self.panel3.image = img
         self.make_tempplate()
         self.make_tempplate2_no_pad()
         while not self.stopEvent.is_set():
@@ -910,8 +1002,10 @@ class App():
             self.imgOrigin = result
             self.ImgCap = result
             if self.ClickValue == 0:
-                self.Show_panel02_0_1(self.treshImg)
-                self.Show_panel03_1_0(self.ImgCap)
+                Show_panel_vcap02(self.treshImg)
+                Show_panel_vcap03(self.ImgCap)
+                #self.Show_panel02_0_1(self.treshImg) ###
+                #self.Show_panel03_1_0(self.ImgCap)  #####
             else:
                 pass
             if self.ClickValue == 10 and self.Detect_flag == 1 or self.ClickValue == 2:
