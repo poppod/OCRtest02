@@ -43,7 +43,7 @@ class App():
         # self.scale2()
         self.root.iconbitmap("./Drawable/icon.ico")
         self.Detect_flag = 0
-        self.algorithm_flag = 1
+        self.status_flag = 1
         self.frameShow = None
         self.frame1 = None
         self.frame = None
@@ -60,6 +60,7 @@ class App():
         self.pass_value=0
         self.fail_value=0
         self.user=None
+        self.persentage=0
 
         self.pass_count=0
         self.fail_count=0
@@ -584,16 +585,20 @@ class App():
 
     def page5_Insert_Value(self):
         self.ClickValue = 3
-        self.root.title("Insert Value")
 
-        self.ClickValue = 3
 
-        for ele in self.root.winfo_children():
-            ele.destroy()
+
         self.panel = None
         self.panel2 = None
         self.panel3 = None
         self.panel4 = None
+        for ele in self.root.winfo_children():
+
+            ele.destroy()
+        self.ClickValue = 3
+        for ele in self.root.winfo_children():
+            ele.destroy()
+        self.root.title("Insert Value")
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
@@ -602,7 +607,7 @@ class App():
         Label(self.root, text="ป้อนค่าบนฉลาก", font=("THSarabunNew", 14)).grid(row=2, column=3,
                                                                             sticky=W + E + N + S,
                                                                             padx=5, pady=5, columnspan=4)
-        #Button(self.root, text="Default load", command=self.load_default_value).grid(row=2, column=4)
+        Button(self.root, text="Default load", command=self.load_default_value).grid(row=9, column=4,pady=5)
         Label(self.root, text="Value 1(Date)", font=("THSarabunNew", 10)).grid(row=3, column=3,sticky=W , columnspan=4)
         self.Value1_Entry = Entry(self.root, bd=2, width=30, textvariable=self.DateValue)
         self.Value1_Entry.grid(row=4, column=3, sticky=W, columnspan=4)
@@ -613,9 +618,17 @@ class App():
         Label(self.root, text="Value 3(Alphabet)", font=("THSarabunNew", 10)).grid(row=7, column=3,sticky=W , columnspan=4)
         self.Value3_Entry = Entry(self.root, bd=2, width=5, textvariable=self.CcodeValue)
         self.Value3_Entry.grid(row=8, column=3, sticky=W, columnspan=4)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=8)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=9)
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date.grid(row=11, column=8, sticky=E, columnspan=2)
+        Button(self.root, text="Save", command=self.save_value_input).grid(row=9, column=5,pady=5)
+        Label(self.root, width=20, height=5).grid(row=1, column=2)
+        Label(self.root, width=30, height=5).grid(row=1, column=7)
 
-        #Save_button = Button(self.root, text="Save", command=self.save_value_input).grid(row=3, column=4)
-
+        Label(self.root, width=30, height=8).grid(row=10, column=7)
     def save_value_input(self):
 
         DateValue = self.Value1_Entry.get()
@@ -635,8 +648,7 @@ class App():
                 Code_value = open('./Configure/Code_value.txt', "w")
                 Code_value.write(str(CcodeValue))
                 Code_value.close()
-                Ok_Next_button = Button(self.root, text="Ok and Next", command=self.page5_to_process).grid(row=3,
-                                                                                                           column=5)
+                Ok_Next_button = Button(self.root, text="Ok and Next", command=self.page5_to_process).grid(row=10, column=6,pady=5)
         else:
             # print(str(self.DateValue))
             MsgER = messagebox.showerror("Insert Eror", "No Value , Please insert value")
@@ -671,10 +683,27 @@ class App():
 
         self.make_tempplate()
         self.make_tempplate2_no_pad()
-        Button(self.root, text="Algorithm 1", command=self.add_algorithm1_flag).grid(row=0, column=4)
-        Button(self.root, text="Algorithm 2", command=self.add_algorithm2_flag).grid(row=1, column=4)
-        Button(self.root, text="Algorithm 3", command=self.add_algorithm3_flag).grid(row=2, column=4)
-
+        #Button(self.root, text="start", command=self.add_algorithm1_flag).grid(row=0, column=4)
+        #Button(self.root, text="pause", command=self.add_algorithm2_flag).grid(row=1, column=4)
+        #Button(self.root, text="stop", command=self.add_algorithm3_flag).grid(row=2, column=4)
+        user = self.user
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
+                                                                                           sticky=W,
+                                                                                           padx=5, pady=5,
+                                                                                           columnspan=2)
+        Label(self.root, text="ประมวลผลภาพ", font=("THSarabunNew", 14)).grid(row=2, column=4,
+                                                                               sticky=W + E + N + S,
+                                                                               padx=5, pady=5, columnspan=3)
+        Label(self.root, text="ค่าที่ป้อน :", font=("THSarabunNew", 8)).grid(row=3, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 8)).grid(row=4, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="สถานะ :", font=("THSarabunNew", 8)).grid(row=5, column=4, sticky=W)
+        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=6, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="ค่าความถูกต้อง :", font=("THSarabunNew", 8)).grid(row=7, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=3, column=7, sticky=W, columnspan=3)
+        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 8)).grid(row=4, column=7, sticky=W, columnspan=1)
+        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 8)).grid(row=5, column=7, sticky=W, columnspan=1)
+        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 8)).grid(row=6, column=7, sticky=W, columnspan=1)
+        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 8)).grid(row=7, column=7, sticky=W, columnspan=1)
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
@@ -685,17 +714,18 @@ class App():
             '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
             self.TextocrThread.daemon = True
             self.TextocrThread.start()'''
+
         # self.root.destroy()
         # self.root.quit()self.thread.isAlive() == False or
 
     def add_algorithm1_flag(self):
-        self.algorithm_flag = 1
+        self.status_flag = 1
 
     def add_algorithm2_flag(self):
-        self.algorithm_flag = 2
+        self.status_flag = 2
 
     def add_algorithm3_flag(self):
-        self.algorithm_flag = 3
+        self.status_flag = 3
 
     def load_all_value(self):
         H = open('./Configure/AreaH.txt', 'r')
@@ -892,7 +922,7 @@ class App():
                 if self.ClickValue == 0  :
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
-                    self.Show_panel01_0_0(self.frameShow)
+                    self.Show_panel_vloop(self.frameShow)
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
@@ -1096,12 +1126,12 @@ class App():
             else:
                 self.no_detect()
             if self.ClickValue == 10:
-                sum_string = "Total :"+str(self.count_sum)
+                '''sum_string = "Total :"+str(self.count_sum)
                 Label(self.root, text=sum_string, font=("Helvetica", 16)).grid(row=3, column=2)
                 pass_string="Pass :"+str(self.pass_count)
                 Label(self.root, text=pass_string, font=("Helvetica", 16), fg="green").grid(row=3, column=3)
                 fail_string="Fail :"+str(self.fail_count)
-                Label(self.root, text=fail_string, font=("Helvetica", 16), fg="red").grid(row=3, column=4)
+                Label(self.root, text=fail_string, font=("Helvetica", 16), fg="red").grid(row=3, column=4)'''
                 #self.sum_state.update()
 
             # print(threading.enumerate())
@@ -1262,13 +1292,16 @@ class App():
         else:
             pass
     def change_state(self):
-        self.count_sum += 1
-        if self.pass_value==1:
-            self.pass_count+=1
+        if self.status_flag==1:
+            self.count_sum += 1
+            if self.pass_value==1:
+                self.pass_count+=1
+            else:
+                self.fail_count+=1
+            self.pass_value = 0
+            self.fail_value = 0
         else:
-            self.fail_count+=1
-        self.pass_value = 0
-        self.fail_value = 0
+            pass
     def check_target_area(self):
         image=self.imgOrigin
         h,w =image.shape[:2]
@@ -1839,49 +1872,28 @@ class App():
             if self.ClickValue == 2:####
                 self.Show_panel_vcap02(img)
                 self.Show_panel_vcap03(imgWrap)
-                #self.Show_panel02_0_1(img)
-                #self.Show_panel03_1_0(imgWrap)
-                '''try:
-                    self.Show_panel04_1_1(imgtest2[1])
-                except:
-                    pass'''
+
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
-                if self.algorithm_flag == 1:
+                if self.status_flag == 1:
                     output = []
+                    output2 = []
                     output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
+                    output2=self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
+                    value2 = self.check_algorithm2_2(output2)
                     value = self.check_algrithm1(output)
-                    if value == 1:
+                    if (value or value2):
                         self.pass_value = 1
-                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
+                        #Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
                     else:
                         self.fail_value = 1
-                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
-                elif self.algorithm_flag == 2:
-                    output = []
-                    output = self.algorithm2_1(tmpcnts2, locs, output)
-                    value = self.check_algorithm2_1(output)
-                    if value == 1:
-                        self.pass_value = 1
-                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
-                    else:
-                        self.fail_value = 1
-                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
-                elif self.algorithm_flag == 3:
-                    output = []
-                    self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output)
-                    value = self.check_algorithm2_2(output)
-                    if value == 1:
-                        self.pass_value = 1
-                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
-                    else:
-                        self.fail_value = 1
-                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+                        #Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+
                 else:
                     pass
 
-
-                try:
+                self.Show_panel_vcap02(self.ImgCap)
+                '''try:
                     self.Show_panel05_2_0(tmpcnts2[1])
                 except:
                     pass
@@ -1894,7 +1906,7 @@ class App():
                     Label(self.root, text=output[2], width=25, font=("Helvetica", 16)).grid(row=2, column=1)
                 except BaseException as e:
                     print(str(e))
-                    pass
+                    pass'''
             print("---OCR %s seconds ---" % (time.time() - start_time))
 
     def algorithm1_original_ocr(self, tmpcnts2, tmpcnts3, locs, output):
@@ -2159,23 +2171,31 @@ class App():
 
     def check_algorithm2_2(self, output):
         all_carec = []
+        len_carec=[]
         e=0
-        e1=1
+
         try:
             for (idx,i) in enumerate(output) :
-
+                len_carec.append(len(i))
                 for j in i:
                     all_carec.append(j)
                 #print(all_carec)
+            min=i[0]
             for (dx,i) in  enumerate(all_carec):
-                if i>= 10 :
-                    e=1
-                else:
-                    e1=0
-            return e1
-        except BaseException as e:
+
+                if min>=i :
+                    min=i
+
+
+            if min>=70:
+                e = 1
+            else:
+                e = 0
+            self.persentage=min
+            return e
+        except BaseException as e1:
             print(all_carec)
-            print(str(e))
+            print(str(e1))
             return 0
 
     def ocr_thread(self):
@@ -2187,16 +2207,16 @@ class App():
     def no_detect(self):
 
         if self.ClickValue == 2:
-            self.Show_panel02_0_1(self.Noimg)
-            self.Show_panel03_1_0(self.Noimg)
-            self.Show_panel04_1_1(self.Noimg)
+            self.Show_panel_vloop(self.Noimg)
+            self.Show_panel_vcap02(self.Noimg)
+            self.Show_panel_vcap03(self.Noimg)
         elif self.ClickValue == 10:
             # self.Show_panel01_0_0(self.frameShow)
-            self.Show_panel03_1_0(self.Noimg)
-            self.Show_panel05_2_0(self.Noimg)
-            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
+            self.Show_panel_vcap02(self.Noimg)
+            #self.Show_panel05_2_0(self.Noimg)
+            '''Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
+            Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)'''
 
     def digit_cnt_sobel(self,img):
         thresh=img
