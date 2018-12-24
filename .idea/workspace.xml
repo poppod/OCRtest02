@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1215" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1295" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/rectX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/rectY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -66,22 +71,22 @@
     <session id="480488181">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="25" />
+          <entry key="project.closed" value="27" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="6" />
           <entry key="project.open.time.11" value="2" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.15" value="2" />
+          <entry key="project.open.time.17" value="2" />
           <entry key="project.open.time.18" value="2" />
           <entry key="project.open.time.19" value="2" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="26" />
+          <entry key="project.opened" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -92,19 +97,19 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="9590" />
+          <entry key="py" value="9975" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="9590" />
+          <entry key="Python" value="9975" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="png" value="13" />
-          <entry key="py" value="7" />
+          <entry key="py" value="8" />
           <entry key="txt" value="14" />
         </counts>
       </usages-collector>
@@ -112,7 +117,7 @@
         <counts>
           <entry key="Image" value="13" />
           <entry key="PLAIN_TEXT" value="14" />
-          <entry key="Python" value="7" />
+          <entry key="Python" value="8" />
         </counts>
       </usages-collector>
     </session>
@@ -122,61 +127,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="401" column="43" selection-start-line="401" selection-start-column="43" selection-end-line="401" selection-end-column="43" />
+            <state relative-caret-position="257">
+              <caret line="615" lean-forward="true" selection-start-line="615" selection-end-line="615" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#5707#5909#0" />
-                <element signature="e#5949#5996#0" />
-                <element signature="e#6037#6073#0" />
-                <element signature="e#6112#6164#0" />
-                <element signature="e#8516#8977#0" />
-                <element signature="e#9024#9491#0" />
-                <element signature="e#9538#10005#0" />
-                <element signature="e#10052#10520#0" />
-                <element signature="e#10567#11034#0" />
-                <element signature="e#11080#11534#0" />
-                <element signature="e#11568#12472#0" />
-                <element signature="e#12515#13574#0" />
-                <element signature="e#13610#13663#0" />
-                <element signature="e#14400#15895#0" />
-                <element signature="e#15939#16594#0" />
-                <element signature="e#16635#18302#0" />
-                <element signature="e#18346#18796#0" />
-                <element signature="e#18840#20050#0" />
-                <element signature="e#20093#21316#0" />
-                <element signature="e#21358#21775#0" />
-                <element signature="e#21827#23076#0" />
-                <element signature="e#23121#23144#0" />
-                <element signature="e#23189#23212#0" />
-                <element signature="e#23320#25980#0" />
-                <element signature="e#26028#28477#0" />
-                <element signature="e#28519#28881#0" />
-                <element signature="e#29698#29838#0" />
-                <element signature="e#29882#30998#0" />
-                <element signature="e#31076#31543#0" />
-                <element signature="e#32225#33015#0" />
-                <element signature="e#33047#33649#0" />
-                <element signature="e#36771#37051#0" />
-                <element signature="e#41886#42463#0" />
-                <element signature="e#42500#42682#0" />
-                <element signature="e#42724#43159#0" />
-                <element signature="e#43193#43386#0" />
-                <element signature="e#43433#45406#0" />
-                <element signature="e#45445#47460#0" />
-                <element signature="e#47496#49410#0" />
-                <element signature="e#49444#62944#0" />
-                <element signature="e#62987#70026#0" />
-                <element signature="e#70109#74226#0" />
-                <element signature="e#74288#75176#0" />
-                <element signature="e#75248#78977#0" />
-                <element signature="e#79027#79407#0" />
-                <element signature="e#79459#79700#0" />
-                <element signature="e#79752#80235#0" />
-                <element signature="e#80271#80421#0" />
-                <element signature="e#80457#81093#0" />
-                <element signature="e#81138#83391#0" />
-                <element signature="e#83442#84431#0" />
+                <element signature="e#5742#5944#0" />
+                <element signature="e#5984#6031#0" />
+                <element signature="e#6072#6108#0" />
+                <element signature="e#6147#6199#0" />
+                <element signature="e#6243#8252#0" />
+                <element signature="e#8287#8504#0" />
+                <element signature="e#8551#9012#0" />
+                <element signature="e#9059#9526#0" />
+                <element signature="e#9573#10040#0" />
+                <element signature="e#10087#10555#0" />
+                <element signature="e#10602#11069#0" />
+                <element signature="e#24235#24685#0" />
               </folding>
             </state>
           </provider>
@@ -775,7 +741,21 @@
       <option name="project" value="LOCAL" />
       <updated>1545415218742</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="check">
+      <created>1545510071364</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1545510071365</updated>
+    </task>
+    <task id="LOCAL-00038" summary="check">
+      <created>1545510106625</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1545510106625</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -796,13 +776,13 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49627978" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6979167" visible="true" weight="0.1816694" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6964286" visible="true" weight="0.30605564" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8058036" weight="0.502455" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49776787" weight="0.32569557" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49776787" weight="0.062193125" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.30208334" side_tool="true" visible="true" weight="0.1816694" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49627978" weight="0.198036" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.30357143" side_tool="true" visible="true" weight="0.30605564" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.42857143" weight="0.3289689" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -829,6 +809,16 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -841,13 +831,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>821</line>
+          <line>899</line>
           <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1957</line>
-          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
@@ -856,38 +841,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2102</line>
+          <line>2186</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>313</line>
+          <line>359</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>879</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>928</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>786</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1043</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>944</line>
+          <line>1022</line>
           <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>424</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>494</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>990</line>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1075,67 +1055,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/img/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/NewGUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="401" column="43" selection-start-line="401" selection-start-column="43" selection-end-line="401" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#5707#5909#0" />
-            <element signature="e#5949#5996#0" />
-            <element signature="e#6037#6073#0" />
-            <element signature="e#6112#6164#0" />
-            <element signature="e#8516#8977#0" />
-            <element signature="e#9024#9491#0" />
-            <element signature="e#9538#10005#0" />
-            <element signature="e#10052#10520#0" />
-            <element signature="e#10567#11034#0" />
-            <element signature="e#11080#11534#0" />
-            <element signature="e#11568#12472#0" />
-            <element signature="e#12515#13574#0" />
-            <element signature="e#13610#13663#0" />
-            <element signature="e#14400#15895#0" />
-            <element signature="e#15939#16594#0" />
-            <element signature="e#16635#18302#0" />
-            <element signature="e#18346#18796#0" />
-            <element signature="e#18840#20050#0" />
-            <element signature="e#20093#21316#0" />
-            <element signature="e#21358#21775#0" />
-            <element signature="e#21827#23076#0" />
-            <element signature="e#23121#23144#0" />
-            <element signature="e#23189#23212#0" />
-            <element signature="e#23320#25980#0" />
-            <element signature="e#26028#28477#0" />
-            <element signature="e#28519#28881#0" />
-            <element signature="e#29698#29838#0" />
-            <element signature="e#29882#30998#0" />
-            <element signature="e#31076#31543#0" />
-            <element signature="e#32225#33015#0" />
-            <element signature="e#33047#33649#0" />
-            <element signature="e#36771#37051#0" />
-            <element signature="e#41886#42463#0" />
-            <element signature="e#42500#42682#0" />
-            <element signature="e#42724#43159#0" />
-            <element signature="e#43193#43386#0" />
-            <element signature="e#43433#45406#0" />
-            <element signature="e#45445#47460#0" />
-            <element signature="e#47496#49410#0" />
-            <element signature="e#49444#62944#0" />
-            <element signature="e#62987#70026#0" />
-            <element signature="e#70109#74226#0" />
-            <element signature="e#74288#75176#0" />
-            <element signature="e#75248#78977#0" />
-            <element signature="e#79027#79407#0" />
-            <element signature="e#79459#79700#0" />
-            <element signature="e#79752#80235#0" />
-            <element signature="e#80271#80421#0" />
-            <element signature="e#80457#81093#0" />
-            <element signature="e#81138#83391#0" />
-            <element signature="e#83442#84431#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/temp2.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1150,6 +1069,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/Area1.png">
       <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://C:/Python36-32/Lib/tkinter/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NewGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="615" lean-forward="true" selection-start-line="615" selection-end-line="615" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#5742#5944#0" />
+            <element signature="e#5984#6031#0" />
+            <element signature="e#6072#6108#0" />
+            <element signature="e#6147#6199#0" />
+            <element signature="e#6243#8252#0" />
+            <element signature="e#8287#8504#0" />
+            <element signature="e#8551#9012#0" />
+            <element signature="e#9059#9526#0" />
+            <element signature="e#9573#10040#0" />
+            <element signature="e#10087#10555#0" />
+            <element signature="e#10602#11069#0" />
+            <element signature="e#24235#24685#0" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">

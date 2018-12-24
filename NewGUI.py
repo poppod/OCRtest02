@@ -298,6 +298,7 @@ class App():
             self.panel5.configure(image=img)
             self.panel5.image = img
     def Show_panel06_3_0(self, img):
+
         try:
             img = imutils.resize(img, width=150, height=100)
         except:
@@ -311,6 +312,51 @@ class App():
         else:
             self.panel6.configure(image=img)
             self.panel6.image = img
+
+    def Show_panel_vloop(self,img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel is None:
+            self.panel = tkinter.Label(image=img, width=160, height=120)
+            self.panel.image = img
+            self.panel.grid(row=2, column=1, rowspan=2, columnspan=1, padx=15)
+        else:
+            self.panel.configure(image=img)
+            self.panel.image = img
+
+    def Show_panel_vcap02(self,img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel2 is None:
+            self.panel2 = tkinter.Label(image=img, width=160, height=120)
+            self.panel2.image = img
+            self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
+        else:
+            self.panel2.configure(image=img)
+            self.panel2.image = img
+
+    def Show_panel_vcap03(self,img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel3 is None:
+            self.panel3 = tkinter.Label(image=img, width=160, height=100)
+            self.panel3.image = img
+            self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
+        else:
+            self.panel3.configure(image=img)
+            self.panel3.image = img
     def importImg(self):
         # img=PIL.Image.open(self.filename)
         def Show_panel_select_page(img):
@@ -386,9 +432,12 @@ class App():
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0, sticky=W,
                                                                                            padx=5, pady=5, columnspan=2)
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
-        info_btn.grid(row=0, column=13)
+        info_btn.grid(row=0, column=11,columnspan=2)
         help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
-        help_btn.grid(row=0, column=14)
+        help_btn.grid(row=0, column=13,columnspan=2)
+        Label(self.root, text="ตั้งค่ากล้องวิดีโอ", font=("THSarabunNew", 14)).grid(row=1, column=4,
+                                                                                  sticky=W + E + N + S,
+                                                                                  padx=5, pady=5, columnspan=4)
         Label(self.root, text="ตั้งค่าคัดกรองสีพื้นหลัง", font=("THSarabunNew", 10)).grid(row=2, column=4,sticky=W + E + N + S,
                                                                                                   padx=5, pady=5,columnspan=3)
         Label(self.root, text="ตั้งค่า contours", font=("THSarabunNew", 10)).grid(row=2, column=8,
@@ -399,10 +448,12 @@ class App():
         self.thread = threading.Thread(target=self.videoLoop, args=())
         self.thread.daemon = True
         self.thread.start()
-        Label(self.root, width=10, height=2).grid(row=1, column=0)
-        #BboxSaveButton = Button(self.root, text="Target Area", command=self.Click_ValueBbox).grid(row=1, column=2)
-        #ResetBboxSaveButton = Button(self.root, text="Reset", command=self.reset_bbox).grid(row=2, column=2)
-        #OkNextButton = Button(self.root, text="OK and Next", command=self.page3_To_page4).grid(row=3, column=3)
+        Label(self.root, width=5, height=2).grid(row=1, column=0)
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date.grid(row=11, column=11, sticky=E, columnspan=3)
+        BboxSaveButton = Button(self.root, text="Target Area", command=self.Click_ValueBbox).grid(row=9, column=4,pady=10)
+        ResetBboxSaveButton = Button(self.root, text="Reset", command=self.reset_bbox).grid(row=9, column=5,pady=10)
+        OkNextButton = Button(self.root, text="OK and Next", command=self.page3_To_page4).grid(row=9, column=6,pady=10)
 
     def page3_To_page4(self):
         self.ClickValue = 5
@@ -445,19 +496,38 @@ class App():
         self.ClickValue = 2
         for ele in self.root.winfo_children():
             ele.destroy()
+        self.root.title("Setting Digits")
         self.panel = None
         self.panel2 = None
         self.panel3 = None
         if self.thread.isAlive() == True:
             print("thread Alive")
+
+            user = self.user
+            Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
+                                                                                               sticky=W,
+                                                                                               padx=5, pady=5,
+                                                                                               columnspan=2)
+            Label(self.root, text="ตั้งค่าภาพ", font=("THSarabunNew", 14)).grid(row=1, column=4,
+                                                                                        sticky=W + E + N + S,
+                                                                                        padx=5, pady=5, columnspan=4)
+            Label(self.root, text="ตั้งค่าสีพื้นหลัง", font=("THSarabunNew", 10)).grid(row=2, column=4,
+                                                                                              sticky=W + E + N + S,
+                                                                                              padx=5, pady=5,
+                                                                                              columnspan=3)
+            Label(self.root, text="ตั้งค่า contours", font=("THSarabunNew", 10)).grid(row=2, column=8,
+                                                                                      sticky=W + E + N + S,
+                                                                                      padx=5, pady=5, columnspan=4)
             self.scale2()
             self.scale3()
-            # self.scale4()
-            '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
-            self.TextocrThread.daemon = True
-            self.TextocrThread.start()'''
-            OkNextButton = Button(self.root, text="OK and Next", command=self.page4_To_page5).grid(row=3, column=3)
-
+            OkNextButton = Button(self.root, text="OK and Next", command=self.page4_To_page5).grid(row=10, column=10)
+            info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+            info_btn.grid(row=0, column=11, columnspan=2)
+            help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+            help_btn.grid(row=0, column=13, columnspan=2)
+            date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+            date.grid(row=11, column=11, sticky=E, columnspan=3)
+            Label(self.root, width=2, height=0).grid(row=1, column=0)
         else:
             print("dead")
 
@@ -524,19 +594,27 @@ class App():
         self.panel2 = None
         self.panel3 = None
         self.panel4 = None
-        Button(self.root, text="Default load", command=self.load_default_value).grid(row=2, column=4)
-        Insert_label1 = Label(self.root, text="Insert Value 1(Date)").grid(row=0, column=0)
-        self.Value1_Entry = Entry(self.root, bd=2, width=50, textvariable=self.DateValue)
-        self.Value1_Entry.grid(row=0, column=1, sticky=W)
+        user = self.user
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
+                                                                                           sticky=W,
+                                                                                           padx=5, pady=5,
+                                                                                           columnspan=2)
+        Label(self.root, text="ป้อนค่าบนฉลาก", font=("THSarabunNew", 14)).grid(row=2, column=3,
+                                                                            sticky=W + E + N + S,
+                                                                            padx=5, pady=5, columnspan=4)
+        #Button(self.root, text="Default load", command=self.load_default_value).grid(row=2, column=4)
+        Label(self.root, text="Value 1(Date)", font=("THSarabunNew", 10)).grid(row=3, column=3,sticky=W , columnspan=4)
+        self.Value1_Entry = Entry(self.root, bd=2, width=30, textvariable=self.DateValue)
+        self.Value1_Entry.grid(row=4, column=3, sticky=W, columnspan=4)
 
-        Insert_label2 = Label(self.root, text="Insert Value 2(NumberCode)").grid(row=1, column=0)
+        Label(self.root, text="Value 2(Code)", font=("THSarabunNew", 10)).grid(row=5, column=3,sticky=W , columnspan=4)
         self.Value2_Entry = Entry(self.root, bd=2, width=30, textvariable=self.NcodeValue)
-        self.Value2_Entry.grid(row=1, column=1, sticky=W)
-        Insert_label3 = Label(self.root, text="Insert Value 3(Alphabet)").grid(row=2, column=0)
+        self.Value2_Entry.grid(row=6, column=3, sticky=W, columnspan=4)
+        Label(self.root, text="Value 3(Alphabet)", font=("THSarabunNew", 10)).grid(row=7, column=3,sticky=W , columnspan=4)
         self.Value3_Entry = Entry(self.root, bd=2, width=5, textvariable=self.CcodeValue)
-        self.Value3_Entry.grid(row=2, column=1, sticky=W)
+        self.Value3_Entry.grid(row=8, column=3, sticky=W, columnspan=4)
 
-        Save_button = Button(self.root, text="Save", command=self.save_value_input).grid(row=3, column=4)
+        #Save_button = Button(self.root, text="Save", command=self.save_value_input).grid(row=3, column=4)
 
     def save_value_input(self):
 
@@ -894,48 +972,48 @@ class App():
 
     def scale2(self):
 
-        scale = Scale(self.root, from_=0, to=255, variable=self.varMax)
+        scale = Scale(self.root, from_=0, to=255, variable=self.varMax, label="B",sliderlength=50,length=250)
         scale.set(self.varMax.get())
-        scale1 = Scale(self.root, from_=0, to=255, variable=self.varMax2)
+        scale1 = Scale(self.root, from_=0, to=255, variable=self.varMax2, label="G",sliderlength=50,length=250)
         scale1.set(self.varMax2.get())
-        scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3)
+        scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3, label="R",sliderlength=50,length=250)
         scale2.set(self.varMax3.get())
-        scale3 = Scale(self.root, from_=0, to=255, variable=self.varMax4, orient=tkinter.HORIZONTAL)
+        scale3 = Scale(self.root, from_=0, to=255, variable=self.varMax4,label="ความฟุ้ง contours", orient=tkinter.HORIZONTAL,sliderlength=50,length=250)
         scale3.set(self.varMax4.get())
-        scale4 = Scale(self.root, from_=0, to=255, variable=self.varMax5, orient=tkinter.HORIZONTAL)
+        scale4 = Scale(self.root, from_=0, to=255, variable=self.varMax5, label="ความฟุ้ง digits", orient=tkinter.HORIZONTAL,sliderlength=50,length=250)
         scale4.set(self.varMax5.get())
-        scale.grid(row=0, column=4)
-        scale1.grid(row=0, column=5)
-        scale2.grid(row=0, column=6)
-        scale3.grid(row=0, column=7)
-        scale4.grid(row=0, column=8)
+        scale.grid(row=3, column=4,rowspan=6 ,sticky=W+N)
+        scale1.grid(row=3, column=5,rowspan=6 ,sticky=W+N)
+        scale2.grid(row=3, column=6,rowspan=6 ,sticky=W+N)
+        scale3.grid(row=9, column=3,columnspan=4,sticky=W+N)
+        scale4.grid(row=9, column=8,columnspan=6,sticky=W+N)
 
     def scale3(self):
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=1, to=100, variable=self.rectY)
+        scale = Scale(self.root, from_=1, to=100, variable=self.rectY, label="rY",sliderlength=50,length=250)
         scale.set(self.rectY.get())
-        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX)
+        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX, label="rX",sliderlength=50,length=250)
         scale1.set(self.rectX.get())
-        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY)
+        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY, label="sqY",sliderlength=50,length=250)
         scale2.set(self.sqY.get())
-        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX)
+        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX, label="sqX",sliderlength=50,length=250)
         scale3.set(self.sqX.get())
-        scale.grid(row=1, column=4)
-        scale1.grid(row=1, column=5)
-        scale2.grid(row=1, column=6)
-        scale3.grid(row=1, column=7)
+        scale.grid(row=3, column=8, rowspan=6, sticky=W + N)
+        scale1.grid(row=3, column=9, rowspan=6, sticky=W + N)
+        scale2.grid(row=3, column=10, rowspan=6, sticky=W + N)
+        scale3.grid(row=3, column=11, rowspan=6, sticky=W + N)
 
     def scale4(self):  # use vssetting
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=1, to=100, variable=self.rectY2,sliderlength=50,length=250)
+        scale = Scale(self.root, from_=1, to=100, variable=self.rectY2, label="rY",sliderlength=50,length=250)
         scale.set(self.rectY2.get())
-        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX2,sliderlength=50,length=250)
+        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX2, label="rX",sliderlength=50,length=250)
         scale1.set(self.rectX2.get())
-        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY2,sliderlength=50,length=250)
+        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY2, label="sqY",sliderlength=50,length=250)
         scale2.set(self.sqY2.get())
-        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX2,sliderlength=50,length=250)
+        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX2, label="sqX",sliderlength=50,length=250)
         scale3.set(self.sqX2.get())
         scale.grid(row=3, column=8,rowspan=6 ,sticky=W+N)
         scale1.grid(row=3, column=9,rowspan=6 ,sticky=W+N)
@@ -1094,7 +1172,8 @@ class App():
         # c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
 
         clone01 = np.dstack([closed.copy()] * 3)
-        self.treshImg = clone01
+
+
         # rect2 = cv2.minAreaRect(c2)
         # box2 = cv2.boxPoints(rect2)
         # box2 = np.int0(box2)
@@ -1127,11 +1206,11 @@ class App():
             #self.cnt_area_check(cnts[0])
             for c in cnts:
                 # approximate the contour
-
+                (x, y, w, h) = cv2.boundingRect(c)
                 #self.cnt_area_check(c)
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-
+                cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 # if our approximated contour has four points, then we
                 # can assume that we have found our screen
                 if len(approx) == 4:
@@ -1143,6 +1222,7 @@ class App():
         else:
             pass
         # screenCnt[1]=screenCnt[1]+20
+        self.treshImg = clone01
         if screenCnt is None:
             screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
             pts = screenCnt.reshape(4, 2)
@@ -1379,7 +1459,7 @@ class App():
             cv2.rectangle(clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
             # roi = ref[y:y + h, x:x + w]
         # cv2.imshow("Simple Method", clone)
-        cv2.imshow('roi', self.roi[2])
+        #cv2.imshow('roi', self.roi[2])
         # cv2.imshow("test",ref)
 
 
@@ -1691,8 +1771,7 @@ class App():
             clone01 = np.dstack([thresh.copy()] * 3)
 
             font = cv2.FONT_HERSHEY_SIMPLEX
-            tmpcnts3 = {}
-
+            tmpcnts3 = {}#ประมวล
             for (idx, c) in enumerate(cnts):
                 x, y, w, h = cv2.boundingRect(c)
                 x -= 15
@@ -1717,7 +1796,7 @@ class App():
             img = clone01
 
             if self.ClickValue == 2:
-                self.Show_panel01_0_0(img)
+                self.Show_panel_vloop(img)
 
             output = []
             kernel = np.ones((1, 1), np.uint8)
@@ -1754,49 +1833,54 @@ class App():
 
 
 
-            if self.algorithm_flag == 1:
-                output = []
-                output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
-                value=self.check_algrithm1(output)
-                if value==1:
-                    self.pass_value=1
-                    Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
-                else:
-                    self.fail_value=1
-                    Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
-            elif self.algorithm_flag == 2:
-                output = []
-                output = self.algorithm2_1(tmpcnts2, locs, output)
-                value=self.check_algorithm2_1(output)
-                if value==1:
-                    self.pass_value=1
-                    Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
-                else:
-                    self.fail_value=1
-                    Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
-            elif self.algorithm_flag == 3:
-                output = []
-                self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output)
-                value=self.check_algorithm2_2(output)
-                if value==1:
-                    self.pass_value=1
-                    Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
-                else:
-                    self.fail_value=1
-                    Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
-            else:
-                pass
+
 
             img = img2
-            if self.ClickValue == 2:
-                self.Show_panel02_0_1(img)
-                self.Show_panel03_1_0(imgWrap)
-                try:
+            if self.ClickValue == 2:####
+                self.Show_panel_vcap02(img)
+                self.Show_panel_vcap03(imgWrap)
+                #self.Show_panel02_0_1(img)
+                #self.Show_panel03_1_0(imgWrap)
+                '''try:
                     self.Show_panel04_1_1(imgtest2[1])
                 except:
-                    pass
+                    pass'''
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
+                if self.algorithm_flag == 1:
+                    output = []
+                    output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
+                    value = self.check_algrithm1(output)
+                    if value == 1:
+                        self.pass_value = 1
+                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
+                    else:
+                        self.fail_value = 1
+                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+                elif self.algorithm_flag == 2:
+                    output = []
+                    output = self.algorithm2_1(tmpcnts2, locs, output)
+                    value = self.check_algorithm2_1(output)
+                    if value == 1:
+                        self.pass_value = 1
+                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
+                    else:
+                        self.fail_value = 1
+                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+                elif self.algorithm_flag == 3:
+                    output = []
+                    self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output)
+                    value = self.check_algorithm2_2(output)
+                    if value == 1:
+                        self.pass_value = 1
+                        Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
+                    else:
+                        self.fail_value = 1
+                        Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+                else:
+                    pass
+
+
                 try:
                     self.Show_panel05_2_0(tmpcnts2[1])
                 except:
