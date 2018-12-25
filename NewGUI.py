@@ -208,7 +208,7 @@ class App():
                                                                                              padx=5, pady=5)
         Label(self.root, text="เริ่มต้นการทำงาน โดยใช้ค่าเดิม(ไม่แนะนำ)", font=("THSarabunNew", 10)).grid(row=3, column=2, sticky=W + E + N + S,
                                                                                   padx=5, pady=5)
-        Button(self.root, text='Default', command=self.default_process_solution_1).grid(row=4, column=2,sticky=W + N + E + S)
+        Button(self.root, text='Default', command=self.default_process).grid(row=4, column=2, sticky=W + N + E + S)
         Label(self.root, text="ตั้งค่าใหม่", font=("THSarabunNew", 14)).grid(row=2, column=4, sticky=W + E + N + S,
                                                                                   padx=5, pady=5)
         Label(self.root, text="ตั้งค่าใหม่ ใช้ข้อมูลใหม่(แนะนำ)", font=("THSarabunNew", 10)).grid(row=3,column=4,sticky=W + E + N + S,padx=5,pady=5)
@@ -355,6 +355,34 @@ class App():
             self.panel3 = tkinter.Label(image=img, width=160, height=100)
             self.panel3.image = img
             self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
+        else:
+            self.panel3.configure(image=img)
+            self.panel3.image = img
+    def Show_panel_proces01(self,img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel2 is None:
+            self.panel2 = tkinter.Label(image=img, width=160, height=100)
+            self.panel2.image = img
+            self.panel2.grid(row=4, column=4, rowspan=3, columnspan=2, padx=10,pady=15)
+        else:
+            self.panel2.configure(image=img)
+            self.panel2.image = img
+    def Show_panel_proces02(self,img):
+        try:
+            img = imutils.resize(img, width=150, height=100)
+        except:
+            img = img
+        img = PIL.Image.fromarray(img)
+        img = PIL.ImageTk.PhotoImage(img)
+        if self.panel3 is None:
+            self.panel3 = tkinter.Label(image=img, width=160, height=100)
+            self.panel3.image = img
+            self.panel3.grid(row=4, column=7, rowspan=3, columnspan=2, padx=10,pady=15)
         else:
             self.panel3.configure(image=img)
             self.panel3.image = img
@@ -592,10 +620,12 @@ class App():
         self.panel2 = None
         self.panel3 = None
         self.panel4 = None
+
         for ele in self.root.winfo_children():
 
             ele.destroy()
         self.ClickValue = 3
+
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Insert Value")
@@ -663,9 +693,9 @@ class App():
             if self.thread.isAlive() == True:
                 print("thread Alive")
                 # self.thread._Thread_stop()
-                self.default_process_solution_1()
+                self.default_process()
 
-    def default_process_solution_1(self):
+    def default_process(self):
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
@@ -693,17 +723,19 @@ class App():
                                                                                            columnspan=2)
         Label(self.root, text="ประมวลผลภาพ", font=("THSarabunNew", 14)).grid(row=2, column=4,
                                                                                sticky=W + E + N + S,
-                                                                               padx=5, pady=5, columnspan=3)
-        Label(self.root, text="ค่าที่ป้อน :", font=("THSarabunNew", 8)).grid(row=3, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 8)).grid(row=4, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="สถานะ :", font=("THSarabunNew", 8)).grid(row=5, column=4, sticky=W)
-        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=6, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="ค่าความถูกต้อง :", font=("THSarabunNew", 8)).grid(row=7, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=3, column=7, sticky=W, columnspan=3)
-        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 8)).grid(row=4, column=7, sticky=W, columnspan=1)
-        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 8)).grid(row=5, column=7, sticky=W, columnspan=1)
-        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 8)).grid(row=6, column=7, sticky=W, columnspan=1)
-        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 8)).grid(row=7, column=7, sticky=W, columnspan=1)
+                                                                               padx=5, pady=5, columnspan=5)
+        Label(self.root, text="ค่าที่ป้อน :  "+str(self.DateValue)+","+str(self.NcodeValue)+","+str(self.CcodeValue), font=("THSarabunNew", 8)).grid(row=8, column=4, sticky=W, columnspan=4)
+        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 8)).grid(row=9, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="สถานะ :", font=("THSarabunNew", 8)).grid(row=10, column=4, sticky=W)
+        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=11, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="ค่าความถูกต้อง : 70 %", font=("THSarabunNew", 8)).grid(row=12, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=13, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 8)).grid(row=14, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 8)).grid(row=15, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 8)).grid(row=16, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 8)).grid(row=17, column=4, sticky=W, columnspan=1)
+        Label(self.root,width=5,height=5).grid(row=4, column=3)
+        #Label(self.root, width=5, height=5).grid(row=8, column=3)
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
@@ -922,7 +954,7 @@ class App():
                 if self.ClickValue == 0  :
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
-                    self.Show_panel_vloop(self.frameShow)
+                    self.Show_panel_proces01(self.frameShow)
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
@@ -1116,22 +1148,34 @@ class App():
                 #self.Show_panel03_1_0(self.ImgCap)  #####
             else:
                 pass
-            if self.ClickValue == 10 and self.Detect_flag == 1 or self.ClickValue == 2:
+            if self.ClickValue == 2 :
+                self.TextOCR2_no_loop()
+            if self.ClickValue == 10 :
                 # self.TextOCR2_no_loop()
                 # self.ocr_thread()
-                ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
-                ocrthread.daemon = True
-                ocrthread.run()
+                if self.Detect_flag == 1:
+                    Label(self.root,text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W, columnspan=1)
+                    '''ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
+                    ocrthread.daemon = True
+                    ocrthread.run()'''
+                    self.TextOCR2_no_loop()
+                else:
+                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W, columnspan=1)
+                    self.no_detect()
+                if self.status_flag==1:
+                    Label(self.root, text="ทำงาน  ", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
+                elif self.status_flag==2 :
+                    Label(self.root, text="พัก    ", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
+                elif self.status_flag==3 :
+                    Label(self.root, text="หยุดทำงาน", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
 
-            else:
-                self.no_detect()
-            if self.ClickValue == 10:
-                '''sum_string = "Total :"+str(self.count_sum)
-                Label(self.root, text=sum_string, font=("Helvetica", 16)).grid(row=3, column=2)
-                pass_string="Pass :"+str(self.pass_count)
-                Label(self.root, text=pass_string, font=("Helvetica", 16), fg="green").grid(row=3, column=3)
-                fail_string="Fail :"+str(self.fail_count)
-                Label(self.root, text=fail_string, font=("Helvetica", 16), fg="red").grid(row=3, column=4)'''
+
+                sum_string = str(self.count_sum)
+                Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
+                pass_string=str(self.pass_count)
+                Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
+                fail_string=str(self.fail_count)
+                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
                 #self.sum_state.update()
 
             # print(threading.enumerate())
@@ -1875,6 +1919,7 @@ class App():
 
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
+
                 if self.status_flag == 1:
                     output = []
                     output2 = []
@@ -1884,15 +1929,23 @@ class App():
                     value = self.check_algrithm1(output)
                     if (value or value2):
                         self.pass_value = 1
-                        #Label(self.root, text="PASS", width=5, font=("Helvetica", 16), fg="green").grid(row=3, column=1)
+                        Label(self.root, text="PASS", width=5,font=("THSarabunNew", 8), fg="green").grid(row=14, column=5)
                     else:
                         self.fail_value = 1
-                        #Label(self.root, text="FAIL", width=5, font=("Helvetica", 16), fg="red").grid(row=3, column=1)
+                        Label(self.root, text="FAIL", width=5,font=("THSarabunNew", 8), fg="red").grid(row=14, column=5)
 
                 else:
                     pass
 
-                self.Show_panel_vcap02(self.ImgCap)
+                self.Show_panel_proces02(self.ImgCap)
+                try:
+                    out="".join(str(x) for x in output[0])+","+"".join(str(x) for x in output[1])+","+"".join(str(x) for x in output[2])
+                    Label(self.root, text=out,font=("THSarabunNew", 8),width=20).grid(row=11, column=5, sticky=W, columnspan=2)
+                    Label(self.root,text=str(self.persentage)+" %",font=("THSarabunNew", 8)).grid(row=13,column=5, sticky=S, columnspan=1)
+                except BaseException as e:
+                    print(str(e))
+                    pass
+
                 '''try:
                     self.Show_panel05_2_0(tmpcnts2[1])
                 except:
@@ -2212,7 +2265,8 @@ class App():
             self.Show_panel_vcap03(self.Noimg)
         elif self.ClickValue == 10:
             # self.Show_panel01_0_0(self.frameShow)
-            self.Show_panel_vcap02(self.Noimg)
+            #self.Show_panel_vcap02(self.Noimg)
+            self.Show_panel_proces02(self.Noimg)
             #self.Show_panel05_2_0(self.Noimg)
             '''Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
             Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
