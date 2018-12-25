@@ -120,8 +120,8 @@ class App():
         # self.load_all_value()
 
         #self.page1_selectOption()
-        #self.well_com_page()
-        self.page2_selectFile()
+        self.well_com_page()
+        #self.page2_selectFile()
 
 
         '''self.thread=threading.Thread(target=self.videoLoop, args=())
@@ -382,7 +382,7 @@ class App():
         if self.panel3 is None:
             self.panel3 = tkinter.Label(image=img, width=160, height=100)
             self.panel3.image = img
-            self.panel3.grid(row=4, column=7, rowspan=3, columnspan=2, padx=10,pady=15)
+            self.panel3.grid(row=4, column=7, rowspan=3, columnspan=3, padx=10,pady=15)
         else:
             self.panel3.configure(image=img)
             self.panel3.image = img
@@ -706,16 +706,16 @@ class App():
         self.panel4 = None
         # self.root2 = tkinter.Tk()
         # self.root2.geometry('800x480')
-        self.root.title("Solution 1 Process")
+        self.root.title("Process")
         self.ClickValue = 10
         self.TextOcrRef()
         self.load_all_value()
 
         self.make_tempplate()
         self.make_tempplate2_no_pad()
-        #Button(self.root, text="start", command=self.add_algorithm1_flag).grid(row=0, column=4)
-        #Button(self.root, text="pause", command=self.add_algorithm2_flag).grid(row=1, column=4)
-        #Button(self.root, text="stop", command=self.add_algorithm3_flag).grid(row=2, column=4)
+        Button(self.root, text="start", command=self.add_algorithm1_flag).grid(row=18, column=7,sticky=W+N+E+S)
+        Button(self.root, text="pause", command=self.add_algorithm2_flag).grid(row=18, column=8,sticky=W+N+E+S)
+        Button(self.root, text="stop", command=self.add_algorithm3_flag).grid(row=18, column=9,sticky=W+N+E+S)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
@@ -1163,11 +1163,11 @@ class App():
                     Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W, columnspan=1)
                     self.no_detect()
                 if self.status_flag==1:
-                    Label(self.root, text="ทำงาน  ", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
+                    Label(self.root, text="ทำงาน",width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
                 elif self.status_flag==2 :
-                    Label(self.root, text="พัก    ", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
+                    Label(self.root, text="พัก",width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
                 elif self.status_flag==3 :
-                    Label(self.root, text="หยุดทำงาน", font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
+                    Label(self.root, text="หยุดทำงาน",width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W, columnspan=1)
 
 
                 sum_string = str(self.count_sum)
