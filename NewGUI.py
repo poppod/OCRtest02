@@ -34,8 +34,15 @@ class App():
         #####
         self.root = tkinter.Tk()
         self.THsarabun = tkinter.Text(self.root)
+        #### time
         self.now = datetime.datetime.now()
-        self.date_time = str(self.now.strftime("%Y-%m-%d %H:%M"))
+        self.date_time = str(self.now.strftime("%d-%m-%Y %H:%M"))
+        self.date = str(self.now.strftime("%d-%m-%Y"))
+        self.start_time = None
+        self.end_time = None
+        self.start_time_min2cal=None
+        self.end_time_min2cal=None
+        ####time
         myfont = Font(family="THSarabunNew", size=14)
         self.THsarabun.configure(font=myfont)
         # self.scale()
@@ -61,6 +68,8 @@ class App():
         self.user = None
         self.persentage = 0
 
+        self.log=StringVar()
+        self.directory=StringVar()
         self.pass_count = 0
         self.fail_count = 0
         self.varMax = IntVar()
@@ -122,9 +131,7 @@ class App():
         self.well_com_page()
         # self.page2_selectFile()
 
-        '''self.thread=threading.Thread(target=self.videoLoop, args=())
-        self.thread.daemon=True
-        self.thread.start()'''
+        #self.date_realtime()
 
         '''self.TextocrThread = threading.Thread(target=self.TextOCR, args=())
         self.TextocrThread.daemon=True
@@ -141,6 +148,12 @@ class App():
         # self.TextOCR()
 
         self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
+
+    def date_realtime(self):
+
+        self.now = datetime.datetime.now()
+        self.date_time = str(self.now.strftime("%Y-%m-%d %H:%M"))
+        self.date = str(self.now.strftime("%Y-%m-%d"))
 
     def well_com_page(self):
 
@@ -173,7 +186,8 @@ class App():
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         Label(self.root, height=12).grid(row=7, column=0)
         date.grid(row=8, column=3, sticky=E, columnspan=2)
-        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10),command=self.close_program).grid(row=8, column=1)
+        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10), command=self.close_program).grid(row=8,
+                                                                                                         column=1)
 
     def well_to_page1(self):
         user = self.user.get()
@@ -181,7 +195,7 @@ class App():
             self.user = user
             self.page1_selectOption()
         else:
-            messagebox.showerror("Insert Eror", "No Value , Please insert value")
+            messagebox.showerror("Insert Error", "No Value ,Insert value please ")
 
     def Save_Bbox(self, h, w):
         self.HeightBbox = h
@@ -196,8 +210,15 @@ class App():
         self.page2_selectFile()
 
     def page1_selectOption(self):
+
         for ele in self.root.winfo_children():
             ele.destroy()
+
+
+        self.panel = None
+        self.panel2 = None
+        self.panel3 = None
+        self.panel4 = None
         self.root.geometry('800x480')
         self.root.title("Start page")
         user = self.user
@@ -223,7 +244,8 @@ class App():
         Button(self.root, text='Setting', command=self.settingButton).grid(row=4, column=4, sticky=W + N + E + S)
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=8, column=6, sticky=E, columnspan=2)
-        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10),command=self.close_program).grid(row=8,column=1)
+        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10), command=self.close_program).grid(row=8,
+                                                                                                         column=1)
         Label(self.root, width=20, height=8).grid(row=1, column=1)
         Label(self.root, width=10, height=8).grid(row=1, column=3)
         Label(self.root, width=10, height=10).grid(row=5, column=5)
@@ -730,14 +752,16 @@ class App():
         self.ClickValue = 10
         self.TextOcrRef()
         self.load_all_value()
-
+        now=datetime.datetime.now()
+        self.start_time_min2cal=(int(now.hour)*60)+int(now.minute)
+        self.start_time=str(now.strftime("%H:%M"))
         self.reset_to_new_process()
         self.make_tempplate()
         self.make_tempplate2_no_pad()
         Button(self.root, text="start", command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
         Button(self.root, text="pause", command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
         Button(self.root, text="stop", command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
-        Button(self.root, text="New",command=self.page5_Insert_Value).grid(row=8, column=7, sticky=W + N + E + S)
+        Button(self.root, text="New", command=self.page5_Insert_Value).grid(row=8, column=7, sticky=W + N + E + S)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
@@ -770,7 +794,7 @@ class App():
         Label(self.root, width=15, height=0).grid(row=1, column=3)
         Label(self.root, width=10, height=0).grid(row=1, column=10)
         # Label(self.root, width=5, height=5).grid(row=8, column=3)
-        if self.thread == None:
+        if self.thread == None or self.stopEvent.is_set():
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
             self.thread.start()
@@ -783,11 +807,13 @@ class App():
 
         # self.root.destroy()
         # self.root.quit()self.thread.isAlive() == False or
+
     def reset_to_new_process(self):
-        self.status_flag=2
-        self.count_sum=0
-        self.pass_count=0
-        self.fail_count=0
+        self.status_flag = 2
+        self.count_sum = 0
+        self.pass_count = 0
+        self.fail_count = 0
+
     def add_algorithm1_flag(self):
         self.status_flag = 1
 
@@ -795,13 +821,23 @@ class App():
         self.status_flag = 2
 
     def add_algorithm3_flag(self):
+        self.status_flag=2
         Msg = messagebox.askyesno("Stop", "Stop and close process")
         if Msg:
             self.status_flag = 3
+            self.ClickValue = 11
 
 
+            self.panel = None
+            self.panel2 = None
+            self.panel3 = None
+            self.panel4 = None
+            self.save_log_page()
+        else:
+            self.status_flag=1
     def save_log_page(self):
         self.ClickValue = 11
+        #self.stopEvent.set()
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
@@ -811,9 +847,94 @@ class App():
         self.panel3 = None
         self.panel4 = None
         self.ClickValue = 11
+        now=datetime.datetime.now()
+        self.end_time_min2cal=(int(now.hour)*60)+int(now.minute)
+        self.end_time=str(now.strftime("%H:%M"))
         self.root.title("Save Log")
+        finish_time=self.end_time_min2cal-self.start_time_min2cal
+        user = self.user
+
+        log=[]
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
+                                                                                           sticky=W,
+                                                                                           padx=5, pady=5,
+                                                                                           columnspan=2)
+
+        Label(self.root, text="วันที่ : " + str(self.date), font=("THSarabunNew", 10)).grid(row=2, column=3, sticky=W,
+                                                                                          columnspan=3)
+
+        log.append("DATE:"+ str(self.date))
+
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 10)).grid(row=3, column=3, sticky=W,
+                                                                                            columnspan=3)
+        log.append("USER:" + str(user))
+
+        Label(self.root, text="เริ่ม : " + str(self.start_time), font=("THSarabunNew", 10)).grid(row=4, column=3,
+                                                                                            sticky=W,
+                                                                                            columnspan=3)
+        log.append("START:" + str(self.start_time))
+
+        Label(self.root, text="สิ้นสุด : " + str(self.end_time), font=("THSarabunNew", 10)).grid(row=5, column=3,
+                                                                                                 sticky=W,
+                                                                                                 columnspan=3)
+        log.append("END:" + str(self.end_time))
+
+        Label(self.root, text="ใช้เวลา : " + str(finish_time)+" นาที", font=("THSarabunNew", 10)).grid(row=6, column=3,
+                                                                                                 sticky=W,
+                                                                                                 columnspan=3)
+        log.append("FINISH:" + str(finish_time))
+
+        Label(self.root, text="ทั้งหมด : " + str(self.count_sum), font=("THSarabunNew", 10)).grid(row=7, column=3,
+                                                                                                 sticky=W,
+                                                                                                 columnspan=3)
+        log.append("TOTAL:"+ str(self.count_sum))
+
+        Label(self.root, text="ผ่าน : " + str(self.pass_count), font=("THSarabunNew", 10)).grid(row=8, column=3,
+                                                                                                 sticky=W,
+                                                                                                 columnspan=3)
+        log.append("PASS:"+ str(self.pass_count))
+
+        Label(self.root, text="ไม่ผ่าน : " + str(self.fail_count), font=("THSarabunNew", 10)).grid(row=9, column=3,
+                                                                                                 sticky=W,
+                                                                                                 columnspan=3)
+        log.append("FAIL:"+str(self.fail_count))
+
+        Label(self.root, text="./log/" , font=("THSarabunNew", 8)).grid(row=11, column=3,
+                                                                                                   sticky=W,
+                                                                                                   columnspan=2)
 
 
+
+        self.log=str(log)
+
+        self.directory='./log/'
+        Button(self.root,text="Change", font=("THSarabunNew", 8),command=self.save_dialog).grid(row=11,column=5)
+        Button(self.root, text="OK", font=("THSarabunNew", 8), command=self.save_logfile).grid(row=12, column=5)
+    def save_dialog(self):
+        directory=filedialog.askdirectory(initialdir = './log/')
+        self.directory=directory
+
+        if directory:
+            Label(self.root, text=str(self.directory), font=("THSarabunNew", 8)).grid(row=11, column=3,
+                                                                           sticky=W,
+                                                                           columnspan=2)
+
+    def save_logfile(self):
+        ms=messagebox.askyesno("Save log","Save log file")
+        if ms:
+            ms_log=self.log
+            self.date_realtime()
+            path=str(self.directory)+str(self.date_time)+'.txt'
+            log = open('./log/test.txt',"w")
+            log.write(ms_log)
+            log.close()
+            Label(self.root, text=str(path), font=("THSarabunNew", 8)).grid(row=12, column=3,
+                                                                                sticky=W,
+                                                                            columnspan=2)
+            time.sleep(3)
+            self.page1_selectOption()
+        else:
+            return
     def load_all_value(self):
         H = open('./Configure/AreaH.txt', 'r')
         self.HeightBbox = int(H.read())
@@ -1218,24 +1339,24 @@ class App():
                 # self.ocr_thread()
                 if self.Detect_flag == 1:
                     Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                                  columnspan=1)
+                                                                                  )
                     '''ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
                     ocrthread.daemon = True
                     ocrthread.run()'''
                     self.TextOCR2_no_loop()
                 else:
                     Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                                  columnspan=1)
+                                                                                  )
                     self.no_detect()
                 if self.status_flag == 1:
                     Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                            columnspan=1)
+                                                                                            )
                 elif self.status_flag == 2:
                     Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                          columnspan=1)
+                                                                                          )
                 elif self.status_flag == 3:
                     Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                                sticky=W, columnspan=1)
+                                                                                                sticky=W, )
 
                 sum_string = str(self.count_sum)
                 Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
@@ -1435,7 +1556,7 @@ class App():
             # pass
 
     def onClose(self):
-        #cv2.imwrite("capture.png", self.imgOrigin)
+        # cv2.imwrite("capture.png", self.imgOrigin)
         self.stopEvent.set()
         # self.vs.release()
         self.root.quit()
@@ -2239,8 +2360,12 @@ class App():
                     roi = cv2.resize(roi, (57, 88))
                 except:
                     roi = cv2.resize(img, (57, 88))
+                roi2=roi.copy()
                 roi = self.digit_cnt_sobel(roi)
-                roi = cv2.resize(roi, (57, 88))
+                try:
+                    roi = cv2.resize(roi, (57, 88))
+                except:
+                    roi = cv2.resize(roi2, (57, 88))
                 imgtest2[charac] = roi
                 charac += 1
                 total = 0
@@ -2396,7 +2521,7 @@ class App():
 
         return thresh
 
-    def perspactive_transform(self,orig, cnts, ratio):
+    def perspactive_transform(self, orig, cnts, ratio):
         pts = cnts
 
         rect = np.zeros((4, 2), dtype="float32")
@@ -2438,7 +2563,6 @@ class App():
         cv2.destroyAllWindows()
         self.stopEvent.set()
         self.root.destroy()
-
 
 
 if __name__ == '__main__':
