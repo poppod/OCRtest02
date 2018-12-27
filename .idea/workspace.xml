@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1382" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1441" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
@@ -93,25 +93,25 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="10837" />
+          <entry key="py" value="11151" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="10837" />
+          <entry key="Python" value="11151" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="png" value="13" />
+          <entry key="png" value="14" />
           <entry key="py" value="11" />
           <entry key="txt" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Image" value="13" />
+          <entry key="Image" value="14" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="Python" value="11" />
         </counts>
@@ -123,11 +123,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1590">
-              <caret line="1202" column="4" selection-start-line="1202" selection-start-column="4" selection-end-line="1202" selection-end-column="4" />
+            <state relative-caret-position="275">
+              <caret line="2437" column="31" lean-forward="true" selection-start-line="2437" selection-start-column="31" selection-end-line="2437" selection-end-column="31" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#4025#5727#0" />
                 <element signature="e#5765#5967#0" />
                 <element signature="e#6007#6054#0" />
                 <element signature="e#6095#6131#0" />
@@ -151,16 +150,23 @@
                 <element signature="e#20993#23610#0" />
                 <element signature="e#23651#25318#0" />
                 <element signature="e#25362#25812#0" />
-                <element signature="e#25856#28646#0" />
-                <element signature="e#28688#29812#0" />
                 <element signature="e#29854#30260#0" />
+                <element signature="e#33933#36593#0" />
+                <element signature="e#36641#39090#0" />
+                <element signature="e#39132#41170#0" />
+                <element signature="e#41306#42604#0" />
                 <element signature="e#42833#43949#0" />
                 <element signature="e#44027#44494#0" />
+                <element signature="e#44526#45288#0" />
+                <element signature="e#45321#46444#0" />
+                <element signature="e#46476#47338#0" />
+                <element signature="e#47387#48245#0" />
+                <element signature="e#48277#52787#0" />
                 <element signature="e#48456#49002#0" />
-                <element signature="e#49051#49597#0" />
-                <element signature="e#58736#58942#0" />
+                <element signature="e#52841#53121#0" />
+                <element signature="e#53671#58587#0" />
+                <element signature="e#58086#58663#0" />
                 <element signature="e#59015#59450#0" />
-                <element signature="e#59484#59677#0" />
                 <element signature="e#59724#61697#0" />
                 <element signature="e#61736#63751#0" />
                 <element signature="e#63787#65702#0" />
@@ -175,8 +181,7 @@
                 <element signature="e#96327#96477#0" />
                 <element signature="e#96513#97209#0" />
                 <element signature="e#97254#99507#0" />
-                <element signature="e#100606#100906#0" />
-                <element signature="e#100939#101453#0" />
+                <element signature="e#99558#100547#0" />
               </folding>
             </state>
           </provider>
@@ -804,7 +809,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545729680088</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="check">
+      <created>1545899220796</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1545899220796</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -820,18 +832,18 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14211309" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14211309" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4955357" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.69494045" visible="true" weight="0.13114753" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.69494045" visible="true" weight="0.21967213" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8058036" weight="0.502455" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49776787" weight="0.32569557" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49627978" weight="0.198036" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.30505952" side_tool="true" visible="true" weight="0.13114753" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.30505952" side_tool="true" visible="true" weight="0.21967213" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.42857143" weight="0.3289689" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -880,43 +892,48 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>220</line>
+          <line>230</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2269</line>
+          <line>2331</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>388</line>
+          <line>402</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1091</line>
+          <line>1144</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>453</line>
+          <line>470</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>523</line>
+          <line>542</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>933</line>
+          <line>983</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1974</line>
+          <line>2036</line>
           <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>717</line>
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -971,9 +988,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/Untitled2.png" />
-    <entry file="file://$PROJECT_DIR$/capture.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmeratest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1129,13 +1143,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/capture.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1590">
-          <caret line="1202" column="4" selection-start-line="1202" selection-start-column="4" selection-end-line="1202" selection-end-column="4" />
+        <state relative-caret-position="275">
+          <caret line="2437" column="31" lean-forward="true" selection-start-line="2437" selection-start-column="31" selection-end-line="2437" selection-end-column="31" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#4025#5727#0" />
             <element signature="e#5765#5967#0" />
             <element signature="e#6007#6054#0" />
             <element signature="e#6095#6131#0" />
@@ -1159,16 +1175,23 @@
             <element signature="e#20993#23610#0" />
             <element signature="e#23651#25318#0" />
             <element signature="e#25362#25812#0" />
-            <element signature="e#25856#28646#0" />
-            <element signature="e#28688#29812#0" />
             <element signature="e#29854#30260#0" />
+            <element signature="e#33933#36593#0" />
+            <element signature="e#36641#39090#0" />
+            <element signature="e#39132#41170#0" />
+            <element signature="e#41306#42604#0" />
             <element signature="e#42833#43949#0" />
             <element signature="e#44027#44494#0" />
+            <element signature="e#44526#45288#0" />
+            <element signature="e#45321#46444#0" />
+            <element signature="e#46476#47338#0" />
+            <element signature="e#47387#48245#0" />
+            <element signature="e#48277#52787#0" />
             <element signature="e#48456#49002#0" />
-            <element signature="e#49051#49597#0" />
-            <element signature="e#58736#58942#0" />
+            <element signature="e#52841#53121#0" />
+            <element signature="e#53671#58587#0" />
+            <element signature="e#58086#58663#0" />
             <element signature="e#59015#59450#0" />
-            <element signature="e#59484#59677#0" />
             <element signature="e#59724#61697#0" />
             <element signature="e#61736#63751#0" />
             <element signature="e#63787#65702#0" />
@@ -1183,8 +1206,7 @@
             <element signature="e#96327#96477#0" />
             <element signature="e#96513#97209#0" />
             <element signature="e#97254#99507#0" />
-            <element signature="e#100606#100906#0" />
-            <element signature="e#100939#101453#0" />
+            <element signature="e#99558#100547#0" />
           </folding>
         </state>
       </provider>
