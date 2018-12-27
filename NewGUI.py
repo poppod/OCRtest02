@@ -734,7 +734,14 @@ class App():
         Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 8)).grid(row=15, column=4, sticky=W, columnspan=1)
         Label(self.root, text="ผ่าน :", font=("THSarabunNew", 8)).grid(row=16, column=4, sticky=W, columnspan=1)
         Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 8)).grid(row=17, column=4, sticky=W, columnspan=1)
-        Label(self.root,width=5,height=5).grid(row=4, column=3)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=11)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=12)
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date.grid(row=21, column=11, sticky=E, columnspan=2)
+        Label(self.root,width=15,height=0).grid(row=1, column=3)
+        Label(self.root, width=10, height=0).grid(row=1, column=10)
         #Label(self.root, width=5, height=5).grid(row=8, column=3)
         if self.thread == None:
             self.thread = threading.Thread(target=self.videoLoop, args=())
@@ -1120,7 +1127,7 @@ class App():
             # ret,img= self.vs.read()
             # img=self.frame
             start_time = time.time()
-            result, image = self.calculate_detect()
+            result, image = self.calculate_detect
             # result, image = self.calculate_detect_multithread()
 
             h, w = result.shape[:2]
@@ -1193,6 +1200,7 @@ class App():
         return_val = async_result.get()
         return return_val
 
+    @property
     def calculate_detect(self):
 
         # self.ret, self.frame = self.vs.read()##change or disble when use picamera
@@ -1306,8 +1314,10 @@ class App():
         if self.ClickValue == 10:
             if self.Detect_flag == 0:
                 result = image
-            elif self.Detect_flag == 1:
+            if self.Detect_flag == 1:
                 result = perspactive_transform(orig, pts, ratio)
+            else:
+                pass
                 # result=pool_perspective(orig,pts,ratio,2)
 
         else:
