@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1562" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1737" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="check">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -93,30 +95,31 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="12612" />
+          <entry key="py" value="13640" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="12612" />
+          <entry key="Python" value="13640" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="2018-12-28 04" value="3" />
           <entry key="2018-12-28 05" value="4" />
+          <entry key="2018-12-28 23" value="1" />
           <entry key="log2018-12-28 03" value="2" />
           <entry key="log2018-12-28 04" value="5" />
           <entry key="png" value="14" />
           <entry key="py" value="12" />
-          <entry key="txt" value="15" />
+          <entry key="txt" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="14" />
-          <entry key="PLAIN_TEXT" value="29" />
+          <entry key="PLAIN_TEXT" value="33" />
           <entry key="Python" value="12" />
         </counts>
       </usages-collector>
@@ -127,11 +130,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="933" column="24" selection-start-line="933" selection-start-column="24" selection-end-line="933" selection-end-column="24" />
+            <state relative-caret-position="-1589">
+              <caret line="1393" column="36" selection-start-line="1393" selection-start-column="36" selection-end-line="1393" selection-end-column="36" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#9840#10057#0" />
                 <element signature="e#10104#10565#0" />
                 <element signature="e#10612#11079#0" />
                 <element signature="e#11126#11593#0" />
@@ -141,23 +143,14 @@
                 <element signature="e#13173#13668#0" />
                 <element signature="e#13716#14217#0" />
                 <element signature="e#14265#14766#0" />
-                <element signature="e#14816#15326#0" />
                 <element signature="e#15376#15886#0" />
-                <element signature="e#15921#17448#0" />
-                <element signature="e#17491#18689#0" />
-                <element signature="e#18823#21371#0" />
-                <element signature="e#21411#22906#0" />
-                <element signature="e#22950#25530#0" />
-                <element signature="e#25571#27238#0" />
                 <element signature="e#27282#27732#0" />
-                <element signature="e#27776#30654#0" />
                 <element signature="e#30697#32036#0" />
-                <element signature="e#32078#32484#0" />
                 <element signature="e#43102#45762#0" />
                 <element signature="e#45810#48259#0" />
                 <element signature="e#48301#50533#0" />
                 <element signature="e#50582#50634#0" />
-                <element signature="e#50669#51969#0" />
+                <element signature="e#50708#51251#0" />
                 <element signature="e#52014#52154#0" />
                 <element signature="e#52198#53314#0" />
                 <element signature="e#53392#53859#0" />
@@ -165,6 +158,11 @@
                 <element signature="e#54701#55898#0" />
                 <element signature="e#55930#56800#0" />
                 <element signature="e#56849#57727#0" />
+                <element signature="e#57939#58488#0" />
+                <element signature="e#58538#59087#0" />
+                <element signature="e#64654#65203#0" />
+                <element signature="e#65253#65802#0" />
+                <element signature="e#65857#66484#0" />
                 <element signature="e#62784#63064#0" />
                 <element signature="e#63121#68048#0" />
                 <element signature="e#68091#68666#0" />
@@ -180,7 +178,6 @@
                 <element signature="e#101750#105634#0" />
                 <element signature="e#105684#106086#0" />
                 <element signature="e#106138#106379#0" />
-                <element signature="e#106431#107074#0" />
                 <element signature="e#107110#107260#0" />
                 <element signature="e#107296#107994#0" />
                 <element signature="e#108040#110351#0" />
@@ -188,11 +185,6 @@
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/log/test.txt">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -236,6 +228,9 @@
       <find>output</find>
       <find>make_tempplate</find>
       <find>check_target_area</find>
+      <find>self.ClickValue</find>
+      <find>self.stopEvent.clear()</find>
+      <find>except</find>
     </findStrings>
   </component>
   <component name="Git.Rebase.Settings">
@@ -315,11 +310,6 @@
             <path>
               <item name="OCRtest02" type="b2602c69:ProjectViewProjectNode" />
               <item name="OCRtest02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OCRtest02" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest02" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -833,7 +823,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545907215996</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="check">
+      <created>1545949229398</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1545949229398</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -854,13 +851,13 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.69345236" visible="true" weight="0.10491803" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.69345236" visible="true" weight="0.24262296" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8058036" weight="0.502455" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49776787" weight="0.32569557" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49627978" weight="0.198036" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.3065476" side_tool="true" visible="true" weight="0.10491803" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.3065476" side_tool="true" visible="true" weight="0.24262296" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.42857143" weight="0.3289689" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -909,52 +906,52 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>252</line>
+          <line>262</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2456</line>
+          <line>2641</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>424</line>
+          <line>434</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1265</line>
+          <line>1310</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>492</line>
+          <line>502</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>564</line>
+          <line>578</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>1104</line>
+          <line>1144</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2157</line>
+          <line>2342</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>739</line>
+          <line>764</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>810</line>
+          <line>838</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
@@ -964,26 +961,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/contours.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/2121435385/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="802" column="8" selection-start-line="802" selection-start-column="8" selection-end-line="802" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/7400.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/6904.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/TextRef/Untitled2.png" />
     <entry file="file://$PROJECT_DIR$/cmeratest.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1161,13 +1138,24 @@
     <entry file="file://$PROJECT_DIR$/log/test.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/log/28_12_2018_23_47.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/28_12_2018_23_48.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/(00-00)-29_12_2018.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/2018-12-28 23">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="933" column="24" selection-start-line="933" selection-start-column="24" selection-end-line="933" selection-end-column="24" />
+        <state relative-caret-position="-1589">
+          <caret line="1393" column="36" selection-start-line="1393" selection-start-column="36" selection-end-line="1393" selection-end-column="36" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#9840#10057#0" />
             <element signature="e#10104#10565#0" />
             <element signature="e#10612#11079#0" />
             <element signature="e#11126#11593#0" />
@@ -1177,23 +1165,14 @@
             <element signature="e#13173#13668#0" />
             <element signature="e#13716#14217#0" />
             <element signature="e#14265#14766#0" />
-            <element signature="e#14816#15326#0" />
             <element signature="e#15376#15886#0" />
-            <element signature="e#15921#17448#0" />
-            <element signature="e#17491#18689#0" />
-            <element signature="e#18823#21371#0" />
-            <element signature="e#21411#22906#0" />
-            <element signature="e#22950#25530#0" />
-            <element signature="e#25571#27238#0" />
             <element signature="e#27282#27732#0" />
-            <element signature="e#27776#30654#0" />
             <element signature="e#30697#32036#0" />
-            <element signature="e#32078#32484#0" />
             <element signature="e#43102#45762#0" />
             <element signature="e#45810#48259#0" />
             <element signature="e#48301#50533#0" />
             <element signature="e#50582#50634#0" />
-            <element signature="e#50669#51969#0" />
+            <element signature="e#50708#51251#0" />
             <element signature="e#52014#52154#0" />
             <element signature="e#52198#53314#0" />
             <element signature="e#53392#53859#0" />
@@ -1201,6 +1180,11 @@
             <element signature="e#54701#55898#0" />
             <element signature="e#55930#56800#0" />
             <element signature="e#56849#57727#0" />
+            <element signature="e#57939#58488#0" />
+            <element signature="e#58538#59087#0" />
+            <element signature="e#64654#65203#0" />
+            <element signature="e#65253#65802#0" />
+            <element signature="e#65857#66484#0" />
             <element signature="e#62784#63064#0" />
             <element signature="e#63121#68048#0" />
             <element signature="e#68091#68666#0" />
@@ -1216,7 +1200,6 @@
             <element signature="e#101750#105634#0" />
             <element signature="e#105684#106086#0" />
             <element signature="e#106138#106379#0" />
-            <element signature="e#106431#107074#0" />
             <element signature="e#107110#107260#0" />
             <element signature="e#107296#107994#0" />
             <element signature="e#108040#110351#0" />

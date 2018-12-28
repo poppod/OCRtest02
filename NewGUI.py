@@ -51,10 +51,13 @@ class App():
         self.Detect_flag = 0
         self.status_flag = 1
         self.frameShow = None
+        self.imgcontoure_selectionSubArea=None
+        self.img_tmpcnt4select=None
+        self.img_tmpcnt4process=None
         self.frame1 = None
         self.frame = None
         self.thread = None
-        self.stopEvent = None
+        self.t1=None
 
         #####disble when use videoloop_picamera
         self.ret, self.frameTemp = self.vs.read()
@@ -67,7 +70,10 @@ class App():
         self.fail_value = 0
         self.user = None
         self.persentage = 0
-
+        self.detect_finish=IntVar()
+        self.value_algor1=None
+        self.value_algor2=None
+        self.output_algor1=None
         self.log=StringVar()
         self.directory=StringVar()
         self.pass_count = 0
@@ -104,7 +110,7 @@ class App():
         # self.cnts=queue.Queue()
         self.imgOrigin = None
 
-        self.lock = multiprocessing.Lock()
+        self.lock = threading.Lock()
         # self.TextOcrRef()
         self.panel = None
         self.panel2 = None
@@ -124,6 +130,7 @@ class App():
         self.thresh = queue.Queue()
         self.result = queue.Queue()
         self.stopEvent = threading.Event()
+        self.stopEvent2 = threading.Event()
         self.load_all_except_target()
         # self.load_all_value()
 
@@ -202,11 +209,14 @@ class App():
         self.WeightBbox = w
 
     def Click_ValueBbox(self):
+        self.lock.acquire()
         self.ClickValue = 5
+        self.lock.release()
         print(5)
 
     def settingButton(self):
         # self.ClickValue+=1
+        self.stopEvent.clear()
         self.page2_selectFile()
 
     def page1_selectOption(self):
@@ -495,7 +505,7 @@ class App():
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Setting Video Capture")
-
+        self.ClickValue=0
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0, sticky=W,
                                                                                            padx=5, pady=5, columnspan=2)
@@ -526,10 +536,14 @@ class App():
         OkNextButton = Button(self.root, text="OK and Next", command=self.page3_To_page4).grid(row=9, column=6, pady=10)
 
     def page3_To_page4(self):
+        self.lock.acquire()
         self.ClickValue = 5
+        self.lock.release()
         Msg = messagebox.askyesno("Save and Next", "Save target Area and Other setting")
         if Msg == True:
+            self.lock.acquire()
             self.ClickValue = 2
+            self.lock.release()
             self.panel = None
             Area_configre_H = open('./Configure/AreaH.txt', "w")
             Area_configre_H.write(str(self.HeightBbox))
@@ -559,11 +573,11 @@ class App():
             sqX2 = open('./Configure/sqX2.txt', 'w')
             sqX2.write(str(self.sqX2.get()))
             sqX2.close()
-            self.ClickValue = 2
+            #self.ClickValue = 2
             self.page4_settingDigit()
 
     def page4_settingDigit(self):
-        self.ClickValue = 2
+        #self.ClickValue = 2
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Setting Digits")
@@ -599,13 +613,19 @@ class App():
             date.grid(row=11, column=11, sticky=E, columnspan=3)
             Label(self.root, width=2, height=0).grid(row=1, column=0)
         else:
+            self.stopEvent.clear()
+            self.thread = threading.Thread(target=self.videoLoop, args=())
+            self.thread.daemon = True
+            self.thread.start()
             print("dead")
 
     def page4_To_page5(self):
 
         Msg = messagebox.askyesno("Save and Next", "Save Value and Other setting")
         if Msg == True:
+            self.lock.acquire()
             self.ClickValue = 3
+            self.lock.release()
             B_scale2 = open('./Configure/B_scale2.txt', "w")
             B_scale2.write(str(self.varMax.get()))
             B_scale2.close()
@@ -637,7 +657,8 @@ class App():
             sqX = open('./Configure/sqX.txt', 'w')
             sqX.write(str(self.sqX.get()))
             sqX.close()
-            self.ClickValue = 3
+
+            #self.ClickValue = 3
             self.page5_Insert_Value()
 
     def load_default_value(self):
@@ -653,16 +674,15 @@ class App():
         Code_value.close()
 
     def page5_Insert_Value(self):
-        self.ClickValue = 3
+        #self.ClickValue = 3
 
         self.panel = None
         self.panel2 = None
         self.panel3 = None
         self.panel4 = None
 
-        for ele in self.root.winfo_children():
-            ele.destroy()
-        self.ClickValue = 3
+
+        #self.ClickValue = 3
 
         for ele in self.root.winfo_children():
             ele.destroy()
@@ -732,16 +752,21 @@ class App():
                 ele.destroy()
                 # ele.quit()
             # self.root.destroy()
+            self.ClickValue=10
             if self.thread.isAlive() == True:
                 print("thread Alive")
                 # self.thread._Thread_stop()
+                self.default_process()
+            else:
+                print("dead")
+                self.stopEvent.clear()
                 self.default_process()
 
     def default_process(self):
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
-
+        #self.stopEvent.clear()
         self.panel = None
         self.panel2 = None
         self.panel3 = None
@@ -749,7 +774,9 @@ class App():
         # self.root2 = tkinter.Tk()
         # self.root2.geometry('800x480')
         self.root.title("Process")
+        self.lock.acquire()
         self.ClickValue = 10
+        self.lock.release()
         self.TextOcrRef()
         self.load_all_value()
         now=datetime.datetime.now()
@@ -794,7 +821,8 @@ class App():
         Label(self.root, width=15, height=0).grid(row=1, column=3)
         Label(self.root, width=10, height=0).grid(row=1, column=10)
         # Label(self.root, width=5, height=5).grid(row=8, column=3)
-        if self.thread == None or self.stopEvent.is_set():
+        if self.thread == None or self.stopEvent.is_set()== True:
+            self.stopEvent.clear()
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
             self.thread.start()
@@ -823,21 +851,27 @@ class App():
     def add_algorithm3_flag(self):
         self.status_flag=2
         Msg = messagebox.askyesno("Stop", "Stop and close process")
-        if Msg:
+        if Msg==True:
+            self.stopEvent.set()
+            self.ClickValue = 20
             self.status_flag = 3
-            self.ClickValue = 11
+
+
+            print(threading.active_count())
 
 
             self.panel = None
             self.panel2 = None
             self.panel3 = None
             self.panel4 = None
+
             self.save_log_page()
         else:
-            self.status_flag=1
+            self.status_flag=2
     def save_log_page(self):
-        self.ClickValue = 11
-        #self.stopEvent.set()
+        self.ClickValue = 20
+
+        self.stopEvent.set()
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
@@ -846,7 +880,7 @@ class App():
         self.panel2 = None
         self.panel3 = None
         self.panel4 = None
-        self.ClickValue = 11
+        #self.ClickValue = 20
         now=datetime.datetime.now()
         self.end_time_min2cal=(int(now.hour)*60)+int(now.minute)
         self.end_time=str(now.strftime("%H:%M"))
@@ -899,17 +933,21 @@ class App():
                                                                                                  columnspan=3)
         log.append("FAIL:"+str(self.fail_count))
 
-        Label(self.root, text="./log/" , font=("THSarabunNew", 8)).grid(row=11, column=3,
+        Label(self.root, text="./log/" , font=("THSarabunNew", 8), width=30).grid(row=11, column=3,
                                                                                                    sticky=W,
-                                                                                                   columnspan=2)
+                                                                                                   columnspan=4)
 
-
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn.grid(row=0, column=9)
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn.grid(row=0, column=10)
+        Label(self.root,width=30, height=2).grid(row=1, column=2)
 
         self.log=str(log)
 
         self.directory='./log/'
-        Button(self.root,text="Change", font=("THSarabunNew", 8),command=self.save_dialog).grid(row=11,column=5)
-        Button(self.root, text="OK", font=("THSarabunNew", 8), command=self.save_logfile).grid(row=12, column=5)
+        Button(self.root,text="Change", font=("THSarabunNew", 8),command=self.save_dialog).grid(row=11,column=7,sticky=W+N+E+S)
+        Button(self.root, text="OK", font=("THSarabunNew", 8), command=self.save_logfile).grid(row=12, column=7,sticky=W+N+E+S)
     def save_dialog(self):
         directory=filedialog.askdirectory(initialdir = './log/')
         self.directory=directory
@@ -917,21 +955,23 @@ class App():
         if directory:
             Label(self.root, text=str(self.directory), font=("THSarabunNew", 8)).grid(row=11, column=3,
                                                                            sticky=W,
-                                                                           columnspan=2)
+                                                                           columnspan=4)
 
     def save_logfile(self):
         ms=messagebox.askyesno("Save log","Save log file")
         if ms:
             ms_log=self.log
             self.date_realtime()
-            path=str(self.directory)+str(self.date_time)+'.txt'
-            log = open('./log/test.txt',"w")
+            now=datetime.datetime.now()
+            nametime = str(now.strftime("(%H-%M)-%d_%m_%Y"))
+            path=str(self.directory)+'/'+str(nametime)+'.txt'
+            log = open(path,"w")
             log.write(ms_log)
             log.close()
             Label(self.root, text=str(path), font=("THSarabunNew", 8)).grid(row=12, column=3,
                                                                                 sticky=W,
                                                                             columnspan=2)
-            time.sleep(3)
+
             self.page1_selectOption()
         else:
             return
@@ -1119,7 +1159,12 @@ class App():
                 self.panel.image = img
 
         self.ret, self.frame = self.vs.read()  # temp for fix
+        self.frameShow=self.frame
+
+
         self.start_thread_detect()
+
+
         # self.detectThread.join()
         # self.detect()
         try:
@@ -1130,10 +1175,10 @@ class App():
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
-                if self.ClickValue == 0:
+                '''if self.ClickValue == 0:
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
-                    self.Show_panel_proces01(self.frameShow)
+                    self.Show_panel_proces01(self.frameShow)'''
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
@@ -1300,6 +1345,13 @@ class App():
 
         self.make_tempplate()
         self.make_tempplate2_no_pad()
+        self.treshImg=self.frame
+        self.ImgCap=self.frame
+        self.imgcontoure_selectionSubArea=self.frame
+        self.img_tmpcnt4process=self.frame
+        self.img_tmpcnt4select=self.frame
+        self.show_attibute_onpage_thread_start()
+        #self.detect_finish=0
         while not self.stopEvent.is_set():
             # ret,img= self.vs.read()
             # img=self.frame
@@ -1320,33 +1372,35 @@ class App():
             if self.ClickValue == 5:
                 h1, w1 = result.shape[:2]
                 self.Save_Bbox(h1, w1)
+                self.lock.acquire()
                 self.ClickValue = 0
+                self.lock.release()
             else:
                 pass
             self.imgOrigin = result
             self.ImgCap = result
-            if self.ClickValue == 0:
+            '''if self.ClickValue == 0:
                 Show_panel_vcap02(self.treshImg)
                 Show_panel_vcap03(self.ImgCap)
                 # self.Show_panel02_0_1(self.treshImg) ###
                 # self.Show_panel03_1_0(self.ImgCap)  #####
             else:
-                pass
+                pass'''
             if self.ClickValue == 2:
                 self.TextOCR2_no_loop()
             if self.ClickValue == 10:
-                # self.TextOCR2_no_loop()
+                self.TextOCR2_no_loop()
+                if self.Detect_flag==0:
+                    self.no_detect()
                 # self.ocr_thread()
-                if self.Detect_flag == 1:
-                    Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                '''if self.Detect_flag == 1:
+                    #Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                                   )
-                    '''ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
-                    ocrthread.daemon = True
-                    ocrthread.run()'''
+                    
                     self.TextOCR2_no_loop()
                 else:
-                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                                  )
+                    #Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                                                                          )
                     self.no_detect()
                 if self.status_flag == 1:
                     Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
@@ -1363,12 +1417,131 @@ class App():
                 pass_string = str(self.pass_count)
                 Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
                 fail_string = str(self.fail_count)
-                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
+                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)'''
                 # self.sum_state.update()
 
             # print(threading.enumerate())
             print("--- %s seconds ---" % (time.time() - start_time))
+        self.detect_finish=1
+    def show_attibute_onpage(self):
+        def Show_panel_vcap02(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel2 is None:
+                self.panel2 = tkinter.Label(image=img, width=160, height=120)
+                self.panel2.image = img
+                self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
+            else:
+                self.panel2.configure(image=img)
+                self.panel2.image = img
 
+        def Show_panel_vcap03(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel3 is None:
+                self.panel3 = tkinter.Label(image=img, width=160, height=100)
+                self.panel3.image = img
+                self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
+            else:
+                self.panel3.configure(image=img)
+                self.panel3.image = img
+
+        def Show_panel_vloop(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel is None:
+                self.panel = tkinter.Label(image=img, width=160, height=120)
+                self.panel.image = img
+                self.panel.grid(row=2, column=1, rowspan=2, columnspan=1, padx=15)
+            else:
+                self.panel.configure(image=img)
+                self.panel.image = img
+        while not self.stopEvent.is_set():
+            if self.ClickValue == 0:
+
+                Show_panel_vcap02(self.treshImg)
+                Show_panel_vcap03(self.ImgCap)
+                Show_panel_vloop(self.frameShow)
+            if self.ClickValue==2:
+
+                #from def ocr
+                if not self.imgOrigin is None:
+                    self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
+                    self.Show_panel_vcap02(self.img_tmpcnt4select)
+                    self.Show_panel_vcap03(self.img_tmpcnt4process)
+            if self.ClickValue == 10:
+
+                self.Show_panel_proces01(self.frameShow)
+                self.Show_panel_proces02(self.ImgCap)
+                if self.Detect_flag == 1:
+                    Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,)
+                    ##go to def ocr
+                    if not self.imgOrigin is None:
+                        #self.Show_panel_proces02(self.ImgCap)
+                        if self.status_flag == 1:
+                            Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
+                                                                                                    sticky=W,
+                                                                                                    )
+                            if (self.value_algor1 or self.value_algor2):
+                                self.pass_value = 1
+                                Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
+                                                                                                                  column=5)
+                            else:
+                                self.fail_value = 1
+                                Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
+                                                                                                                column=5)
+                        elif self.status_flag == 2:
+                            Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
+                                                                                                  sticky=W,
+                                                                                                  )
+                        elif self.status_flag == 3:
+                            Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10,
+                                                                                                        column=5,
+                                                                                                        sticky=W, )
+
+
+                        try:
+
+                            Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11,
+                                                                                                               column=5,
+                                                                                                               sticky=W,
+                                                                                                               columnspan=2)
+                            Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13,
+                                                                                                              column=5,
+                                                                                                              sticky=S,
+                                                                                                              columnspan=1)
+                        except BaseException as e:
+                            print(str(e)+"[p[opoiojk")
+                            pass
+                else:
+                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                                                                                  )
+
+
+
+                sum_string = str(self.count_sum)
+                Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
+                pass_string = str(self.pass_count)
+                Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
+                fail_string = str(self.fail_count)
+                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
+
+    def show_attibute_onpage_thread_start(self):
+        self.t1=threading.Thread(target=self.show_attibute_onpage,args=())
+        self.t1.daemon=True
+        self.t1.start()
     def calculate_detect_multithread(self):
         pool = ThreadPool(processes=5)
 
@@ -1512,7 +1685,9 @@ class App():
         if self.ClickValue == 5:
             # h1, w1 = result.shape[:2]
             self.Save_Bbox(h, w)
+            self.lock.acquire()
             self.ClickValue = 0
+            self.lock.release()
         if not self.HeightBbox is None or not self.WeightBbox is None:
             if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
                 self.Detect_flag = 1
@@ -2062,9 +2237,9 @@ class App():
             # print(t)
 
             img = clone01
-
-            if self.ClickValue == 2:
-                self.Show_panel_vloop(img)
+            self.imgcontoure_selectionSubArea=img
+            '''if self.ClickValue == 2:
+                self.Show_panel_vloop(self.imgcontoure_selectionSubArea)'''
 
             output = []
             kernel = np.ones((1, 1), np.uint8)
@@ -2087,7 +2262,7 @@ class App():
                 tmpcnts2[i] = img
                 text.append(i)
             if len(tmpcnts) == 0:
-                self.Detect_flag = 0  ##
+                #self.Detect_flag = 0  ##
 
                 tmpcnts2[0] = imgTocrop
                 tmpcnts3[0] = imgWrap
@@ -2100,9 +2275,11 @@ class App():
             ###
 
             img = img2
-            if self.ClickValue == 2:  ####
+            self.img_tmpcnt4select=img
+            self.img_tmpcnt4process=imgWrap
+            '''if self.ClickValue == 2:  ####
                 self.Show_panel_vcap02(img)
-                self.Show_panel_vcap03(imgWrap)
+                self.Show_panel_vcap03(imgWrap)'''
 
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
@@ -2114,30 +2291,38 @@ class App():
                     output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
                     value2 = self.check_algorithm2_2(output2)
                     value = self.check_algrithm1(output)
-                    if (value or value2):
+                    self.value_algor1=value
+                    self.value_algor2=value2
+                    '''if (self.value_algor1 or self.value_algor2):
                         self.pass_value = 1
                         Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
                                                                                                           column=5)
                     else:
                         self.fail_value = 1
                         Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                        column=5)
+                                                                                                        column=5)'''
 
                 else:
                     pass
-
-                self.Show_panel_proces02(self.ImgCap)
+                try :
+                    out= "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
+                    str(x) for x in output[2])
+                    self.output_algor1 = out
+                except:
+                    pass
+                '''self.Show_panel_proces02(self.ImgCap)
                 try:
                     out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
                         str(x) for x in output[2])
-                    Label(self.root, text=out, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=W,
+                    self.output_algor1=out
+                    Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=W,
                                                                                         columnspan=2)
                     Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13, column=5,
                                                                                                       sticky=S,
                                                                                                       columnspan=1)
                 except BaseException as e:
                     print(str(e))
-                    pass
+                    pass'''
 
                 '''try:
                     self.Show_panel05_2_0(tmpcnts2[1])
