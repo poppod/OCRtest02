@@ -622,7 +622,7 @@ class App():
             print("dead")
 
     def page4_To_page5(self):
-
+        self.ClickValue=3
         Msg = messagebox.askyesno("Save and Next", "Save Value and Other setting")
         if Msg == True:
             self.lock.acquire()
@@ -662,7 +662,8 @@ class App():
 
             #self.ClickValue = 3
             self.page5_Insert_Value()
-
+        else:
+            self.ClickValue=2
     def load_default_value(self):
         Date_value = open('./Configure/Date_value.txt', "r")
 
@@ -853,7 +854,8 @@ class App():
         self.status_flag = 2
 
     def add_algorithm3_flag(self):
-        #self.status_flag=3
+        self.status_flag=3
+        self.ClickValue=20
         Msg = messagebox.askyesno("Stop", "Stop and close process")
         if Msg==True:
             self.stopEvent.set()
@@ -872,6 +874,7 @@ class App():
 
             self.save_log_page()
         else:
+            self.ClickValue=10
             self.status_flag=2
     def save_log_page(self):
         self.ClickValue = 20
@@ -943,10 +946,7 @@ class App():
                                                                                                    sticky=W,
                                                                                                    columnspan=4)
 
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
-        info_btn.grid(row=0, column=9)
-        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
-        help_btn.grid(row=0, column=10)
+
         Label(self.root,width=30, height=2).grid(row=1, column=2)
 
         self.log=str(log)
