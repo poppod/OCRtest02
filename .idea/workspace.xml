@@ -4,10 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1737" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log">
+    <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,12 +94,12 @@
         <counts>
           <entry key="dummy" value="12" />
           <entry key="py" value="13734" />
-          <entry key="txt" value="20" />
+          <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="32" />
+          <entry key="PLAIN_TEXT" value="33" />
           <entry key="Python" value="13734" />
         </counts>
       </usages-collector>
@@ -130,8 +129,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="948" column="8" selection-start-line="948" selection-start-column="8" selection-end-line="948" selection-end-column="8" />
+            <state relative-caret-position="125">
+              <caret line="1579" column="40" selection-start-line="1579" selection-start-column="22" selection-end-line="1579" selection-end-column="49" />
               <folding>
                 <element signature="e#455#490#0" />
                 <element signature="e#660#4466#0" />
@@ -305,7 +304,6 @@
                 <element signature="e#70450#70622#0" />
                 <element signature="e#71134#71252#0" />
                 <element signature="e#71305#71585#0" />
-                <element signature="e#71642#76569#0" />
                 <element signature="e#72591#72689#0" />
                 <element signature="e#73778#73880#0" />
                 <element signature="e#74007#74036#0" />
@@ -585,11 +583,6 @@
             <path>
               <item name="OCRtest02" type="b2602c69:ProjectViewProjectNode" />
               <item name="OCRtest02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OCRtest02" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OCRtest02" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1123,7 +1116,14 @@
       <option name="project" value="LOCAL" />
       <updated>1546068771401</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="commit save log2">
+      <created>1546072666580</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1546072666580</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1137,7 +1137,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25297618" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -1193,7 +1192,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="check" />
     <MESSAGE value="commit save log" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit save log" />
+    <MESSAGE value="commit save log2" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit save log2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1413,8 +1413,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="948" column="8" selection-start-line="948" selection-start-column="8" selection-end-line="948" selection-end-column="8" />
+        <state relative-caret-position="125">
+          <caret line="1579" column="40" selection-start-line="1579" selection-start-column="22" selection-end-line="1579" selection-end-column="49" />
           <folding>
             <element signature="e#455#490#0" />
             <element signature="e#660#4466#0" />
@@ -1588,7 +1588,6 @@
             <element signature="e#70450#70622#0" />
             <element signature="e#71134#71252#0" />
             <element signature="e#71305#71585#0" />
-            <element signature="e#71642#76569#0" />
             <element signature="e#72591#72689#0" />
             <element signature="e#73778#73880#0" />
             <element signature="e#74007#74036#0" />
