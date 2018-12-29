@@ -217,6 +217,7 @@ class App():
     def settingButton(self):
         # self.ClickValue+=1
         self.stopEvent.clear()
+        self.stopEvent2.clear()
         self.page2_selectFile()
 
     def page1_selectOption(self):
@@ -614,6 +615,7 @@ class App():
             Label(self.root, width=2, height=0).grid(row=1, column=0)
         else:
             self.stopEvent.clear()
+            self.stopEvent2.clear()
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
             self.thread.start()
@@ -760,6 +762,7 @@ class App():
             else:
                 print("dead")
                 self.stopEvent.clear()
+                self.stopEvent2.clear()
                 self.default_process()
 
     def default_process(self):
@@ -823,6 +826,7 @@ class App():
         # Label(self.root, width=5, height=5).grid(row=8, column=3)
         if self.thread == None or self.stopEvent.is_set()== True:
             self.stopEvent.clear()
+            self.stopEvent2.clear()
             self.thread = threading.Thread(target=self.videoLoop, args=())
             self.thread.daemon = True
             self.thread.start()
@@ -849,10 +853,11 @@ class App():
         self.status_flag = 2
 
     def add_algorithm3_flag(self):
-        self.status_flag=2
+        #self.status_flag=3
         Msg = messagebox.askyesno("Stop", "Stop and close process")
         if Msg==True:
             self.stopEvent.set()
+            self.stopEvent2.set()
             self.ClickValue = 20
             self.status_flag = 3
 
@@ -872,6 +877,7 @@ class App():
         self.ClickValue = 20
 
         self.stopEvent.set()
+        self.stopEvent2.set()
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
@@ -1159,7 +1165,7 @@ class App():
                 self.panel.image = img
 
         self.ret, self.frame = self.vs.read()  # temp for fix
-        self.frameShow=self.frame
+
 
 
         self.start_thread_detect()
@@ -1175,10 +1181,10 @@ class App():
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
-                '''if self.ClickValue == 0:
+                if self.ClickValue == 0:
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
-                    self.Show_panel_proces01(self.frameShow)'''
+                    self.Show_panel_proces01(self.frameShow)
         except RuntimeError as e:
             print("error runtime")
             self.vs.release()
@@ -1345,12 +1351,7 @@ class App():
 
         self.make_tempplate()
         self.make_tempplate2_no_pad()
-        self.treshImg=self.frame
-        self.ImgCap=self.frame
-        self.imgcontoure_selectionSubArea=self.frame
-        self.img_tmpcnt4process=self.frame
-        self.img_tmpcnt4select=self.frame
-        self.show_attibute_onpage_thread_start()
+
         #self.detect_finish=0
         while not self.stopEvent.is_set():
             # ret,img= self.vs.read()
@@ -1379,27 +1380,25 @@ class App():
                 pass
             self.imgOrigin = result
             self.ImgCap = result
-            '''if self.ClickValue == 0:
+            if self.ClickValue == 0:
                 Show_panel_vcap02(self.treshImg)
                 Show_panel_vcap03(self.ImgCap)
                 # self.Show_panel02_0_1(self.treshImg) ###
                 # self.Show_panel03_1_0(self.ImgCap)  #####
             else:
-                pass'''
+                pass
             if self.ClickValue == 2:
                 self.TextOCR2_no_loop()
             if self.ClickValue == 10:
-                self.TextOCR2_no_loop()
-                if self.Detect_flag==0:
-                    self.no_detect()
+
                 # self.ocr_thread()
-                '''if self.Detect_flag == 1:
-                    #Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                if self.Detect_flag == 1:
+                    Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                                   )
                     
                     self.TextOCR2_no_loop()
                 else:
-                    #Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                           )
                     self.no_detect()
                 if self.status_flag == 1:
@@ -1417,7 +1416,7 @@ class App():
                 pass_string = str(self.pass_count)
                 Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
                 fail_string = str(self.fail_count)
-                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)'''
+                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
                 # self.sum_state.update()
 
             # print(threading.enumerate())
@@ -1468,7 +1467,7 @@ class App():
             else:
                 self.panel.configure(image=img)
                 self.panel.image = img
-        while not self.stopEvent.is_set():
+        while not self.stopEvent2.is_set():
             if self.ClickValue == 0:
 
                 Show_panel_vcap02(self.treshImg)
@@ -1484,47 +1483,48 @@ class App():
             if self.ClickValue == 10:
 
                 self.Show_panel_proces01(self.frameShow)
-                self.Show_panel_proces02(self.ImgCap)
+
                 if self.Detect_flag == 1:
+                    self.Show_panel_proces02(self.ImgCap)
                     Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,)
                     ##go to def ocr
-                    if not self.imgOrigin is None:
+
                         #self.Show_panel_proces02(self.ImgCap)
-                        if self.status_flag == 1:
-                            Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                                    sticky=W,
-                                                                                                    )
-                            if (self.value_algor1 or self.value_algor2):
-                                self.pass_value = 1
-                                Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
-                                                                                                                  column=5)
-                            else:
-                                self.fail_value = 1
-                                Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                                column=5)
-                        elif self.status_flag == 2:
-                            Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                                  sticky=W,
-                                                                                                  )
-                        elif self.status_flag == 3:
-                            Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10,
-                                                                                                        column=5,
-                                                                                                        sticky=W, )
+                    if self.status_flag == 1:
+                        Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
+                                                                                                sticky=W,
+                                                                                                )
+                        if (self.value_algor1 or self.value_algor2):
+                            self.pass_value = 1
+                            Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
+                                                                                                              column=5)
+                        else:
+                            self.fail_value = 1
+                            Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
+                                                                                                            column=5)
+                    elif self.status_flag == 2:
+                        Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
+                                                                                              sticky=W,
+                                                                                              )
+                    elif self.status_flag == 3:
+                        Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10,
+                                                                                                    column=5,
+                                                                                                    sticky=W, )
 
 
-                        try:
+                    try:
 
-                            Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11,
-                                                                                                               column=5,
-                                                                                                               sticky=W,
-                                                                                                               columnspan=2)
-                            Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13,
-                                                                                                              column=5,
-                                                                                                              sticky=S,
-                                                                                                              columnspan=1)
-                        except BaseException as e:
-                            print(str(e)+"[p[opoiojk")
-                            pass
+                        Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11,
+                                                                                                           column=5,
+                                                                                                           sticky=W,
+                                                                                                           columnspan=2)
+                        Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13,
+                                                                                                          column=5,
+                                                                                                          sticky=S,
+                                                                                                          columnspan=1)
+                    except BaseException as e:
+                        print(str(e)+"[p[opoiojk")
+                        pass
                 else:
                     Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                                   )
@@ -2238,8 +2238,8 @@ class App():
 
             img = clone01
             self.imgcontoure_selectionSubArea=img
-            '''if self.ClickValue == 2:
-                self.Show_panel_vloop(self.imgcontoure_selectionSubArea)'''
+            if self.ClickValue == 2:
+                self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
 
             output = []
             kernel = np.ones((1, 1), np.uint8)
@@ -2277,9 +2277,9 @@ class App():
             img = img2
             self.img_tmpcnt4select=img
             self.img_tmpcnt4process=imgWrap
-            '''if self.ClickValue == 2:  ####
+            if self.ClickValue == 2:  ####
                 self.Show_panel_vcap02(img)
-                self.Show_panel_vcap03(imgWrap)'''
+                self.Show_panel_vcap03(imgWrap)
 
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
@@ -2293,24 +2293,19 @@ class App():
                     value = self.check_algrithm1(output)
                     self.value_algor1=value
                     self.value_algor2=value2
-                    '''if (self.value_algor1 or self.value_algor2):
+                    if (self.value_algor1 or self.value_algor2):
                         self.pass_value = 1
                         Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
                                                                                                           column=5)
                     else:
                         self.fail_value = 1
                         Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                        column=5)'''
+                                                                                                        column=5)
 
                 else:
                     pass
-                try :
-                    out= "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
-                    str(x) for x in output[2])
-                    self.output_algor1 = out
-                except:
-                    pass
-                '''self.Show_panel_proces02(self.ImgCap)
+
+                self.Show_panel_proces02(self.ImgCap)
                 try:
                     out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
                         str(x) for x in output[2])
@@ -2322,7 +2317,7 @@ class App():
                                                                                                       columnspan=1)
                 except BaseException as e:
                     print(str(e))
-                    pass'''
+                    pass
 
                 '''try:
                     self.Show_panel05_2_0(tmpcnts2[1])
