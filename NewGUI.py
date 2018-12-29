@@ -42,6 +42,8 @@ class App():
         self.end_time = None
         self.start_time_min2cal=None
         self.end_time_min2cal=None
+        self.detect_timestamp=0
+        self.no_detect_timestamp=0
         ####time
         myfont = Font(family="THSarabunNew", size=14)
         self.THsarabun.configure(font=myfont)
@@ -1195,6 +1197,7 @@ class App():
         self.detectThread.daemon = True
         self.detectThread.start()
 
+
     def videoLoop_picamera(self):
         self.frame_temp()
         camera = PiCamera()
@@ -1420,8 +1423,9 @@ class App():
                 # self.sum_state.update()
 
             # print(threading.enumerate())
+            print(threading.active_count())
             print("--- %s seconds ---" % (time.time() - start_time))
-        self.detect_finish=1
+
     def show_attibute_onpage(self):
         def Show_panel_vcap02(img):
             try:
@@ -1690,18 +1694,23 @@ class App():
             self.lock.release()
         if not self.HeightBbox is None or not self.WeightBbox is None:
             if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
+
                 self.Detect_flag = 1
+                self.detect_timestamp = datetime.datetime.now().second
             else:
                 if self.Detect_flag == 1:
                     self.change_state()
 
                 self.Detect_flag = 0
+                self.no_detect_timestamp=datetime.datetime.now().second
 
         else:
             pass
 
     def change_state(self):
-        if self.status_flag == 1:
+        def_time=self.detect_timestamp-self.no_detect_timestamp
+        if self.status_flag == 1 and def_time>=0.1:
+
             self.count_sum += 1
             if self.pass_value == 1:
                 self.pass_count += 1
