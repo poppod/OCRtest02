@@ -121,6 +121,10 @@ class App():
         self.panel5 = None
         self.panel6 = None  # use
         self.buttom = None
+        ###### icon
+        self.start_icon=None
+        self.pause_icon=None
+        self.stop_icon=None
 
         self.make01 = None
         self.make02 = None
@@ -137,7 +141,9 @@ class App():
         # self.load_all_value()
 
         # self.page1_selectOption()
+        self.load_icon()
         self.well_com_page()
+
         # self.page2_selectFile()
 
         #self.date_realtime()
@@ -157,19 +163,30 @@ class App():
         # self.TextOCR()
 
         self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
+    def load_icon(self):
+        icon_list=['./Drawable/play_icon.png','./Drawable/pause_icon.png','./Drawable/stop_icon.png']
+        icon={}
+        for i,x in enumerate(icon_list):
+            img= PIL.Image.open(x)
+            img = PIL.ImageTk.PhotoImage(img)
+            icon[i]=img
+        self.start_icon=icon[0]
+        self.pause_icon=icon[1]
+        self.stop_icon=icon[2]
 
     def date_realtime(self):
 
         self.now = datetime.datetime.now()
         self.date_time = str(self.now.strftime("%Y-%m-%d %H:%M"))
         self.date = str(self.now.strftime("%Y-%m-%d"))
-
+    def information(self):
+        msgb=messagebox.showinfo("เกี่ยวกับโปรแกรม","โปรแกรมตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์")
     def well_com_page(self):
 
         self.root.geometry('800x480')
         self.root.title("ยินดีต้อนรับ")
 
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8),command=self.information)  ##command
         info_btn.grid(row=0, column=3)
         help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
         help_btn.grid(row=0, column=4)
@@ -785,21 +802,27 @@ class App():
         self.lock.release()
         self.TextOcrRef()
         self.load_all_value()
+
         now=datetime.datetime.now()
         self.start_time_min2cal=(int(now.hour)*60)+int(now.minute)
         self.start_time=str(now.strftime("%H:%M"))
         self.reset_to_new_process()
         self.make_tempplate()
         self.make_tempplate2_no_pad()
-        Button(self.root, text="start", command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
-        Button(self.root, text="pause", command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
-        Button(self.root, text="stop", command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
+
+
+
+
+        s=Button(self.root, text="start",image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
+        Button(self.root, text="pause",image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
+        Button(self.root, text="stop",image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
         Button(self.root, text="New", command=self.page5_Insert_Value).grid(row=8, column=7, sticky=W + N + E + S)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
                                                                                            padx=5, pady=5,
                                                                                            columnspan=2)
+
         Label(self.root, text="ประมวลผลภาพ", font=("THSarabunNew", 14)).grid(row=2, column=4,
                                                                              sticky=W + E + N + S,
                                                                              padx=5, pady=5, columnspan=5)
@@ -1318,9 +1341,7 @@ class App():
         scale3.grid(row=3, column=11, rowspan=6, sticky=W + N)
 
     def detect(self):
-        '''self.thread = threading.Thread(target=self.videoLoop, args=())
-        self.thread.daemon = True
-        self.thread.start()'''
+
 
         def Show_panel_vcap02(img):
             try:
@@ -1360,7 +1381,7 @@ class App():
             # ret,img= self.vs.read()
             # img=self.frame
             start_time = time.time()
-            result, image = self.calculate_detect
+            result, image = self.calculate_detect()
             # result, image = self.calculate_detect_multithread()
 
             h, w = result.shape[:2]
@@ -1372,29 +1393,30 @@ class App():
             # result = cv2.warpPerspective(result, M, (h, w))
             # print(result.shape[:2])
             # result = self.check_target_area(result, image, h, w)
-            self.imgOrigin = result
-            if self.ClickValue == 5:
-                h1, w1 = result.shape[:2]
-                self.Save_Bbox(h1, w1)
-                self.lock.acquire()
-                self.ClickValue = 0
-                self.lock.release()
-            else:
-                pass
+
             self.imgOrigin = result
             self.ImgCap = result
+            '''if self.ClickValue == 5:
+                h1, w1 = result.shape[:2]
+                self.Save_Bbox(h1, w1)
+                self.ClickValue = 0
+                
+            else:
+                pass'''
+
             if self.ClickValue == 0:
                 Show_panel_vcap02(self.treshImg)
                 Show_panel_vcap03(self.ImgCap)
                 # self.Show_panel02_0_1(self.treshImg) ###
                 # self.Show_panel03_1_0(self.ImgCap)  #####
-            else:
-                pass
+            if self.ClickValue == 5:
+                h1, w1 = result.shape[:2]
+                self.Save_Bbox(h1, w1)
+                self.ClickValue = 0
             if self.ClickValue == 2:
                 self.TextOCR2_no_loop()
-            if self.ClickValue == 10:
 
-                # self.ocr_thread()
+            if self.ClickValue == 10:
                 if self.Detect_flag == 1:
                     Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                                   )
@@ -1421,7 +1443,8 @@ class App():
                 fail_string = str(self.fail_count)
                 Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
                 # self.sum_state.update()
-
+            else:
+                pass
             # print(threading.enumerate())
             print(threading.active_count())
             print("--- %s seconds ---" % (time.time() - start_time))
@@ -1558,7 +1581,7 @@ class App():
         return_val = async_result.get()
         return return_val
 
-    @property
+
     def calculate_detect(self):
 
         # self.ret, self.frame = self.vs.read()##change or disble when use picamera
