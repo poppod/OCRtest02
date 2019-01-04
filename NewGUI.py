@@ -36,6 +36,8 @@ class App():
         self.THsarabun = tkinter.Text(self.root)
         #### time
         self.now = datetime.datetime.now()
+        self.root.geometry('800x480')
+        self.root.title("ยินดีต้อนรับ")
         self.date_time = str(self.now.strftime("%d-%m-%Y %H:%M"))
         self.date = str(self.now.strftime("%d-%m-%Y"))
         self.start_time = None
@@ -125,6 +127,11 @@ class App():
         self.start_icon=None
         self.pause_icon=None
         self.stop_icon=None
+        self.power_icon=None
+        self.launch_icon=None
+        self.setting_icon=None
+        self.open_icon=None
+        self.edit_icon=None
 
         self.make01 = None
         self.make02 = None
@@ -164,7 +171,9 @@ class App():
 
         self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
     def load_icon(self):
-        icon_list=['./Drawable/play_icon.png','./Drawable/pause_icon.png','./Drawable/stop_icon.png']
+        icon_list=['./Drawable/play_icon.png','./Drawable/pause_icon.png','./Drawable/stop_icon.png','./Drawable'
+                    '/power_icon.ico','./Drawable/launch_icon.ico','./Drawable/setting_icon.ico','./Drawable'
+                    '/open_icon.ico','./Drawable/edit_icon.ico']
         icon={}
         for i,x in enumerate(icon_list):
             img= PIL.Image.open(x)
@@ -173,6 +182,11 @@ class App():
         self.start_icon=icon[0]
         self.pause_icon=icon[1]
         self.stop_icon=icon[2]
+        self.power_icon=icon[3]
+        self.launch_icon=icon[4]
+        self.setting_icon=icon[5]
+        self.open_icon=icon[6]
+        self.edit_icon=icon[7]
 
     def date_realtime(self):
 
@@ -212,8 +226,7 @@ class App():
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         Label(self.root, height=12).grid(row=7, column=0)
         date.grid(row=8, column=3, sticky=E, columnspan=2)
-        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10), command=self.close_program).grid(row=8,
-                                                                                                         column=1)
+        Button(self.root, image=self.power_icon, command=self.close_program).grid(row=8,column=1)
 
     def well_to_page1(self):
         user = self.user.get()
@@ -265,16 +278,16 @@ class App():
                                                                                                           sticky=W + E + N + S,
                                                                                                           padx=5,
                                                                                                           pady=5)
-        Button(self.root, text='Default', command=self.default_process).grid(row=4, column=2, sticky=W + N + E + S)
+        Button(self.root, text='Default',image=self.launch_icon,compound=TOP, command=self.default_process).grid(row=4, column=2, sticky= N + S)
         Label(self.root, text="ตั้งค่าใหม่", font=("THSarabunNew", 14)).grid(row=2, column=4, sticky=W + E + N + S,
                                                                              padx=5, pady=5)
         Label(self.root, text="ตั้งค่าใหม่ ใช้ข้อมูลใหม่(แนะนำ)", font=("THSarabunNew", 10)).grid(row=3, column=4,
                                                                                                   sticky=W + E + N + S,
                                                                                                   padx=5, pady=5)
-        Button(self.root, text='Setting', command=self.settingButton).grid(row=4, column=4, sticky=W + N + E + S)
+        Button(self.root, text='Setting',image=self.setting_icon,compound=TOP, command=self.settingButton).grid(row=4, column=4, sticky= N +S)
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=8, column=6, sticky=E, columnspan=2)
-        Button(self.root, text='ปิดโปรแกรม', font=("THSarabunNew", 10), command=self.close_program).grid(row=8,
+        Button(self.root, image=self.power_icon, font=("THSarabunNew", 10), command=self.close_program).grid(row=8,
                                                                                                          column=1)
         Label(self.root, width=20, height=8).grid(row=1, column=1)
         Label(self.root, width=10, height=8).grid(row=1, column=3)
@@ -813,10 +826,10 @@ class App():
 
 
 
-        s=Button(self.root, text="start",image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
+        Button(self.root, text="start",image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
         Button(self.root, text="pause",image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
         Button(self.root, text="stop",image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
-        Button(self.root, text="New", command=self.page5_Insert_Value).grid(row=8, column=7, sticky=W + N + E + S)
+        Button(self.root,image=self.edit_icon, command=self.page5_Insert_Value).grid(row=8, column=8, sticky=W + N + E + S)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
@@ -828,24 +841,24 @@ class App():
                                                                              padx=5, pady=5, columnspan=5)
         Label(self.root,
               text="ค่าที่ป้อน :  " + str(self.DateValue) + "," + str(self.NcodeValue) + "," + str(self.CcodeValue),
-              font=("THSarabunNew", 8)).grid(row=8, column=4, sticky=W, columnspan=4)
-        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 8)).grid(row=9, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="สถานะ :", font=("THSarabunNew", 8)).grid(row=10, column=4, sticky=W)
-        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=11, column=4, sticky=W,
+              font=("THSarabunNew", 10)).grid(row=8, column=4, sticky=W, columnspan=4)
+        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 10)).grid(row=9, column=4, sticky=W, columnspan=2)
+        Label(self.root, text="สถานะ :", font=("THSarabunNew", 10)).grid(row=10, column=4, sticky=W)
+        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 10)).grid(row=11, column=4, sticky=W,
                                                                                 columnspan=2)
-        Label(self.root, text="ค่าความถูกต้อง : 70 %", font=("THSarabunNew", 8)).grid(row=12, column=4, sticky=W,
+        Label(self.root, text="ค่าความถูกต้อง : 70 %", font=("THSarabunNew", 10)).grid(row=12, column=4, sticky=W,
                                                                                       columnspan=2)
-        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 8)).grid(row=13, column=4, sticky=W,
+        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 10)).grid(row=13, column=4, sticky=W,
                                                                                         columnspan=2)
-        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 8)).grid(row=14, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 8)).grid(row=15, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 8)).grid(row=16, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 8)).grid(row=17, column=4, sticky=W, columnspan=1)
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
+        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 10)).grid(row=14, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 10)).grid(row=15, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 10)).grid(row=16, column=4, sticky=W, columnspan=1)
+        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 10)).grid(row=17, column=4, sticky=W, columnspan=1)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 10))  ##command
         info_btn.grid(row=0, column=11)
-        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 10))  ##command
         help_btn.grid(row=0, column=12)
-        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 10))
         date.grid(row=21, column=11, sticky=E, columnspan=2)
         Label(self.root, width=15, height=0).grid(row=1, column=3)
         Label(self.root, width=10, height=0).grid(row=1, column=10)
@@ -1157,9 +1170,9 @@ class App():
                                                                             padx=5, pady=5)
         Label(self.root, text="ใช้ค่าเดิม", font=("THSarabunNew", 10)).grid(row=3, column=4, sticky=W + E + N + S,
                                                                             padx=5, pady=5)
-        fileOpenButtun = Button(self.root, text="Open File", command=self.openDialog).grid(row=4, column=2,
+        Button(self.root, text="Open File",image=self.open_icon,compound=TOP, command=self.openDialog).grid(row=4, column=2,
                                                                                            sticky=N + S)
-        defauil_bnt = Button(self.root, text="Use default", command=self.page2_default_selection).grid(row=4, column=4,
+        Button(self.root, text="Use default",image=self.launch_icon,compound=TOP, command=self.page2_default_selection).grid(row=4, column=4,
                                                                                                        sticky=N + S)
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=10, column=6, sticky=E, columnspan=2)
@@ -1193,7 +1206,7 @@ class App():
 
 
 
-        self.start_thread_detect()
+        #self.start_thread_detect()
 
 
         # self.detectThread.join()
@@ -1206,6 +1219,7 @@ class App():
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
+                self.detect_noloop()
                 if self.ClickValue == 0:
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
@@ -1340,6 +1354,112 @@ class App():
         scale2.grid(row=3, column=10, rowspan=6, sticky=W + N)
         scale3.grid(row=3, column=11, rowspan=6, sticky=W + N)
 
+    def detect_noloop(self):
+        def Show_panel_vcap02(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel2 is None:
+                self.panel2 = tkinter.Label(image=img, width=160, height=120)
+                self.panel2.image = img
+                self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
+            else:
+                self.panel2.configure(image=img)
+                self.panel2.image = img
+
+        def Show_panel_vcap03(img):
+            try:
+                img = imutils.resize(img, width=150, height=100)
+            except:
+                img = img
+            img = PIL.Image.fromarray(img)
+            img = PIL.ImageTk.PhotoImage(img)
+            if self.panel3 is None:
+                self.panel3 = tkinter.Label(image=img, width=160, height=100)
+                self.panel3.image = img
+                self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
+            else:
+                self.panel3.configure(image=img)
+                self.panel3.image = img
+
+        self.make_tempplate()
+        self.make_tempplate2_no_pad()
+
+        # self.detect_finish=0
+
+        # ret,img= self.vs.read()
+        # img=self.frame
+        start_time = time.time()
+        result, image = self.calculate_detect()
+        # result, image = self.calculate_detect_multithread()
+
+        h, w = result.shape[:2]
+
+        if h <= 0 or w <= 0:  # fixed box to tracking
+            result = image
+
+        # M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
+        # result = cv2.warpPerspective(result, M, (h, w))
+        # print(result.shape[:2])
+        # result = self.check_target_area(result, image, h, w)
+
+        self.imgOrigin = result
+        self.ImgCap = result
+        '''if self.ClickValue == 5:
+            h1, w1 = result.shape[:2]
+            self.Save_Bbox(h1, w1)
+            self.ClickValue = 0
+
+        else:
+            pass'''
+
+        if self.ClickValue == 0:
+            Show_panel_vcap02(self.treshImg)
+            Show_panel_vcap03(self.ImgCap)
+            # self.Show_panel02_0_1(self.treshImg) ###
+            # self.Show_panel03_1_0(self.ImgCap)  #####
+        if self.ClickValue == 5:
+            h1, w1 = result.shape[:2]
+            self.Save_Bbox(h1, w1)
+            self.ClickValue = 0
+        if self.ClickValue == 2:
+            self.TextOCR2_no_loop()
+
+        if self.ClickValue == 10:
+            if self.Detect_flag == 1:
+                Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                                                                              )
+
+                self.TextOCR2_no_loop()
+            else:
+                Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                                                                              )
+                self.no_detect()
+            if self.status_flag == 1:
+                Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
+                                                                                        )
+            elif self.status_flag == 2:
+                Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
+                                                                                      )
+            elif self.status_flag == 3:
+                Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
+                                                                                            sticky=W, )
+
+            sum_string = str(self.count_sum)
+            Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
+            pass_string = str(self.pass_count)
+            Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
+            fail_string = str(self.fail_count)
+            Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
+            # self.sum_state.update()
+        else:
+            pass
+        # print(threading.enumerate())
+        print(threading.active_count())
+        print("--- %s seconds ---" % (time.time() - start_time))
     def detect(self):
 
 
