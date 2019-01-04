@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1889" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/NewGUI.py" line="1893" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log2">
-      <change afterPath="$PROJECT_DIR$/Drawable/edit_icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/launch_icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/open_icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/power_icon.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/power_icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/power_icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Drawable/setting_icon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera_detect.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,14 +98,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="15010" />
+          <entry key="py" value="15080" />
           <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="15010" />
+          <entry key="Python" value="15080" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -127,7 +118,7 @@
           <entry key="log2018-12-28 03" value="2" />
           <entry key="log2018-12-28 04" value="5" />
           <entry key="png" value="32" />
-          <entry key="py" value="12" />
+          <entry key="py" value="13" />
           <entry key="txt" value="19" />
         </counts>
       </usages-collector>
@@ -135,7 +126,7 @@
         <counts>
           <entry key="Image" value="43" />
           <entry key="PLAIN_TEXT" value="34" />
-          <entry key="Python" value="12" />
+          <entry key="Python" value="13" />
         </counts>
       </usages-collector>
     </session>
@@ -145,9 +136,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4770">
-              <caret line="831" column="100" selection-start-line="831" selection-start-column="100" selection-end-line="831" selection-end-column="100" />
+            <state relative-caret-position="-2932">
+              <caret line="1207" column="23" selection-start-line="1207" selection-start-column="23" selection-end-line="1207" selection-end-column="23" />
               <folding>
+                <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#455#490#0" />
                 <element signature="e#1340#1354#0" />
                 <element signature="e#3070#3094#0" />
@@ -253,7 +245,6 @@
                 <element signature="e#46008#48668#0" />
                 <element signature="e#48716#51165#0" />
                 <element signature="e#53488#53540#0" />
-                <element signature="e#53575#54880#0" />
                 <element signature="e#53614#54157#0" />
                 <element signature="e#53870#54052#0" />
                 <element signature="e#54087#54157#0" />
@@ -469,6 +460,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/camera_detect.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Drawable/setting_icon.ico">
           <provider selected="true" editor-type-id="images" />
         </entry>
@@ -564,11 +567,11 @@
         <option value="$PROJECT_DIR$/vvom.py" />
         <option value="$PROJECT_DIR$/to2.py" />
         <option value="$PROJECT_DIR$/GUi.py" />
-        <option value="$PROJECT_DIR$/camera_detect.py" />
         <option value="$PROJECT_DIR$/detect_label.py" />
         <option value="$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/contours.py" />
         <option value="$PROJECT_DIR$/../template/venv2/Lib/site-packages/imutils/convenience.py" />
         <option value="$PROJECT_DIR$/testProcess.py" />
+        <option value="$PROJECT_DIR$/camera_detect.py" />
         <option value="$PROJECT_DIR$/NewGUI.py" />
       </list>
     </option>
@@ -809,13 +812,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
-    </task>
-    <task id="LOCAL-00004" summary="check">
-      <created>1539102217741</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1539102217741</updated>
     </task>
     <task id="LOCAL-00005" summary="check">
       <created>1539203038720</created>
@@ -1153,7 +1149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1546097326771</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="commit save log2">
+      <created>1546588777286</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1546588777287</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1174,7 +1177,7 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6912202" visible="true" weight="0.124590166" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6912202" visible="true" weight="0.2147541" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.80505955" weight="0.19672132" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1231,22 +1234,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2319</line>
+          <line>2323</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>376</line>
+          <line>379</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2309</line>
+          <line>2313</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>800</line>
+          <line>803</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
       </breakpoints>
@@ -1362,13 +1365,6 @@
     <entry file="file://$PROJECT_DIR$/log/28_12_2018_23_48.txt" />
     <entry file="file://$PROJECT_DIR$/log/(00-00)-29_12_2018.txt" />
     <entry file="file://$PROJECT_DIR$/log/2018-12-28 23" />
-    <entry file="file://$PROJECT_DIR$/camera_detect.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log/(02-41)-29_12_2018.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1408,11 +1404,22 @@
     <entry file="file://$PROJECT_DIR$/Drawable/setting_icon.ico">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/camera_detect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4770">
-          <caret line="831" column="100" selection-start-line="831" selection-start-column="100" selection-end-line="831" selection-end-column="100" />
+        <state relative-caret-position="-2932">
+          <caret line="1207" column="23" selection-start-line="1207" selection-start-column="23" selection-end-line="1207" selection-end-column="23" />
           <folding>
+            <element signature="e#0#14#0" expanded="true" />
             <element signature="e#455#490#0" />
             <element signature="e#1340#1354#0" />
             <element signature="e#3070#3094#0" />
@@ -1518,7 +1525,6 @@
             <element signature="e#46008#48668#0" />
             <element signature="e#48716#51165#0" />
             <element signature="e#53488#53540#0" />
-            <element signature="e#53575#54880#0" />
             <element signature="e#53614#54157#0" />
             <element signature="e#53870#54052#0" />
             <element signature="e#54087#54157#0" />

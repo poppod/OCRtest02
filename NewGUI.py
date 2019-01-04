@@ -14,7 +14,7 @@ import multiprocessing
 import numpy as np
 import queue
 import datetime
-
+from  camera_detect import WebcamVideoStream
 from itertools import product
 from imutils import contours
 from multiprocessing.pool import ThreadPool
@@ -30,8 +30,10 @@ from skimage.filters import threshold_local
 class App():
     def __init__(self, ):
         #####disble when use videoloop_picamera
-        self.vs = cv2.VideoCapture(0)
+        #self.vs = cv2.VideoCapture(0)
+        self.vs= WebcamVideoStream(src=0)
         #####
+
         self.root = tkinter.Tk()
         self.THsarabun = tkinter.Text(self.root)
         #### time
@@ -64,7 +66,7 @@ class App():
         self.t1=None
 
         #####disble when use videoloop_picamera
-        self.ret, self.frameTemp = self.vs.read()
+        #self.ret, self.frameTemp = self.vs.read()
         #####
         self.Noimg = cv2.imread('no_detect.png')
         self.MultiOcr = None
@@ -139,6 +141,7 @@ class App():
         self.area01 = None
         self.area02 = None
         self.area03 = None
+
         self.digits_pad = {}
         self.thresh = queue.Queue()
         self.result = queue.Queue()
@@ -1202,7 +1205,8 @@ class App():
                 self.panel.configure(image=img)
                 self.panel.image = img
 
-        self.ret, self.frame = self.vs.read()  # temp for fix
+        self.vs.start()
+        self.frame = self.vs.read()  # temp for fix
 
 
 
@@ -1214,7 +1218,7 @@ class App():
         try:
             while not self.stopEvent.is_set():
 
-                self.ret, self.frame = self.vs.read()
+                self.frame = self.vs.read()
 
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
@@ -1458,7 +1462,7 @@ class App():
         else:
             pass
         # print(threading.enumerate())
-        print(threading.active_count())
+        #print(threading.active_count())
         print("--- %s seconds ---" % (time.time() - start_time))
     def detect(self):
 
@@ -1566,7 +1570,7 @@ class App():
             else:
                 pass
             # print(threading.enumerate())
-            print(threading.active_count())
+           # print(threading.active_count())
             print("--- %s seconds ---" % (time.time() - start_time))
 
     def show_attibute_onpage(self):
