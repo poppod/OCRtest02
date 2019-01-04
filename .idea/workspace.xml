@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera_detect.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,14 +94,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="15080" />
+          <entry key="py" value="15097" />
           <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="15080" />
+          <entry key="Python" value="15097" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -136,8 +132,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2932">
-              <caret line="1207" column="23" selection-start-line="1207" selection-start-column="23" selection-end-line="1207" selection-end-column="23" />
+            <state relative-caret-position="183">
+              <caret line="1441" column="103" selection-start-line="1441" selection-start-column="103" selection-end-line="1441" selection-end-column="103" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#455#490#0" />
@@ -392,20 +388,11 @@
                 <element signature="e#97957#98738#0" />
                 <element signature="e#98060#98194#0" />
                 <element signature="e#98265#98738#0" />
-                <element signature="e#98781#106319#0" />
-                <element signature="e#98825#106319#0" />
                 <element signature="e#101298#101706#0" />
                 <element signature="e#101772#101793#0" />
                 <element signature="e#102479#102835#0" />
                 <element signature="e#102532#102709#0" />
                 <element signature="e#102886#102990#0" />
-                <element signature="e#103294#103369#0" />
-                <element signature="e#103425#106247#0" />
-                <element signature="e#103528#104590#0" />
-                <element signature="e#104045#104294#0" />
-                <element signature="e#104345#104590#0" />
-                <element signature="e#104735#105510#0" />
-                <element signature="e#105574#105612#0" />
                 <element signature="e#105630#106247#1" />
                 <element signature="e#106402#110523#0" />
                 <element signature="e#106544#110409#0" />
@@ -813,13 +800,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
     </task>
-    <task id="LOCAL-00005" summary="check">
-      <created>1539203038720</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1539203038720</updated>
-    </task>
     <task id="LOCAL-00006" summary="check">
       <created>1539206494567</created>
       <option name="number" value="00006" />
@@ -1156,7 +1136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1546588777287</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="commit save log2">
+      <created>1546590229567</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1546590229567</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1177,7 +1164,7 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6912202" visible="true" weight="0.2147541" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6912202" visible="true" weight="0.23934427" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.80505955" weight="0.19672132" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1416,8 +1403,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2932">
-          <caret line="1207" column="23" selection-start-line="1207" selection-start-column="23" selection-end-line="1207" selection-end-column="23" />
+        <state relative-caret-position="183">
+          <caret line="1441" column="103" selection-start-line="1441" selection-start-column="103" selection-end-line="1441" selection-end-column="103" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#455#490#0" />
@@ -1672,20 +1659,11 @@
             <element signature="e#97957#98738#0" />
             <element signature="e#98060#98194#0" />
             <element signature="e#98265#98738#0" />
-            <element signature="e#98781#106319#0" />
-            <element signature="e#98825#106319#0" />
             <element signature="e#101298#101706#0" />
             <element signature="e#101772#101793#0" />
             <element signature="e#102479#102835#0" />
             <element signature="e#102532#102709#0" />
             <element signature="e#102886#102990#0" />
-            <element signature="e#103294#103369#0" />
-            <element signature="e#103425#106247#0" />
-            <element signature="e#103528#104590#0" />
-            <element signature="e#104045#104294#0" />
-            <element signature="e#104345#104590#0" />
-            <element signature="e#104735#105510#0" />
-            <element signature="e#105574#105612#0" />
             <element signature="e#105630#106247#1" />
             <element signature="e#106402#110523#0" />
             <element signature="e#106544#110409#0" />

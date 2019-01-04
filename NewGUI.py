@@ -1434,12 +1434,12 @@ class App():
 
         if self.ClickValue == 10:
             if self.Detect_flag == 1:
-                Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=S,
                                                                               )
 
                 self.TextOCR2_no_loop()
             else:
-                Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
+                Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=S,
                                                                               )
                 self.no_detect()
             if self.status_flag == 1:
@@ -2466,7 +2466,7 @@ class App():
                     out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
                         str(x) for x in output[2])
                     self.output_algor1=out
-                    Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=W,
+                    Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=S,
                                                                                         columnspan=2)
                     Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13, column=5,
                                                                                                       sticky=S,
