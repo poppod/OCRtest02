@@ -903,11 +903,7 @@ class App():
             self.stopEvent2.set()
             self.ClickValue = 20
             self.status_flag = 3
-
-
-            print(threading.active_count())
-
-
+            #print(threading.active_count())
             self.panel = None
             self.panel2 = None
             self.panel3 = None
@@ -1210,7 +1206,7 @@ class App():
 
 
 
-        #self.start_thread_detect()
+        self.start_thread_detect()
 
 
         # self.detectThread.join()
@@ -1223,7 +1219,8 @@ class App():
                 # self.detectThread.run()
                 image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
                 self.frameShow = image
-                self.detect_noloop()
+                #cv2.imwrite('./screencapture/img1.png',self.frame)
+                #self.detect_noloop()
                 if self.ClickValue == 0:
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
@@ -1397,6 +1394,7 @@ class App():
         # ret,img= self.vs.read()
         # img=self.frame
         start_time = time.time()
+
         result, image = self.calculate_detect()
         # result, image = self.calculate_detect_multithread()
 
@@ -1412,6 +1410,7 @@ class App():
 
         self.imgOrigin = result
         self.ImgCap = result
+        #cv2.imwrite('./screencapture/detect_perspective.png',self.ImgCap)
         '''if self.ClickValue == 5:
             h1, w1 = result.shape[:2]
             self.Save_Bbox(h1, w1)
@@ -1435,12 +1434,12 @@ class App():
         if self.ClickValue == 10:
             if self.Detect_flag == 1:
                 Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=S,
-                                                                              )
+                                                                              columnspan=2)
 
                 self.TextOCR2_no_loop()
             else:
                 Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=S,
-                                                                              )
+                                                                              columnspan=2)
                 self.no_detect()
             if self.status_flag == 1:
                 Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
@@ -1720,11 +1719,13 @@ class App():
         Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
         Imax = np.array([255, 255, 255], dtype='uint8')
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        #cv2.imwrite('./screencapture/detect_hsv.png',hsv)
         masks = cv2.inRange(hsv, Imin, Imax)
+        #cv2.imwrite('./screencapture/detect_masks.png',masks)
         blurred = cv2.blur(masks, (5, 5))
 
         (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
-
+        #cv2.imwrite('./screencapture/detect_colorselection.png',thresh)
         rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY2.get(), self.rectX2.get()))
         try:
 
@@ -1735,25 +1736,32 @@ class App():
 
         tophat = cv2.morphologyEx(thresh, cv2.MORPH_TOPHAT, rectKernel)
         np.seterr(divide='ignore', invalid='ignore')
+        #cv2.imwrite('./screencapture/detect_tophat.png',tophat)
         gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,
                           ksize=7)
+        #cv2.imwrite('./screencapture/detect_sobel.png',gradX)
         gradX = np.absolute(gradX)
+        #cv2.imwrite('./screencapture/detect_sobelabsolute.png', gradX)
         (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-        gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-        gradX = gradX.astype("uint8")
 
+        gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+        #cv2.imwrite('./screencapture/detect_sobelabsolute_minva.png', gradX)
+        gradX = gradX.astype("uint8")
+        #cv2.imwrite('./screencapture/detect_sobelabsolute_full.png', gradX)
         gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
+        #cv2.imwrite('./screencapture/detect_morpho_rect.png', gradX)
         thresh = cv2.threshold(gradX, 0, 255,
                                cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
         thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-
+        #cv2.imwrite('./screencapture/detect_morpho_sq.png', thresh)
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
+        #cv2.imwrite('./screencapture/detect_getstruture_kernel.png', kernel)
         closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-
+        #cv2.imwrite('./screencapture/detect_closed.png',closed)
         kernelp = np.ones((15, 15), np.uint8)
         closed = cv2.erode(closed, None, iterations=4)
         closed = cv2.dilate(closed, kernelp, iterations=5)
-
+        #cv2.imwrite('./screencapture/detect_closed_erod_dilate.png',closed)
         _, cnts, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
@@ -1797,6 +1805,7 @@ class App():
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)
                 cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
                 # if our approximated contour has four points, then we
                 # can assume that we have found our screen
                 if len(approx) == 4:
@@ -1809,6 +1818,7 @@ class App():
             pass
         # screenCnt[1]=screenCnt[1]+20
         self.treshImg = clone01
+        #cv2.imwrite('./screencapture/detect_clone01_rectangle.png', clone01)
         if screenCnt is None:
             screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
             pts = screenCnt.reshape(4, 2)
@@ -1846,6 +1856,7 @@ class App():
                 self.detect_timestamp = datetime.datetime.now().second
             else:
                 if self.Detect_flag == 1:
+                    #self.no_detect_timestamp = datetime.datetime.now().second
                     self.change_state()
 
                 self.Detect_flag = 0
@@ -1853,10 +1864,11 @@ class App():
 
         else:
             pass
+        print(self.Detect_flag)
 
     def change_state(self):
         def_time=self.detect_timestamp-self.no_detect_timestamp
-        if self.status_flag == 1 and def_time>=0.1:
+        if self.status_flag == 1 and abs(def_time)>=0.09:
 
             self.count_sum += 1
             if self.pass_value == 1:
@@ -2467,10 +2479,10 @@ class App():
                         str(x) for x in output[2])
                     self.output_algor1=out
                     Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=S,
-                                                                                        columnspan=2)
+                                                                                        columnspan=3)
                     Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13, column=5,
                                                                                                       sticky=S,
-                                                                                                      columnspan=1)
+                                                                                                      columnspan=2)
                 except BaseException as e:
                     print(str(e))
                     pass
