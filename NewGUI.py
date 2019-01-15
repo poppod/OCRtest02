@@ -18,6 +18,7 @@ from  camera_detect import WebcamVideoStream
 from itertools import product
 from imutils import contours
 from multiprocessing.pool import ThreadPool
+from pivideostream import PiVideoStream
 from skimage.filters import threshold_local
 
 
@@ -31,7 +32,8 @@ class App():
     def __init__(self, ):
         #####disble when use videoloop_picamera
         #self.vs = cv2.VideoCapture(0)
-        self.vs= WebcamVideoStream(src=0)
+        self.vs= WebcamVideoStream(src=0).start()
+        #self.vs=PiVideoStream().start()
         #####
 
         self.root = tkinter.Tk()
@@ -1201,7 +1203,7 @@ class App():
                 self.panel.configure(image=img)
                 self.panel.image = img
 
-        self.vs.start()
+        #self.vs.start() ##forfix
         self.frame = self.vs.read()  # temp for fix
 
 
@@ -1240,7 +1242,7 @@ class App():
         self.frame_temp()
         camera = PiCamera()
         camera.resolution = (640, 480)
-        camera.framerate = 60
+        camera.framerate = 64
         camera.rotation = 180
         rawCapture = PiRGBArray(camera, size=(640, 480))
 
