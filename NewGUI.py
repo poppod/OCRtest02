@@ -18,7 +18,7 @@ from  camera_detect import WebcamVideoStream
 from itertools import product
 from imutils import contours
 from multiprocessing.pool import ThreadPool
-from pivideostream import PiVideoStream
+#from pivideostream import PiVideoStream
 from skimage.filters import threshold_local
 
 
@@ -55,7 +55,7 @@ class App():
         self.THsarabun.configure(font=myfont)
         # self.scale()
         # self.scale2()
-        self.root.iconbitmap("./Drawable/icon.ico")
+        self.root.iconbitmap('./Drawable/icon.ico')
         self.Detect_flag = 0
         self.status_flag = 1
         self.frameShow = None
@@ -1853,24 +1853,29 @@ class App():
             self.lock.release()
         if not self.HeightBbox is None or not self.WeightBbox is None:
             if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
+                if self.Detect_flag==0 :
+                    self.Detect_flag = 1
+                    self.detect_timestamp = time.time()
+                    print(self.detect_timestamp)
 
-                self.Detect_flag = 1
-                self.detect_timestamp = datetime.datetime.now().second
             else:
                 if self.Detect_flag == 1:
-                    #self.no_detect_timestamp = datetime.datetime.now().second
+                    self.no_detect_timestamp = time.time()
                     self.change_state()
 
                 self.Detect_flag = 0
-                self.no_detect_timestamp=datetime.datetime.now().second
+                self.no_detect_timestamp = 0.000
+                self.detect_timestamp = 0.000
+                #self.no_detect_timestamp=datetime.datetime.now().second
 
         else:
             pass
         print(self.Detect_flag)
 
     def change_state(self):
-        def_time=self.detect_timestamp-self.no_detect_timestamp
-        if self.status_flag == 1 and abs(def_time)>=0.09:
+        def_time=self.no_detect_timestamp-self.detect_timestamp
+        print(def_time)
+        if self.status_flag == 1 and def_time >=0.5:
 
             self.count_sum += 1
             if self.pass_value == 1:
@@ -1881,6 +1886,8 @@ class App():
             self.fail_value = 0
         else:
             pass
+        self.detect_timestamp=0.000
+        self.no_detect_timestamp=0.000
 
     def check_target_area(self):
         image = self.imgOrigin
@@ -2419,6 +2426,10 @@ class App():
 
             text = []
             tmpcnts2 = {}
+            if len(tmpcnts) != 3:
+                return
+            if len(tmpcnts3) > 19:
+                return 0
             for i in range(len(tmpcnts)):
                 # text = []
                 try:
@@ -2433,7 +2444,7 @@ class App():
                 text.append(i)
             if len(tmpcnts) == 0:
                 #self.Detect_flag = 0  ##
-
+                return 0
                 tmpcnts2[0] = imgTocrop
                 tmpcnts3[0] = imgWrap
 
@@ -2450,27 +2461,37 @@ class App():
             if self.ClickValue == 2:  ####
                 self.Show_panel_vcap02(img)
                 self.Show_panel_vcap03(imgWrap)
-
+                if len(tmpcnts) > 3:
+                    return 0
+                if len(tmpcnts3) > 19:
+                    return 0
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
 
                 if self.status_flag == 1:
-                    output = []
-                    output2 = []
-                    output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
-                    output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
-                    value2 = self.check_algorithm2_2(output2)
-                    value = self.check_algrithm1(output)
-                    self.value_algor1=value
-                    self.value_algor2=value2
-                    if (self.value_algor1 or self.value_algor2):
-                        self.pass_value = 1
-                        Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
-                                                                                                          column=5)
-                    else:
+                    if len(tmpcnts) > 3:
                         self.fail_value = 1
-                        Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                        column=5)
+                        return 0
+                    elif len(tmpcnts3) > 19:
+                        self.fail_value = 1
+                        return 0
+                    else :
+                        output = []
+                        output2 = []
+                        output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
+                        output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
+                        value2 = self.check_algorithm2_2(output2)
+                        value = self.check_algrithm1(output)
+                        self.value_algor1=value
+                        self.value_algor2=value2
+                        if (self.value_algor1 or self.value_algor2):
+                            self.pass_value = 1
+                            Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
+                                                                                                              column=5)
+                        else:
+                            self.fail_value = 1
+                            Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
+                                                                                                            column=5)
 
                 else:
                     pass
@@ -2486,7 +2507,7 @@ class App():
                                                                                                       sticky=S,
                                                                                                       columnspan=2)
                 except BaseException as e:
-                    print(str(e))
+                    print(str(e)+"poppy")
                     pass
 
                 '''try:
@@ -2561,6 +2582,7 @@ class App():
                 try:
                     roi = cv2.resize(roi, (57, 88))
                 except:
+                    pass
                     roi = cv2.resize(img, (57, 88))
                 imgtest2[charac] = roi
                 roi = self.digit_cnt_sobel(roi)
@@ -2911,6 +2933,7 @@ class App():
 
     def close_program(self):
         cv2.destroyAllWindows()
+        self.vs.stop()
         self.stopEvent.set()
         self.root.destroy()
 
