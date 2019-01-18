@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log2">
-      <change afterPath="$PROJECT_DIR$/pivideostream.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +65,7 @@
     <session id="480488181">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="40" />
+          <entry key="project.closed" value="41" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="7" />
           <entry key="project.open.time.11" value="3" />
@@ -95,14 +93,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="15505" />
+          <entry key="py" value="15525" />
           <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="15505" />
+          <entry key="Python" value="15525" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -133,8 +131,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1479">
-              <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+            <state relative-caret-position="249">
+              <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#499#534#0" />
@@ -225,6 +223,7 @@
                 <element signature="e#34508#34550#0" />
                 <element signature="e#34678#34783#0" />
                 <element signature="e#34818#34949#0" />
+                <element signature="e#34990#39840#0" />
                 <element signature="e#35041#35079#0" />
                 <element signature="e#35227#35254#0" />
                 <element signature="e#39592#39749#1" />
@@ -244,6 +243,7 @@
                 <element signature="e#49246#51695#0" />
                 <element signature="e#51737#54008#0" />
                 <element signature="e#54057#54109#0" />
+                <element signature="e#54144#55559#0" />
                 <element signature="e#55604#55744#0" />
                 <element signature="e#55789#56905#0" />
                 <element signature="e#56117#56138#0" />
@@ -257,12 +257,37 @@
                 <element signature="e#58292#59489#0" />
                 <element signature="e#59521#60391#0" />
                 <element signature="e#60440#61318#0" />
+                <element signature="e#61357#65897#0" />
                 <element signature="e#61397#61946#0" />
                 <element signature="e#61654#61839#0" />
                 <element signature="e#61874#61946#0" />
                 <element signature="e#61996#62545#0" />
                 <element signature="e#62253#62438#0" />
                 <element signature="e#62473#62545#0" />
+                <element signature="e#65930#70683#0" />
+                <element signature="e#70729#76996#0" />
+                <element signature="e#77055#77173#0" />
+                <element signature="e#77226#77506#0" />
+                <element signature="e#77550#83461#0" />
+                <element signature="e#83504#84398#0" />
+                <element signature="e#84436#84806#0" />
+                <element signature="e#84849#85290#0" />
+                <element signature="e#85323#85518#0" />
+                <element signature="e#85566#87548#0" />
+                <element signature="e#87588#89606#0" />
+                <element signature="e#89642#91564#0" />
+                <element signature="e#91597#105097#0" />
+                <element signature="e#105140#112678#0" />
+                <element signature="e#112761#116882#0" />
+                <element signature="e#116944#117832#0" />
+                <element signature="e#117904#121788#0" />
+                <element signature="e#121838#122240#0" />
+                <element signature="e#122292#122533#0" />
+                <element signature="e#122585#123228#0" />
+                <element signature="e#123264#123414#0" />
+                <element signature="e#123450#124148#0" />
+                <element signature="e#124194#126505#0" />
+                <element signature="e#126571#127656#0" />
               </folding>
             </state>
           </provider>
@@ -271,8 +296,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pivideostream.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
+            <state relative-caret-position="204">
+              <caret line="12" column="34" lean-forward="true" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -361,7 +386,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="676" />
     <option name="width" value="697" />
     <option name="height" value="735" />
@@ -596,13 +621,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
-    </task>
-    <task id="LOCAL-00008" summary="check">
-      <created>1541609645232</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1541609645232</updated>
     </task>
     <task id="LOCAL-00009" summary="check">
       <created>1541697503846</created>
@@ -940,7 +958,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547486071604</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="commit save log2">
+      <created>1547576088311</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1547576088312</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -954,9 +979,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="676" y="0" width="697" height="735" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3748103" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1047041" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1050,6 +1074,11 @@
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
           <line>1359</line>
           <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/NewGUI.py</url>
+          <line>2078</line>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -1203,8 +1232,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pivideostream.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
+        <state relative-caret-position="204">
+          <caret line="12" column="34" lean-forward="true" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
@@ -1213,8 +1242,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1479">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
+        <state relative-caret-position="249">
+          <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#499#534#0" />
@@ -1305,6 +1334,7 @@
             <element signature="e#34508#34550#0" />
             <element signature="e#34678#34783#0" />
             <element signature="e#34818#34949#0" />
+            <element signature="e#34990#39840#0" />
             <element signature="e#35041#35079#0" />
             <element signature="e#35227#35254#0" />
             <element signature="e#39592#39749#1" />
@@ -1324,6 +1354,7 @@
             <element signature="e#49246#51695#0" />
             <element signature="e#51737#54008#0" />
             <element signature="e#54057#54109#0" />
+            <element signature="e#54144#55559#0" />
             <element signature="e#55604#55744#0" />
             <element signature="e#55789#56905#0" />
             <element signature="e#56117#56138#0" />
@@ -1337,12 +1368,37 @@
             <element signature="e#58292#59489#0" />
             <element signature="e#59521#60391#0" />
             <element signature="e#60440#61318#0" />
+            <element signature="e#61357#65897#0" />
             <element signature="e#61397#61946#0" />
             <element signature="e#61654#61839#0" />
             <element signature="e#61874#61946#0" />
             <element signature="e#61996#62545#0" />
             <element signature="e#62253#62438#0" />
             <element signature="e#62473#62545#0" />
+            <element signature="e#65930#70683#0" />
+            <element signature="e#70729#76996#0" />
+            <element signature="e#77055#77173#0" />
+            <element signature="e#77226#77506#0" />
+            <element signature="e#77550#83461#0" />
+            <element signature="e#83504#84398#0" />
+            <element signature="e#84436#84806#0" />
+            <element signature="e#84849#85290#0" />
+            <element signature="e#85323#85518#0" />
+            <element signature="e#85566#87548#0" />
+            <element signature="e#87588#89606#0" />
+            <element signature="e#89642#91564#0" />
+            <element signature="e#91597#105097#0" />
+            <element signature="e#105140#112678#0" />
+            <element signature="e#112761#116882#0" />
+            <element signature="e#116944#117832#0" />
+            <element signature="e#117904#121788#0" />
+            <element signature="e#121838#122240#0" />
+            <element signature="e#122292#122533#0" />
+            <element signature="e#122585#123228#0" />
+            <element signature="e#123264#123414#0" />
+            <element signature="e#123450#124148#0" />
+            <element signature="e#124194#126505#0" />
+            <element signature="e#126571#127656#0" />
           </folding>
         </state>
       </provider>
