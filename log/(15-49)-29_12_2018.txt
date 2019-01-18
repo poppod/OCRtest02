@@ -1,0 +1,1 @@
+['DATE:29-12-2018', 'USER:poppod', 'START:15:46', 'END:15:48', 'FINISH:2', 'TOTAL:2', 'PASS:2', 'FAIL:0']
