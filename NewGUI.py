@@ -150,7 +150,7 @@ class App():
         self.stopEvent = threading.Event()
         self.stopEvent2 = threading.Event()
         self.load_all_except_target()
-        # self.load_all_value()
+        self.load_all_value()
 
         # self.page1_selectOption()
         self.load_icon()
@@ -246,9 +246,9 @@ class App():
         self.WeightBbox = w
 
     def Click_ValueBbox(self):
-        self.lock.acquire()
+
         self.ClickValue = 5
-        self.lock.release()
+
         print(5)
 
     def settingButton(self):
@@ -834,7 +834,7 @@ class App():
         Button(self.root, text="start",image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
         Button(self.root, text="pause",image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
         Button(self.root, text="stop",image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
-        Button(self.root,image=self.edit_icon, command=self.page5_Insert_Value).grid(row=8, column=8, sticky=W + N + E + S)
+        Button(self.root,image=self.edit_icon, command=self.edit_insert).grid(row=8, column=8, sticky=W + N + E + S)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
                                                                                            sticky=W,
@@ -1002,6 +1002,18 @@ class App():
                                                                            sticky=W,
                                                                            columnspan=4)
 
+
+    def edit_insert(self):
+        self.status_flag = 2
+        self.ClickValue = 3
+        ms = messagebox.askyesno("Edit", "Edit Value")
+        if ms:
+            self.ClickValue = 3
+            self.page5_Insert_Value()
+        else:
+            self.ClickValue = 10
+
+            return
     def save_logfile(self):
         ms=messagebox.askyesno("Save log","Save log file")
         if ms:
@@ -1521,23 +1533,37 @@ class App():
 
             self.imgOrigin = result
             self.ImgCap = result
-            '''if self.ClickValue == 5:
+            if self.ClickValue == 5:
                 h1, w1 = result.shape[:2]
                 self.Save_Bbox(h1, w1)
                 self.ClickValue = 0
                 
-            else:
-                pass'''
 
+            '''if self.ClickValue == 5:
+                h1, w1 = result.shape[:2]
+                self.Save_Bbox(h1, w1)
+                self.load_all_value()
+                print("zzz")
+                if not self.HeightBbox is None or not self.WeightBbox is None:
+                    if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
+                        if self.Detect_flag == 0:
+                            self.Detect_flag = 1
+
+
+                    else:
+                        if self.Detect_flag == 1:
+                            self.change_state()
+
+                        self.Detect_flag = 0
+
+
+                self.ClickValue = 0'''
             if self.ClickValue == 0:
                 Show_panel_vcap02(self.treshImg)
                 Show_panel_vcap03(self.ImgCap)
                 # self.Show_panel02_0_1(self.treshImg) ###
                 # self.Show_panel03_1_0(self.ImgCap)  #####
-            if self.ClickValue == 5:
-                h1, w1 = result.shape[:2]
-                self.Save_Bbox(h1, w1)
-                self.ClickValue = 0
+
             if self.ClickValue == 2:
                 self.TextOCR2_no_loop()
 
@@ -1723,7 +1749,7 @@ class App():
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         #cv2.imwrite('./screencapture/detect_hsv.png',hsv)
         masks = cv2.inRange(hsv, Imin, Imax)
-        #cv2.imwrite('./screencapture/detect_masks.png',masks)
+        #cv2.imwrite('./screencapture/detect_masks2.png',masks)
         blurred = cv2.blur(masks, (5, 5))
 
         (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
@@ -1848,16 +1874,17 @@ class App():
         if self.ClickValue == 5:
             # h1, w1 = result.shape[:2]
             self.Save_Bbox(h, w)
-            self.lock.acquire()
+            self.Detect_flag = 0
+
             self.ClickValue = 0
-            self.lock.release()
+
         if not self.HeightBbox is None or not self.WeightBbox is None:
             if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
                 if self.Detect_flag==0 :
                     self.Detect_flag = 1
                     self.detect_timestamp = time.time()
                     print(self.detect_timestamp)
-
+                self.Detect_flag = 1
             else:
                 if self.Detect_flag == 1:
                     self.no_detect_timestamp = time.time()
@@ -1868,14 +1895,14 @@ class App():
                 self.detect_timestamp = 0.000
                 #self.no_detect_timestamp=datetime.datetime.now().second
 
-        else:
-            pass
+
+
         print(self.Detect_flag)
 
     def change_state(self):
         def_time=self.no_detect_timestamp-self.detect_timestamp
         print(def_time)
-        if self.status_flag == 1 and def_time >=0.5:
+        if self.status_flag == 1 and abs(def_time) >=0.8:
 
             self.count_sum += 1
             if self.pass_value == 1:
@@ -2429,7 +2456,7 @@ class App():
             if len(tmpcnts) != 3:
                 return
             if len(tmpcnts3) > 19:
-                return 0
+                return
             for i in range(len(tmpcnts)):
                 # text = []
                 try:
@@ -2461,10 +2488,7 @@ class App():
             if self.ClickValue == 2:  ####
                 self.Show_panel_vcap02(img)
                 self.Show_panel_vcap03(imgWrap)
-                if len(tmpcnts) > 3:
-                    return 0
-                if len(tmpcnts3) > 19:
-                    return 0
+
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
 
