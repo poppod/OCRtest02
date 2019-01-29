@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="commit save log2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectX2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/sqY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/sqY.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/sqY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/sqY2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -103,14 +94,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="15965" />
+          <entry key="py" value="16049" />
           <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="15965" />
+          <entry key="Python" value="16049" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -141,8 +132,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="1886" column="36" selection-start-line="1886" selection-start-column="36" selection-end-line="1886" selection-end-column="36" />
+            <state relative-caret-position="97">
+              <caret line="1570" column="20" lean-forward="true" selection-start-line="1570" selection-start-column="20" selection-end-line="1570" selection-end-column="20" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5067#0" />
@@ -237,7 +228,6 @@
                 <element signature="e#39626#39783#1" />
                 <element signature="e#39793#39814#0" />
                 <element signature="e#39920#40023#0" />
-                <element signature="e#40068#40088#0" />
                 <element signature="e#40346#40668#0" />
                 <element signature="e#40695#40744#0" />
                 <element signature="e#40782#45347#0" />
@@ -290,16 +280,8 @@
                 <element signature="e#66870#67055#0" />
                 <element signature="e#67090#67162#0" />
                 <element signature="e#67318#67343#0" />
-                <element signature="e#67668#67742#0" />
                 <element signature="e#68164#68830#1" />
-                <element signature="e#69216#71012#0" />
-                <element signature="e#69262#69499#0" />
-                <element signature="e#69542#69743#0" />
-                <element signature="e#69806#69999#0" />
-                <element signature="e#70064#70253#0" />
-                <element signature="e#70318#70519#0" />
                 <element signature="e#71064#71094#0" />
-                <element signature="e#71254#77521#0" />
                 <element signature="e#71294#71843#0" />
                 <element signature="e#71551#71736#0" />
                 <element signature="e#71771#71843#0" />
@@ -310,10 +292,7 @@
                 <element signature="e#72747#72929#0" />
                 <element signature="e#72964#73034#0" />
                 <element signature="e#73091#77521#0" />
-                <element signature="e#73133#73261#0" />
-                <element signature="e#73314#73586#0" />
                 <element signature="e#73395#73586#0" />
-                <element signature="e#73642#77521#0" />
                 <element signature="e#73746#76853#0" />
                 <element signature="e#73914#73929#0" />
                 <element signature="e#74064#75024#0" />
@@ -407,22 +386,8 @@
                 <element signature="e#105580#106361#0" />
                 <element signature="e#105683#105817#0" />
                 <element signature="e#105888#106361#0" />
-                <element signature="e#106404#114555#0" />
                 <element signature="e#108921#109329#0" />
                 <element signature="e#109395#109416#0" />
-                <element signature="e#110219#110575#0" />
-                <element signature="e#110272#110449#0" />
-                <element signature="e#110626#110754#0" />
-                <element signature="e#111322#114483#0" />
-                <element signature="e#111425#112818#0" />
-                <element signature="e#111470#111522#0" />
-                <element signature="e#111592#111644#0" />
-                <element signature="e#111696#112818#0" />
-                <element signature="e#112249#112506#0" />
-                <element signature="e#112565#112818#0" />
-                <element signature="e#112963#113738#0" />
-                <element signature="e#113802#113848#0" />
-                <element signature="e#113866#114483#1" />
                 <element signature="e#114638#118784#0" />
                 <element signature="e#114780#118670#0" />
                 <element signature="e#115926#116049#0" />
@@ -800,13 +765,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
     </task>
-    <task id="LOCAL-00012" summary="check">
-      <created>1543158409926</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1543158409926</updated>
-    </task>
     <task id="LOCAL-00013" summary="check">
       <created>1543158476725</created>
       <option name="number" value="00013" />
@@ -1143,7 +1101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547819566684</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="commit save log2">
+      <created>1548744103118</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1548744103118</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1164,13 +1129,13 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6860119" visible="true" weight="0.3" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6860119" visible="true" weight="0.25245902" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8035714" weight="0.47540984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49776787" weight="0.32569557" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4955357" weight="0.10491803" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.3139881" side_tool="true" visible="true" weight="0.3" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.3139881" side_tool="true" visible="true" weight="0.25245902" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.42857143" weight="0.3289689" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49924126" weight="0.32890365" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1226,7 +1191,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2361</line>
+          <line>2364</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1241,22 +1206,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2371</line>
+          <line>2374</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2112</line>
+          <line>2115</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2957</line>
+          <line>2961</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2523</line>
+          <line>2526</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
       </breakpoints>
@@ -1418,8 +1383,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="1886" column="36" selection-start-line="1886" selection-start-column="36" selection-end-line="1886" selection-end-column="36" />
+        <state relative-caret-position="97">
+          <caret line="1570" column="20" lean-forward="true" selection-start-line="1570" selection-start-column="20" selection-end-line="1570" selection-end-column="20" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5067#0" />
@@ -1514,7 +1479,6 @@
             <element signature="e#39626#39783#1" />
             <element signature="e#39793#39814#0" />
             <element signature="e#39920#40023#0" />
-            <element signature="e#40068#40088#0" />
             <element signature="e#40346#40668#0" />
             <element signature="e#40695#40744#0" />
             <element signature="e#40782#45347#0" />
@@ -1567,16 +1531,8 @@
             <element signature="e#66870#67055#0" />
             <element signature="e#67090#67162#0" />
             <element signature="e#67318#67343#0" />
-            <element signature="e#67668#67742#0" />
             <element signature="e#68164#68830#1" />
-            <element signature="e#69216#71012#0" />
-            <element signature="e#69262#69499#0" />
-            <element signature="e#69542#69743#0" />
-            <element signature="e#69806#69999#0" />
-            <element signature="e#70064#70253#0" />
-            <element signature="e#70318#70519#0" />
             <element signature="e#71064#71094#0" />
-            <element signature="e#71254#77521#0" />
             <element signature="e#71294#71843#0" />
             <element signature="e#71551#71736#0" />
             <element signature="e#71771#71843#0" />
@@ -1587,10 +1543,7 @@
             <element signature="e#72747#72929#0" />
             <element signature="e#72964#73034#0" />
             <element signature="e#73091#77521#0" />
-            <element signature="e#73133#73261#0" />
-            <element signature="e#73314#73586#0" />
             <element signature="e#73395#73586#0" />
-            <element signature="e#73642#77521#0" />
             <element signature="e#73746#76853#0" />
             <element signature="e#73914#73929#0" />
             <element signature="e#74064#75024#0" />
@@ -1684,22 +1637,8 @@
             <element signature="e#105580#106361#0" />
             <element signature="e#105683#105817#0" />
             <element signature="e#105888#106361#0" />
-            <element signature="e#106404#114555#0" />
             <element signature="e#108921#109329#0" />
             <element signature="e#109395#109416#0" />
-            <element signature="e#110219#110575#0" />
-            <element signature="e#110272#110449#0" />
-            <element signature="e#110626#110754#0" />
-            <element signature="e#111322#114483#0" />
-            <element signature="e#111425#112818#0" />
-            <element signature="e#111470#111522#0" />
-            <element signature="e#111592#111644#0" />
-            <element signature="e#111696#112818#0" />
-            <element signature="e#112249#112506#0" />
-            <element signature="e#112565#112818#0" />
-            <element signature="e#112963#113738#0" />
-            <element signature="e#113802#113848#0" />
-            <element signature="e#113866#114483#1" />
             <element signature="e#114638#118784#0" />
             <element signature="e#114780#118670#0" />
             <element signature="e#115926#116049#0" />

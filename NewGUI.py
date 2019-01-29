@@ -1526,10 +1526,7 @@ class App():
             if h <= 0 or w <= 0:  # fixed box to tracking
                 result = image
 
-            # M = cv2.getPerspectiveTransform(np.float32(screenCnt), np.float32(box3))
-            # result = cv2.warpPerspective(result, M, (h, w))
-            # print(result.shape[:2])
-            # result = self.check_target_area(result, image, h, w)
+
 
             self.imgOrigin = result
             self.ImgCap = result
@@ -1571,15 +1568,20 @@ class App():
                 if self.Detect_flag == 1:
                     Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                                   )
-                    
-                    self.TextOCR2_no_loop()
+
+                    if self.status_flag == 1:
+                        self.TextOCR2_no_loop()
+                    else:
+                        self.Show_panel_proces02(self.ImgCap)
                 else:
                     Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
                                                                           )
                     self.no_detect()
-                if self.status_flag == 1:
+                if self.status_flag == 1 :
                     Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                            )
+                                                          )
+
+
                 elif self.status_flag == 2:
                     Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
                                                                                           )
@@ -1595,6 +1597,7 @@ class App():
                 Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
                 # self.sum_state.update()
             else:
+                return
                 pass
             # print(threading.enumerate())
            # print(threading.active_count())
@@ -2495,10 +2498,10 @@ class App():
                 if self.status_flag == 1:
                     if len(tmpcnts) > 3:
                         self.fail_value = 1
-                        return 0
+                        return
                     elif len(tmpcnts3) > 19:
                         self.fail_value = 1
-                        return 0
+                        return
                     else :
                         output = []
                         output2 = []
@@ -2550,6 +2553,7 @@ class App():
                     pass'''
             print("---OCR %s seconds ---" % (time.time() - start_time))
 
+        return
     def algorithm1_original_ocr(self, tmpcnts2, tmpcnts3, locs, output):
         imgtest2 = {}
         charac = 0
