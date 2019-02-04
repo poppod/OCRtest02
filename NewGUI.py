@@ -1597,7 +1597,7 @@ class App():
                 Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
                 # self.sum_state.update()
             else:
-                return
+                #return
                 pass
             # print(threading.enumerate())
            # print(threading.active_count())
@@ -2456,10 +2456,7 @@ class App():
 
             text = []
             tmpcnts2 = {}
-            if len(tmpcnts) != 3:
-                return
-            if len(tmpcnts3) > 19:
-                return
+
             for i in range(len(tmpcnts)):
                 # text = []
                 try:
@@ -2474,7 +2471,7 @@ class App():
                 text.append(i)
             if len(tmpcnts) == 0:
                 #self.Detect_flag = 0  ##
-                return 0
+                #return
                 tmpcnts2[0] = imgTocrop
                 tmpcnts3[0] = imgWrap
 
@@ -2494,7 +2491,10 @@ class App():
 
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
-
+                if len(tmpcnts) != 3:
+                    return
+                if len(tmpcnts3) > 19:
+                    return
                 if self.status_flag == 1:
                     if len(tmpcnts) > 3:
                         self.fail_value = 1
