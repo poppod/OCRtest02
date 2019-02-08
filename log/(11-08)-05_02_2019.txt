@@ -1,0 +1,1 @@
+['DATE:05-02-2019', 'USER:pop', 'START:11:07', 'END:11:08', 'FINISH:1', 'TOTAL:2', 'PASS:2', 'FAIL:0']
