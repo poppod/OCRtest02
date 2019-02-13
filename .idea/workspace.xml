@@ -6,7 +6,13 @@
       <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/rectX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/rectX2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/rectY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/rectY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configure/sqY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/sqY2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,9 +73,9 @@
     <session id="480488181">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="55" />
+          <entry key="project.closed" value="56" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="9" />
+          <entry key="project.open.time.10" value="10" />
           <entry key="project.open.time.11" value="5" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.13" value="4" />
@@ -89,7 +95,7 @@
           <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="7" />
-          <entry key="project.opened" value="58" />
+          <entry key="project.opened" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -100,14 +106,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="16940" />
+          <entry key="py" value="16970" />
           <entry key="txt" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="16940" />
+          <entry key="Python" value="16970" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -138,8 +144,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="1517" column="21" selection-start-line="1517" selection-start-column="21" selection-end-line="1517" selection-end-column="21" />
+            <state relative-caret-position="17">
+              <caret line="1491" lean-forward="true" selection-start-line="1491" selection-end-line="1491" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5067#0" />
@@ -643,13 +649,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
     </task>
-    <task id="LOCAL-00016" summary="check">
-      <created>1543404406456</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1543404406459</updated>
-    </task>
     <task id="LOCAL-00017" summary="check">
       <created>1543418807224</created>
       <option name="number" value="00017" />
@@ -986,7 +985,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549618779850</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="commit save log2">
+      <created>1550046743396</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1550046743396</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1007,7 +1013,7 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6785714" visible="true" weight="0.35945484" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6785714" visible="true" weight="0.35775128" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8020833" weight="0.12786885" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1248,8 +1254,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="1517" column="21" selection-start-line="1517" selection-start-column="21" selection-end-line="1517" selection-end-column="21" />
+        <state relative-caret-position="17">
+          <caret line="1491" lean-forward="true" selection-start-line="1491" selection-end-line="1491" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5067#0" />
