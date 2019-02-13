@@ -1493,41 +1493,36 @@ class App():
         detectThread.daemon = True
         detectThread.start()
     def loop_for_detect(self):
-        #i = 0
+        frame = self.vs.read()
+        t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+        t1.daemon = True
+        t1.start()
+        i = 0
         while not self.stopEvent.is_set():
             frame=self.vs.read()
-            t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+            #self.detect_noloop(frame)
+            '''t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
             t1.daemon = False
-            t1.run()
-            '''if i == 0:
-                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t1.daemon = True
-                t1.run()
-
-
-                i += 1
-                pass
-            if i == 1:
+            t1.run()'''
+            print(threading.active_count())
+            if i == 0 and  t1.isAlive():
                 t2 = threading.Thread(target=self.detect_noloop, args=(frame,))
                 t2.daemon = True
-                t2.run()
-
+                t2.start()
                 i += 1
-                pass
-            if i == 2:
+            elif i == 1 and t2.isAlive() and t1.isAlive():
                 t3 = threading.Thread(target=self.detect_noloop, args=(frame,))
                 t3.daemon = True
                 t3.run()
 
-                i += 1
-                pass
-            if i == 3:
-                t4 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t4.daemon = True
-                t4.run()
-               
                 i = 0
-                pass'''
+
+            else:
+                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+                t1.daemon = True
+                t1.start()
+                i = 0
+
     def detect(self):
 
 
