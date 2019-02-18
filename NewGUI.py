@@ -37,10 +37,12 @@ class App():
         #####
 
         self.root = tkinter.Tk()
-        self.THsarabun = tkinter.Text(self.root)
+        self.default_font = tkinter.font.Font(family="Ekkamai Standard")
+        self.root.option_add("*font",self.default_font)
+        #self.THsarabun = tkinter.Text(self.root)
         #### time
         self.now = datetime.datetime.now()
-        self.root.geometry('800x480')
+        self.root.geometry('1024x600')
         self.root.title("ยินดีต้อนรับ")
         self.date_time = str(self.now.strftime("%d-%m-%Y %H:%M"))
         self.date = str(self.now.strftime("%d-%m-%Y"))
@@ -51,8 +53,8 @@ class App():
         self.detect_timestamp=0
         self.no_detect_timestamp=0
         ####time
-        myfont = Font(family="THSarabunNew", size=14)
-        self.THsarabun.configure(font=myfont)
+        #myfont = Font(family="Ekkamai Standard", size=14)
+        #self.THsarabun.configure(font=myfont)
         # self.scale()
         # self.scale2()
         self.root.iconbitmap('./Drawable/icon.ico')
@@ -136,6 +138,7 @@ class App():
         self.setting_icon=None
         self.open_icon=None
         self.edit_icon=None
+        self.user_icon=None
 
         self.make01 = None
         self.make02 = None
@@ -178,7 +181,7 @@ class App():
     def load_icon(self):
         icon_list=['./Drawable/play_icon.png','./Drawable/pause_icon.png','./Drawable/stop_icon.png','./Drawable'
                     '/power_icon.ico','./Drawable/launch_icon.ico','./Drawable/setting_icon.ico','./Drawable'
-                    '/open_icon.ico','./Drawable/edit_icon.ico']
+                    '/open_icon.ico','./Drawable/edit_icon.ico','./Drawable/interview.ico']
         icon={}
         for i,x in enumerate(icon_list):
             img= PIL.Image.open(x)
@@ -192,7 +195,7 @@ class App():
         self.setting_icon=icon[5]
         self.open_icon=icon[6]
         self.edit_icon=icon[7]
-
+        self.user_icon=icon[8]
     def date_realtime(self):
 
         self.now = datetime.datetime.now()
@@ -202,36 +205,32 @@ class App():
         msgb=messagebox.showinfo("เกี่ยวกับโปรแกรม","โปรแกรมตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์")
     def well_com_page(self):
 
-        self.root.geometry('800x480')
+        self.root.geometry('1024x600')
         self.root.title("ยินดีต้อนรับ")
 
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8),command=self.information)  ##command
-        info_btn.grid(row=0, column=3)
-        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
-        help_btn.grid(row=0, column=4)
-        well_btn = Label(self.root, text="โปรแกรม ตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์", font=("THSarabunNew", 16))
-        well_btn.grid(row=2, column=1, sticky=W + E + N + S, padx=5, pady=5)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม",font=("Noto Sans Thai",9),command=self.information,relief=FLAT,cursor="hand2")  ##command
+        info_btn.place(x=922,y=57)
+        #info_btn.pack()
+        '''help_btn = Button(self.root, text="วิธีใช้")  ##command
+        help_btn.grid(row=0, column=4)'''
+        well_btn = Label(self.root, text="โปรแกรมตรวจสอบคุณภาพฉลากบนซองบรรจุผลิตภัณฑ์",font=("Noto Sans Thai",30) )
+        well_btn.place(x=77,y=89)
+        #well_btn.pack()
         # print(well_btn.winfo_reqwidth())
-        Label(self.root, text="ชื่อผู้ใช้งาน หรือผู้ควบคุม", font=("THSarabunNew", 10)).grid(row=3, column=1,
-                                                                                             sticky=W + E + N + S,
-                                                                                             padx=5, pady=5)
+        Label(self.root, text="ชื่อผู้ใช้หรือผู้ควบคุม",font=("Noto Sans Thai",22)).place(x=403,y=148)
         X = int(((800 - int(well_btn.winfo_reqwidth())) / 15))
         # print(X)
-        Label(self.root, width=X + 2).grid(row=0, column=0)
-        X = int(X / 3)
-        Label(self.root, width=X).grid(row=0, column=2)
-        X = int(X - 3)
-        Label(self.root, height=X).grid(row=1, column=0)
         vartx = ""
-        self.user = Entry(self.root, width=15, textvariable=vartx)  ##data in user no self.user
-        self.user.grid(row=4, column=1, sticky=N + S, pady=5)
-        login_btn = Button(self.root, text="เข้าสู่โปรแกรม", command=self.well_to_page1)  ##command
-        login_btn.grid(row=5, column=1, sticky=N + S, pady=5)
+        self.user = Entry(self.root, width=18, textvariable=vartx,background="gray",relief=FLAT)  ##data in user no self.user
+        self.user.place(x=414,y=220)
+        Label(self.root,image=self.user_icon).place(x=340,y=204)
+        login_btn = Button(self.root, text="เข้าสู่ระบบ",relief=FLAT,font=("Noto Sans Thai",12), command=self.well_to_page1,cursor="hand2",background='#26D793')  ##command
+        login_btn.place(x=482,y=289)
 
-        date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
+        '''date = Label(self.root, text=self.date_time, textvariable=self.date_time)
         Label(self.root, height=12).grid(row=7, column=0)
         date.grid(row=8, column=3, sticky=E, columnspan=2)
-        Button(self.root, image=self.power_icon, command=self.close_program).grid(row=8,column=1)
+        Button(self.root, image=self.power_icon, command=self.close_program).grid(row=8,column=1)'''
 
     def well_to_page1(self):
         user = self.user.get()
@@ -3333,5 +3332,6 @@ class App():
 
 
 if __name__ == '__main__':
+
     t = App()
     t.root.mainloop()
