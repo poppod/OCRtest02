@@ -397,45 +397,45 @@ class App():
 
     def Show_panel_vloop(self, img):
         try:
-            img = imutils.resize(img, width=150, height=100)
+            img = imutils.resize(img, width=242, height=109)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel is None:
-            self.panel = tkinter.Label(image=img, width=160, height=120)
+            self.panel = tkinter.Label(image=img,width=242, height=109)
             self.panel.image = img
-            self.panel.grid(row=2, column=1, rowspan=2, columnspan=1, padx=15)
+            self.panel.place(x=77,y=117)
         else:
             self.panel.configure(image=img)
             self.panel.image = img
 
     def Show_panel_vcap02(self, img):
         try:
-            img = imutils.resize(img, width=150, height=100)
+            img = imutils.resize(img, width=242, height=109)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img, width=160, height=120)
+            self.panel2 = tkinter.Label(image=img, width=242, height=109)
             self.panel2.image = img
-            self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
+            self.panel2.place(x=77,y=256)
         else:
             self.panel2.configure(image=img)
             self.panel2.image = img
 
     def Show_panel_vcap03(self, img):
         try:
-            img = imutils.resize(img, width=150, height=100)
+            img = imutils.resize(img, width=242, height=109)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel3 is None:
-            self.panel3 = tkinter.Label(image=img, width=160, height=100)
+            self.panel3 = tkinter.Label(image=img,width=242, height=109)
             self.panel3.image = img
-            self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
+            self.panel3.place(x=77,y=395)
         else:
             self.panel3.configure(image=img)
             self.panel3.image = img
@@ -565,9 +565,9 @@ class App():
         Button(self.root, text="OK and Next", command=self.page3_To_page4,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=504)
 
     def page3_To_page4(self):
-        self.lock.acquire()
+
         self.ClickValue = 5
-        self.lock.release()
+
         Msg = messagebox.askyesno("Save and Next", "Save target Area and Other setting")
         if Msg == True:
             self.lock.acquire()
@@ -610,6 +610,7 @@ class App():
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Setting Digits")
+        self.root.geometry('1024x600')
         self.panel = None
         self.panel2 = None
         self.panel3 = None
@@ -617,30 +618,24 @@ class App():
             print("thread Alive")
 
             user = self.user
-            Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
-                                                                                               sticky=W,
-                                                                                               padx=5, pady=5,
-                                                                                               columnspan=2)
-            Label(self.root, text="ตั้งค่าภาพ", font=("THSarabunNew", 14)).grid(row=1, column=4,
-                                                                                sticky=W + E + N + S,
-                                                                                padx=5, pady=5, columnspan=4)
-            Label(self.root, text="ตั้งค่าสีพื้นหลัง", font=("THSarabunNew", 10)).grid(row=2, column=4,
-                                                                                       sticky=W + E + N + S,
-                                                                                       padx=5, pady=5,
-                                                                                       columnspan=3)
-            Label(self.root, text="ตั้งค่า contours", font=("THSarabunNew", 10)).grid(row=2, column=8,
-                                                                                      sticky=W + E + N + S,
-                                                                                      padx=5, pady=5, columnspan=4)
+            Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("Noto Sans Thai", 15)).grid(row=0, column=1,
+                                                                                                 sticky=W,
+                                                                                                 padx=5, pady=5,
+                                                                                                 columnspan=3)
+            Label(self.root, text="ตั้งค่าภาพ", font=("Noto Sans Thai", 30)).place(x=379,y=36)
+            Label(self.root, text="ตั้งค่าสีพื้นหลัง",  font=("Noto Sans Thai", 18)).place(x=419,y=130)
+            Label(self.root, text="ตั้งค่า contours", font=("Noto Sans Thai", 18)).place(x=765,y=127)
             self.scale2()
             self.scale3()
-            OkNextButton = Button(self.root, text="OK and Next", command=self.page4_To_page5).grid(row=10, column=10)
-            info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
-            info_btn.grid(row=0, column=11, columnspan=2)
-            help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+            Button(self.root, text="OK and Next", command=self.page4_To_page5,font=("Noto Sans Thai", 14),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=526)
+            info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
+                              relief=FLAT, cursor="hand2")  ##command
+            info_btn.place(x=922, y=57)
+            '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
             help_btn.grid(row=0, column=13, columnspan=2)
             date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
             date.grid(row=11, column=11, sticky=E, columnspan=3)
-            Label(self.root, width=2, height=0).grid(row=1, column=0)
+            Label(self.root, width=2, height=0).grid(row=1, column=0)'''
         else:
             self.stopEvent.clear()
             self.stopEvent2.clear()
@@ -1300,27 +1295,29 @@ class App():
 
     def scale(self):
 
-        scale = Scale(self.root, from_=255, to=0, variable=self.var, label="H", sliderlength=50, length=250)
+        scale = Scale(self.root, from_=255, to=0, variable=self.var, sliderlength=50, length=250)
         scale.set(self.var.get())
-        scale1 = Scale(self.root, from_=255, to=0, variable=self.var1, label="S", sliderlength=50, length=250)
+        scale1 = Scale(self.root, from_=255, to=0, variable=self.var1, sliderlength=50, length=250)
         scale1.set(self.var1.get())
-        scale2 = Scale(self.root, from_=255, to=0, variable=self.var2, label="V", sliderlength=50, length=250)
+        scale2 = Scale(self.root, from_=255, to=0, variable=self.var2,  sliderlength=50, length=250)
         scale2.set(self.var2.get())
         scale.place(x=405,y=186)
-        Label(self.root,text="H").place(x=405,y=434)
+        Label(self.root,text="H").place(x=435,y=444)
         scale1.place(x=480,y=186)
+        Label(self.root, text="S").place(x=510, y=444)
         scale2.place(x=555,y=186)
+        Label(self.root, text="V").place(x=585, y=444)
         '''scale2.pack(fill=BOTH, expand=0, side=RIGHT)
         scale1.pack(fill=BOTH, expand=0, side=RIGHT)
         scale.pack(fill=BOTH, expand=0, side=RIGHT)'''
 
     def scale2(self):
 
-        scale = Scale(self.root, from_=0, to=255, variable=self.varMax, label="B", sliderlength=50, length=250)
+        scale = Scale(self.root, from_=0, to=255, variable=self.varMax,  sliderlength=50, length=200)
         scale.set(self.varMax.get())
-        scale1 = Scale(self.root, from_=0, to=255, variable=self.varMax2, label="G", sliderlength=50, length=250)
+        scale1 = Scale(self.root, from_=0, to=255, variable=self.varMax2,  sliderlength=50, length=200)
         scale1.set(self.varMax2.get())
-        scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3, label="R", sliderlength=50, length=250)
+        scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3,  sliderlength=50, length=200)
         scale2.set(self.varMax3.get())
         scale3 = Scale(self.root, from_=0, to=255, variable=self.varMax4, label="ความฟุ้ง contours",
                        orient=tkinter.HORIZONTAL, sliderlength=50, length=250)
@@ -1328,43 +1325,47 @@ class App():
         scale4 = Scale(self.root, from_=0, to=255, variable=self.varMax5, label="ความฟุ้ง digits",
                        orient=tkinter.HORIZONTAL, sliderlength=50, length=250)
         scale4.set(self.varMax5.get())
-        scale.grid(row=3, column=4, rowspan=6, sticky=W + N)
-        scale1.grid(row=3, column=5, rowspan=6, sticky=W + N)
-        scale2.grid(row=3, column=6, rowspan=6, sticky=W + N)
-        scale3.grid(row=9, column=3, columnspan=4, sticky=W + N)
-        scale4.grid(row=9, column=8, columnspan=6, sticky=W + N)
+        scale.place(x=405, y=186)
+        Label(self.root, text="H").place(x=435, y=394)
+        scale1.place(x=480, y=186)
+        Label(self.root, text="S").place(x=510, y=394)
+        scale2.place(x=555, y=186)
+        Label(self.root, text="V").place(x=585, y=394)
+        scale3.place(x=398, y=428)
+        scale4.place(x=672, y=428)
 
     def scale3(self):
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=1, to=100, variable=self.rectY, label="rY", sliderlength=50, length=250)
+        scale = Scale(self.root, from_=1, to=100, variable=self.rectY, sliderlength=50, length=200)
         scale.set(self.rectY.get())
-        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX, label="rX", sliderlength=50, length=250)
+        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX,  sliderlength=50, length=200)
         scale1.set(self.rectX.get())
-        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY, label="sqY", sliderlength=50, length=250)
+        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY, sliderlength=50, length=200)
         scale2.set(self.sqY.get())
-        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX, label="sqX", sliderlength=50, length=250)
+        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX,  sliderlength=50, length=200)
         scale3.set(self.sqX.get())
-        scale.grid(row=3, column=8, rowspan=6, sticky=W + N)
-        scale1.grid(row=3, column=9, rowspan=6, sticky=W + N)
-        scale2.grid(row=3, column=10, rowspan=6, sticky=W + N)
-        scale3.grid(row=3, column=11, rowspan=6, sticky=W + N)
+        scale.place(x=730, y=186)
+        scale1.place(x=786, y=186)
+        scale2.place(x=842, y=186)
+        scale3.place(x=898, y=186)
 
     def scale4(self):  # use vssetting
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=100, to=1, variable=self.rectY2, label="rY", sliderlength=50, length=250)
+        scale = Scale(self.root, from_=100, to=1, variable=self.rectY2, sliderlength=50, length=250)
         scale.set(self.rectY2.get())
-        scale1 = Scale(self.root, from_=100, to=1, variable=self.rectX2, label="rX", sliderlength=50, length=250)
+        scale1 = Scale(self.root, from_=100, to=1, variable=self.rectX2,  sliderlength=50, length=250)
         scale1.set(self.rectX2.get())
-        scale2 = Scale(self.root, from_=100, to=1, variable=self.sqY2, label="sqY", sliderlength=50, length=250)
+        scale2 = Scale(self.root, from_=100, to=1, variable=self.sqY2, sliderlength=50, length=250)
         scale2.set(self.sqY2.get())
-        scale3 = Scale(self.root, from_=100, to=1, variable=self.sqX2, label="sqX", sliderlength=50, length=250)
+        scale3 = Scale(self.root, from_=100, to=1, variable=self.sqX2,  sliderlength=50, length=250)
         scale3.set(self.sqX2.get())
-        scale.place(x=746,y=186)
-        scale1.place(x=802,y=186)
-        scale2.place(x=858,y=186)
-        scale3.place(x=914,y=186)
+        scale.place(x=730,y=186)
+
+        scale1.place(x=786,y=186)
+        scale2.place(x=842,y=186)
+        scale3.place(x=898,y=186)
 
     def detect_noloop(self,image):
         def Show_panel_vcap02(img):
@@ -1575,25 +1576,7 @@ class App():
                 self.ClickValue = 0
                 
 
-            '''if self.ClickValue == 5:
-                h1, w1 = result.shape[:2]
-                self.Save_Bbox(h1, w1)
-                self.load_all_value()
-                print("zzz")
-                if not self.HeightBbox is None or not self.WeightBbox is None:
-                    if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
-                        if self.Detect_flag == 0:
-                            self.Detect_flag = 1
 
-
-                    else:
-                        if self.Detect_flag == 1:
-                            self.change_state()
-
-                        self.Detect_flag = 0
-
-
-                self.ClickValue = 0'''
             if self.ClickValue == 0:
                 Show_panel_vcap02(self.treshImg)
                 Show_panel_vcap03(self.ImgCap)
