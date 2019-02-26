@@ -442,30 +442,30 @@ class App():
 
     def Show_panel_proces01(self, img):
         try:
-            img = imutils.resize(img, width=150, height=100)
+            img = imutils.resize(img, width=242, height=109)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img, width=160, height=100)
+            self.panel2 = tkinter.Label(image=img,width=242, height=109)
             self.panel2.image = img
-            self.panel2.grid(row=4, column=4, rowspan=3, columnspan=2, padx=10, pady=15)
+            self.panel2.place(x=174,y=116)
         else:
             self.panel2.configure(image=img)
             self.panel2.image = img
 
     def Show_panel_proces02(self, img):
         try:
-            img = imutils.resize(img, width=150, height=100)
+            img = imutils.resize(img, width=242, height=109)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel3 is None:
-            self.panel3 = tkinter.Label(image=img, width=160, height=100)
+            self.panel3 = tkinter.Label(image=img,width=242, height=109)
             self.panel3.image = img
-            self.panel3.grid(row=4, column=7, rowspan=3, columnspan=3, padx=10, pady=15)
+            self.panel3.place(x=567,y=116)
         else:
             self.panel3.configure(image=img)
             self.panel3.image = img
@@ -714,36 +714,32 @@ class App():
             ele.destroy()
         self.root.title("Insert Value")
         user = self.user
-        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
-                                                                                           sticky=W,
-                                                                                           padx=5, pady=5,
-                                                                                           columnspan=2)
-        Label(self.root, text="ป้อนค่าบนฉลาก", font=("THSarabunNew", 14)).grid(row=2, column=3,
-                                                                               sticky=W + E + N + S,
-                                                                               padx=5, pady=5, columnspan=4)
-        Button(self.root, text="Default load", command=self.load_default_value).grid(row=9, column=4, pady=5)
-        Label(self.root, text="Value 1(Date)", font=("THSarabunNew", 10)).grid(row=3, column=3, sticky=W, columnspan=4)
-        self.Value1_Entry = Entry(self.root, bd=2, width=30, textvariable=self.DateValue)
-        self.Value1_Entry.grid(row=4, column=3, sticky=W, columnspan=4)
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user),  font=("Noto Sans Thai", 15)).grid(row=0, column=1,
+                                                                                                 sticky=W,
+                                                                                                 padx=5, pady=5,
+                                                                                                 columnspan=3)
+        Label(self.root, text="ป้อนค่าบนฉลาก",  font=("Noto Sans Thai", 30)).place(x=385,y=74)
+        Button(self.root, text="Default load", command=self.load_default_value,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#27AE60').place(x=366,y=423)
+        Label(self.root, text="Value 1(Date)",  font=("Noto Sans Thai", 13)).place(x=362,y=159)
+        self.Value1_Entry = Entry(self.root, bd=2, width=30, textvariable=self.DateValue,background="#C4C4C4",relief=FLAT)
+        self.Value1_Entry.place(x=391,y=191)
 
-        Label(self.root, text="Value 2(Code)", font=("THSarabunNew", 10)).grid(row=5, column=3, sticky=W, columnspan=4)
-        self.Value2_Entry = Entry(self.root, bd=2, width=30, textvariable=self.NcodeValue)
-        self.Value2_Entry.grid(row=6, column=3, sticky=W, columnspan=4)
-        Label(self.root, text="Value 3(Alphabet)", font=("THSarabunNew", 10)).grid(row=7, column=3, sticky=W,
-                                                                                   columnspan=4)
-        self.Value3_Entry = Entry(self.root, bd=2, width=5, textvariable=self.CcodeValue)
-        self.Value3_Entry.grid(row=8, column=3, sticky=W, columnspan=4)
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 8))  ##command
-        info_btn.grid(row=0, column=8)
-        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
+        Label(self.root, text="Value 2(Code)",  font=("Noto Sans Thai", 13)).place(x=362,y=233)
+        self.Value2_Entry = Entry(self.root, bd=2, width=30, textvariable=self.NcodeValue,background="#C4C4C4",relief=FLAT)
+        self.Value2_Entry.place(x=391,y=263)
+
+        Label(self.root, text="Value 3(Alphabet)", font=("Noto Sans Thai", 13)).place(x=362,y=306)
+        self.Value3_Entry = Entry(self.root, bd=2, width=5, textvariable=self.CcodeValue,background="#C4C4C4",relief=FLAT)
+        self.Value3_Entry.place(x=391,y=337)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
+                          relief=FLAT, cursor="hand2")  ##command
+        info_btn.place(x=922, y=57)
+        '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
         help_btn.grid(row=0, column=9)
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
-        date.grid(row=11, column=8, sticky=E, columnspan=2)
-        Button(self.root, text="Save", command=self.save_value_input).grid(row=9, column=5, pady=5)
-        Label(self.root, width=20, height=5).grid(row=1, column=2)
-        Label(self.root, width=30, height=5).grid(row=1, column=7)
+        date.grid(row=11, column=8, sticky=E, columnspan=2)'''
+        Button(self.root, text="Save", command=self.save_value_input,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=615, y=423)
 
-        Label(self.root, width=30, height=8).grid(row=10, column=7)
 
     def save_value_input(self):
 
@@ -764,9 +760,7 @@ class App():
                 Code_value = open('./Configure/Code_value.txt', "w")
                 Code_value.write(str(CcodeValue))
                 Code_value.close()
-                Ok_Next_button = Button(self.root, text="Ok and Next", command=self.page5_to_process).grid(row=10,
-                                                                                                           column=6,
-                                                                                                           pady=5)
+                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#14FF00').place(x=789,y=521)
         else:
             # print(str(self.DateValue))
             MsgER = messagebox.showerror("Insert Eror", "No Value , Please insert value")
@@ -817,42 +811,38 @@ class App():
 
 
 
-        Button(self.root, text="start",image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag).grid(row=17, column=7, sticky=W + N + E + S)
-        Button(self.root, text="pause",image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag).grid(row=17, column=8, sticky=W + N + E + S)
-        Button(self.root, text="stop",image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag).grid(row=17, column=9, sticky=W + N + E + S)
-        Button(self.root,image=self.edit_icon, command=self.edit_insert).grid(row=8, column=8, sticky=W + N + E + S)
+        Button(self.root, text="Start",width=100,image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag,  font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#08FF03').place(x=347,y=500)
+        Button(self.root, text="Pause",width=100,image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FAFF08').place(x=557,y=500)
+        Button(self.root, text="Stop",width=100,image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF0404').place(x=759,y=500)
+        Button(self.root,text="New value",image=self.edit_icon,compound=RIGHT, command=self.edit_insert,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=122,y=500)
         user = self.user
-        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
-                                                                                           sticky=W,
-                                                                                           padx=5, pady=5,
-                                                                                           columnspan=2)
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 15)).grid(row=0, column=1,
+                                                                                                 sticky=W,
+                                                                                                 padx=5, pady=5,
+                                                                                                 columnspan=3)
 
-        Label(self.root, text="ประมวลผลภาพ", font=("THSarabunNew", 14)).grid(row=2, column=4,
-                                                                             sticky=W + E + N + S,
-                                                                             padx=5, pady=5, columnspan=5)
+        Label(self.root, text="ประมวลผลภาพ",font=("Noto Sans Thai", 30)).place(x=385,y=44)
         Label(self.root,
               text="ค่าที่ป้อน :  " + str(self.DateValue) + "," + str(self.NcodeValue) + "," + str(self.CcodeValue),
-              font=("THSarabunNew", 10)).grid(row=8, column=4, sticky=W, columnspan=4)
-        Label(self.root, text="การตรวจจับ :", font=("THSarabunNew", 10)).grid(row=9, column=4, sticky=W, columnspan=2)
-        Label(self.root, text="สถานะ :", font=("THSarabunNew", 10)).grid(row=10, column=4, sticky=W)
-        Label(self.root, text="ค่าที่อ่านได้ :", font=("THSarabunNew", 10)).grid(row=11, column=4, sticky=W,
-                                                                                columnspan=2)
-        Label(self.root, text="ค่าความถูกต้อง : 70 %", font=("THSarabunNew", 10)).grid(row=12, column=4, sticky=W,
-                                                                                      columnspan=2)
-        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("THSarabunNew", 10)).grid(row=13, column=4, sticky=W,
-                                                                                        columnspan=2)
-        Label(self.root, text="ผลลัพธ์ :", font=("THSarabunNew", 10)).grid(row=14, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ทั้งหมด :", font=("THSarabunNew", 10)).grid(row=15, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ผ่าน :", font=("THSarabunNew", 10)).grid(row=16, column=4, sticky=W, columnspan=1)
-        Label(self.root, text="ไม่ผ่าน :", font=("THSarabunNew", 10)).grid(row=17, column=4, sticky=W, columnspan=1)
-        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("THSarabunNew", 10))  ##command
-        info_btn.grid(row=0, column=11)
-        help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 10))  ##command
+              font=("Noto Sans Thai", 16)).place(x=124, y=267)
+        Label(self.root, text="การตรวจจับ :",font=("Noto Sans Thai", 16)).place(x=124, y=309)
+        Label(self.root, text="สถานะ :", font=("Noto Sans Thai", 16)).place(x=124, y=349)
+        Label(self.root, text="ค่าที่อ่านได้ :", font=("Noto Sans Thai", 16)).place(x=567, y=267)
+        Label(self.root, text="ค่าความถูกต้อง : 70 %",font=("Noto Sans Thai", 16)).place(x=567, y=309)
+        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("Noto Sans Thai", 16)).place(x=567, y=343)
+        Label(self.root, text="ผลลัพธ์ :",font=("Noto Sans Thai", 16)).place(x=124, y=389)
+        Label(self.root, text="ทั้งหมด :",font=("Noto Sans Thai", 16)).place(x=124, y=434)
+        Label(self.root, text="ผ่าน :",  fg="green",font=("Noto Sans Thai", 16)).place(x=384, y=434)
+        Label(self.root, text="ไม่ผ่าน :", fg="red",font=("Noto Sans Thai", 16)).place(x=625, y=434)
+        info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
+                          relief=FLAT, cursor="hand2")  ##command
+        info_btn.place(x=922, y=57)
+        '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 10))  ##command
         help_btn.grid(row=0, column=12)
         date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 10))
         date.grid(row=21, column=11, sticky=E, columnspan=2)
         Label(self.root, width=15, height=0).grid(row=1, column=3)
-        Label(self.root, width=10, height=0).grid(row=1, column=10)
+        Label(self.root, width=10, height=0).grid(row=1, column=10)'''
         # Label(self.root, width=5, height=5).grid(row=8, column=3)
         if self.thread == None or self.stopEvent.is_set()== True:
             self.stopEvent.clear()
@@ -923,71 +913,56 @@ class App():
         user = self.user
 
         log=[]
-        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 12)).grid(row=0, column=0,
-                                                                                           sticky=W,
-                                                                                           padx=5, pady=5,
-                                                                                           columnspan=2)
+        Label(self.root,text="บันทึกการทำงาน",font=("Noto Sans Thai", 45)).place(x=313,y=61)
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 15)).grid(row=0, column=1,
+                                                                                                 sticky=W,
+                                                                                                 padx=5, pady=5,
+                                                                                                 columnspan=3)
 
-        Label(self.root, text="วันที่ : " + str(self.date), font=("THSarabunNew", 10)).grid(row=2, column=3, sticky=W,
-                                                                                          columnspan=3)
+        Label(self.root, text="วันที่ : " + str(self.date),font=("Noto Sans Thai", 16)).place(x=313,y=155)
 
         log.append("DATE:"+ str(self.date))
 
-        Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("THSarabunNew", 10)).grid(row=3, column=3, sticky=W,
-                                                                                            columnspan=3)
+        Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 16)).place(x=313,y=189)
         log.append("USER:" + str(user))
 
-        Label(self.root, text="เริ่ม : " + str(self.start_time), font=("THSarabunNew", 10)).grid(row=4, column=3,
-                                                                                            sticky=W,
-                                                                                            columnspan=3)
+        Label(self.root, text="เริ่ม : " + str(self.start_time),font=("Noto Sans Thai", 16)).place(x=313,y=223)
         log.append("START:" + str(self.start_time))
 
-        Label(self.root, text="สิ้นสุด : " + str(self.end_time), font=("THSarabunNew", 10)).grid(row=5, column=3,
-                                                                                                 sticky=W,
-                                                                                                 columnspan=3)
+        Label(self.root, text="สิ้นสุด : " + str(self.end_time),font=("Noto Sans Thai", 16)).place(x=313,y=257)
         log.append("END:" + str(self.end_time))
 
-        Label(self.root, text="ใช้เวลา : " + str(finish_time)+" นาที", font=("THSarabunNew", 10)).grid(row=6, column=3,
-                                                                                                 sticky=W,
-                                                                                                 columnspan=3)
+        Label(self.root, text="ใช้เวลา : " + str(finish_time)+" นาที",font=("Noto Sans Thai", 16)).place(x=313,y=291)
         log.append("FINISH:" + str(finish_time))
 
-        Label(self.root, text="ทั้งหมด : " + str(self.count_sum), font=("THSarabunNew", 10)).grid(row=7, column=3,
-                                                                                                 sticky=W,
-                                                                                                 columnspan=3)
+        Label(self.root, text="ทั้งหมด : " + str(self.count_sum),font=("Noto Sans Thai", 16)).place(x=313,y=325)
         log.append("TOTAL:"+ str(self.count_sum))
 
-        Label(self.root, text="ผ่าน : " + str(self.pass_count), font=("THSarabunNew", 10)).grid(row=8, column=3,
-                                                                                                 sticky=W,
-                                                                                                 columnspan=3)
+        Label(self.root, text="ผ่าน : " + str(self.pass_count),font=("Noto Sans Thai", 16)).place(x=313,y=359)
         log.append("PASS:"+ str(self.pass_count))
 
-        Label(self.root, text="ไม่ผ่าน : " + str(self.fail_count), font=("THSarabunNew", 10)).grid(row=9, column=3,
-                                                                                                 sticky=W,
-                                                                                                 columnspan=3)
+        Label(self.root, text="ไม่ผ่าน : " + str(self.fail_count),font=("Noto Sans Thai", 16)).place(x=313,y=393)
         log.append("FAIL:"+str(self.fail_count))
 
-        Label(self.root, text="./log/" , font=("THSarabunNew", 8), width=30).grid(row=11, column=3,
-                                                                                                   sticky=W,
-                                                                                                   columnspan=4)
+        Label(self.root, text="./log/" ,font=("Noto Sans Thai", 14)).place(x=313,y=434)
 
 
-        Label(self.root,width=30, height=2).grid(row=1, column=2)
+
 
         self.log=str(log)
 
         self.directory='./log/'
-        Button(self.root,text="Change", font=("THSarabunNew", 8),command=self.save_dialog).grid(row=11,column=7,sticky=W+N+E+S)
-        Button(self.root, text="OK", font=("THSarabunNew", 8), command=self.save_logfile).grid(row=12, column=7,sticky=W+N+E+S)
+        Button(self.root,text="Change",command=self.save_dialog,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=370,y=479)
+        Button(self.root, text="OK", command=self.save_logfile,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=611,y=479)
     def save_dialog(self):
         directory=filedialog.askdirectory(initialdir = './log/')
         self.directory=directory
 
         if directory:
-            Label(self.root, text=str(self.directory), font=("THSarabunNew", 8)).grid(row=11, column=3,
-                                                                           sticky=W,
-                                                                           columnspan=4)
-
+            Label(self.root, text=str(self.directory),font=("Noto Sans Thai", 14)).place(x=313,y=434)
+        else:
+            self.directory = './log/'
+            Label(self.root, text=str(self.directory), font=("Noto Sans Thai", 14)).place(x=313, y=434)
 
     def edit_insert(self):
         self.status_flag = 2
@@ -1445,35 +1420,32 @@ class App():
 
         if self.ClickValue == 10:
             if self.Detect_flag == 1:
-                Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                              )
+                Label(self.root, text="พบ   ",  fg="green",font=("Noto Sans Thai", 16)).place(x=251, y=309)
 
                 if self.status_flag == 1:
                     self.TextOCR2_no_loop2(result)
                 else:
                     self.Show_panel_proces02(self.ImgCap)
             else:
-                Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                              )
+                Label(self.root, text="ไม่พบ", fg="red", font=("Noto Sans Thai", 16)).place(x=251, y=309)
+                Label(self.root, text="                     ",width=100, font=("Noto Sans Thai", 16)).place(x=676, y=267)
+                Label(self.root, text="           ",width=100, font=("Noto Sans Thai", 16)).place(x=788, y=343)
                 self.no_detect()
             if self.status_flag == 1:
-                Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                        )
+                Label(self.root, text="ทำงาน",  fg="green", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
 
 
             elif self.status_flag == 2:
-                Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                      )
+                Label(self.root, text="พัก", fg="red", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
             elif self.status_flag == 3:
-                Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                            sticky=W, )
+                Label(self.root, text="หยุดทำงาน", fg="red", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
 
             sum_string = str(self.count_sum)
-            Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
+            Label(self.root, text=sum_string, font=("Noto Sans Thai", 16)).place(x=251, y=434)
             pass_string = str(self.pass_count)
-            Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
+            Label(self.root, text=pass_string,  fg="green",font=("Noto Sans Thai", 16)).place(x=437, y=434)
             fail_string = str(self.fail_count)
-            Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
+            Label(self.root, text=fail_string, fg="red",font=("Noto Sans Thai", 16)).place(x=702, y=434)
             # self.sum_state.update()
         else:
             pass
@@ -2854,12 +2826,10 @@ class App():
                         self.value_algor2 = value2
                         if (self.value_algor1 or self.value_algor2):
                             self.pass_value = 1
-                            Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
-                                                                                                              column=5)
+                            Label(self.root, text="PASS", width=5,  fg="green",font=("Noto Sans Thai", 16)).place(x=215, y=389)
                         else:
                             self.fail_value = 1
-                            Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                            column=5)
+                            Label(self.root, text="FAIL", width=5, fg="red",font=("Noto Sans Thai", 16)).place(x=215, y=389)
 
                 else:
                     pass
@@ -2869,12 +2839,8 @@ class App():
                     out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
                         str(x) for x in output[2])
                     self.output_algor1 = out
-                    Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5,
-                                                                                                       sticky=S,
-                                                                                                       columnspan=3)
-                    Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13, column=5,
-                                                                                                      sticky=S,
-                                                                                                      columnspan=2)
+                    Label(self.root, text=self.output_algor1,width=20, font=("Noto Sans Thai", 16)).place(x=676, y=267)
+                    Label(self.root, text=str(self.persentage) + " %",width=5,  font=("Noto Sans Thai", 16)).place(x=788, y=343)
                 except BaseException as e:
                     print(str(e) + "poppy")
                     pass
