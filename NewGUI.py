@@ -210,7 +210,7 @@ class App():
         self.date_time = str(self.now.strftime("%Y-%m-%d %H:%M"))
         self.date = str(self.now.strftime("%Y-%m-%d"))
     def information(self):
-        msgb=messagebox.showinfo("เกี่ยวกับโปรแกรม","โปรแกรมตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์")
+        messagebox.showinfo("เกี่ยวกับโปรแกรม","โปรแกรมตรวจสอบคุณภาพฉลากบนผลิตภัณฑ์")
     def well_com_page(self):
 
         self.root.geometry('1024x600')
@@ -273,7 +273,7 @@ class App():
         self.page2_selectFile()
 
     def page1_selectOption(self):
-
+        self.ClickValue = 23
         for ele in self.root.winfo_children():
             ele.destroy()
 
@@ -290,6 +290,9 @@ class App():
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
                           relief=FLAT, cursor="hand2")  ##command
         info_btn.place(x=922, y=57)
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947, y=10)
+
         '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
         help_btn.grid(row=0, column=7)'''
         Label(self.root, text="เริ่มต้นการทำงาน", font=("Noto Sans Thai", 25)).place(x=159,y=105)
@@ -545,6 +548,9 @@ class App():
 
     def page3_setting_vscap(self):
         self.panel = None
+        self.panel2 = None
+        self.panel3 = None
+        self.panel4 = None
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.geometry('1024x600')
@@ -556,6 +562,8 @@ class App():
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม",font=("Noto Sans Thai", 9), command=self.information,
                           relief=FLAT, cursor="hand2")  ##command
         info_btn.place(x=922, y=57)
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947, y=10)
         '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
         help_btn.grid(row=0, column=13, columnspan=2)'''
         Label(self.root, text="ตั้งค่ากล้องวิดีโอ", font=("Noto Sans Thai", 30)).place(x=379,y=36)
@@ -563,10 +571,14 @@ class App():
         Label(self.root, text="ตั้งค่า contours",font=("Noto Sans Thai", 18)).place(x=765,y=127)
         self.scale()
         self.scale4()
-        self.thread = threading.Thread(target=self.videoLoop, args=())
-        self.thread.daemon = True
-        self.thread.start()
-
+        if self.thread == None or self.stopEvent.is_set()== True:
+            self.stopEvent.clear()
+            self.stopEvent2.clear()
+            self.thread = threading.Thread(target=self.videoLoop, args=())
+            self.thread.daemon = True
+            self.thread.start()
+        Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.back3to2,
+               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=11, column=11, sticky=E, columnspan=3)'''
         Button(self.root, text="Target Area", command=self.Click_ValueBbox,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=600,y=504)
@@ -615,7 +627,7 @@ class App():
             self.page4_settingDigit()
 
     def page4_settingDigit(self):
-        #self.ClickValue = 2
+        self.ClickValue = 2
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.title("Setting Digits")
@@ -623,6 +635,7 @@ class App():
         self.panel = None
         self.panel2 = None
         self.panel3 = None
+        self.panel4 = None
         if self.thread.isAlive() == True:
             print("thread Alive")
 
@@ -634,12 +647,16 @@ class App():
             Label(self.root, text="ตั้งค่าภาพ", font=("Noto Sans Thai", 30)).place(x=379,y=36)
             Label(self.root, text="ตั้งค่าสีพื้นหลัง",  font=("Noto Sans Thai", 18)).place(x=419,y=130)
             Label(self.root, text="ตั้งค่า contours", font=("Noto Sans Thai", 18)).place(x=765,y=127)
+            Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+                   cursor="hand2").place(x=947, y=10)
             self.scale2()
             self.scale3()
             Button(self.root, text="OK and Next", command=self.page4_To_page5,font=("Noto Sans Thai", 14),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=526)
             info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
                               relief=FLAT, cursor="hand2")  ##command
             info_btn.place(x=922, y=57)
+            Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page3_setting_vscap,
+                   relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
             '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
             help_btn.grid(row=0, column=13, columnspan=2)
             date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
@@ -732,7 +749,8 @@ class App():
         Label(self.root, text="Value 1(Date)",  font=("Noto Sans Thai", 13)).place(x=362,y=159)
         self.Value1_Entry = Entry(self.root, bd=2, width=30, textvariable=self.DateValue,background="#C4C4C4",relief=FLAT)
         self.Value1_Entry.place(x=391,y=191)
-
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947, y=10)
         Label(self.root, text="Value 2(Code)",  font=("Noto Sans Thai", 13)).place(x=362,y=233)
         self.Value2_Entry = Entry(self.root, bd=2, width=30, textvariable=self.NcodeValue,background="#C4C4C4",relief=FLAT)
         self.Value2_Entry.place(x=391,y=263)
@@ -749,7 +767,8 @@ class App():
         date.grid(row=11, column=8, sticky=E, columnspan=2)'''
         Button(self.root, text="Save", command=self.save_value_input,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=615, y=423)
 
-
+        Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page4_settingDigit,
+               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
     def save_value_input(self):
 
         DateValue = self.Value1_Entry.get()
@@ -816,9 +835,8 @@ class App():
 
         self.make_tempplate2_no_pad()
 
-
-
-
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947, y=10)
         Button(self.root, text="Start",width=100,image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag,  font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#08FF03').place(x=347,y=500)
         Button(self.root, text="Pause",width=100,image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FAFF08').place(x=557,y=500)
         Button(self.root, text="Stop",width=100,image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF0404').place(x=759,y=500)
@@ -1072,6 +1090,7 @@ class App():
         sqX2.close()
 
     def load_all_except_target(self):
+
         B_scale = open('./Configure/B_scale.txt', "r")
         self.var.set(int(B_scale.read()))
         B_scale.close()
@@ -1134,11 +1153,38 @@ class App():
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
 
+    def back3to2(self):
+        self.ClickValue = 23
+        msg=messagebox.askokcancel("ย้อนกลับ","ต้องการย้อนกลับ")
+        if msg==TRUE :
+            self.stopEvent.set()
+            self.stopEvent2.set()
+            self.panel = None
+            self.panel2 = None
+            self.panel3 = None
+            self.panel4 = None
+            for ele in self.root.winfo_children():
+                ele.destroy()
+            self.page2_selectFile()
+        else:
+            self.ClickValue=0
     def page2_selectFile(self):
+        self.ClickValue=23
+        self.stopEvent.set()
+        self.stopEvent2.set()
+
+        self.panel = None
+        for ele in self.root.winfo_children():
+            ele.destroy()
+        self.ClickValue = 23
         for ele in self.root.winfo_children():
             ele.destroy()
         self.root.geometry('1024x600')
         self.root.title("Select File")
+        self.panel = None
+        self.panel2 = None
+        self.panel3 = None
+        self.panel4 = None
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user), font=("Noto Sans Thai", 15)).grid(row=0, column=1, sticky=W,
                                                                                              padx=5, pady=5,
@@ -1146,6 +1192,9 @@ class App():
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
                           relief=FLAT, cursor="hand2")  ##command
         info_btn.place(x=922, y=57)
+
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947, y=10)
         '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
         help_btn.grid(row=0, column=7)'''
         Label(self.root, text="นำเข้าภาพฟอนต์", font=("Noto Sans Thai", 30)).place(x=378,y=61)
@@ -1157,6 +1206,9 @@ class App():
         Button(self.root,image=self.default_icon, command=self.page2_default_selection,
                           relief=FLAT, cursor="hand2").place(x=632,y=201)
         Label(self.root, text="Use default",font=("Noto Sans Thai", 16),background='#F85252').place(x=599,y=296)
+
+        Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page1_selectOption,
+               relief=FLAT, cursor="hand2",background='#F2C94C').place(x=40,y=554)
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=10, column=6, sticky=E, columnspan=2)'''
         '''Label(self.root, width=38, height=4).grid(row=1, column=1)
@@ -1620,6 +1672,8 @@ class App():
     def onClose(self):
         # cv2.imwrite("capture.png", self.imgOrigin)
         self.stopEvent.set()
+        self.stopEvent.set()
+        self.stopEvent2.set()
         # self.vs.release()
         self.root.quit()
         # self.root.q
