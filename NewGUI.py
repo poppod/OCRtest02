@@ -113,8 +113,8 @@ class App():
         self.NcodeValue = StringVar()
         self.CcodeValue = StringVar()
 
-        self.HeightBbox = None
-        self.WeightBbox = None
+        self.HeightBbox = 0
+        self.WeightBbox = 0
 
         # self.box=queue.Queue()
         # self.cnts=queue.Queue()
@@ -141,6 +141,7 @@ class App():
         self.user_icon=None
         self.manual_icon=None
         self.default_icon=None
+        self.setting_small_icon=None
 
         self.make01 = None
         self.make02 = None
@@ -154,7 +155,7 @@ class App():
         self.result = queue.Queue()
         self.stopEvent = threading.Event()
         self.stopEvent2 = threading.Event()
-        self.load_all_except_target()
+        #self.load_all_except_target()
         self.load_all_value()
 
         # self.page1_selectOption()
@@ -185,7 +186,7 @@ class App():
                     '/power_icon.ico','./Drawable/launch_icon.ico','./Drawable/setting_icon.ico','./Drawable'
                     '/open_icon.ico','./Drawable/edit_icon.ico','./Drawable/interview.ico','./Drawable/manual.ico'
 
-                   ,'./Drawable/default_icon.ico']
+                   ,'./Drawable/default_icon.ico','./Drawable/setting_small_icon.ico']
         icon={}
         for i,x in enumerate(icon_list):
             img= PIL.Image.open(x)
@@ -202,6 +203,7 @@ class App():
         self.user_icon=icon[8]
         self.manual_icon=icon[9]
         self.default_icon=icon[10]
+        self.setting_small_icon=icon[11]
     def date_realtime(self):
 
         self.now = datetime.datetime.now()
@@ -215,6 +217,8 @@ class App():
         self.root.title("ยินดีต้อนรับ")
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม",font=("Noto Sans Thai",9),command=self.information,relief=FLAT,cursor="hand2")  ##command
         info_btn.place(x=922,y=57)
+        Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
+               cursor="hand2").place(x=947,y=10)
         #info_btn.pack()
         help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",12),cursor="hand2",background='#C4C4C4')  ##command
         help_btn.place(x=892,y=545)
@@ -250,12 +254,17 @@ class App():
     def Save_Bbox(self, h, w):
         self.HeightBbox = h
         self.WeightBbox = w
-
+        Area_configre_H = open('./Configure/AreaH.txt', "w")
+        Area_configre_H.write(str(self.HeightBbox))
+        Area_configre_H.close()
+        Area_configre_W = open('./Configure/AreaW.txt', "w")
+        Area_configre_W.write(str(self.WeightBbox))
+        Area_configre_W.close()
     def Click_ValueBbox(self):
+        result = self.imgOrigin
+        h1, w1 = result.shape[:2]
+        self.Save_Bbox(h1, w1)
 
-        self.ClickValue = 5
-
-        print(5)
 
     def settingButton(self):
         # self.ClickValue+=1
@@ -531,8 +540,8 @@ class App():
             Button(self.root, text="OK and Next", command=self.page3_setting_vscap,relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=475,y=534)
 
     def reset_bbox(self):
-        self.HeightBbox = None
-        self.WeightBbox = None
+        self.HeightBbox = 0
+        self.WeightBbox = 0
 
     def page3_setting_vscap(self):
         self.panel = None
@@ -795,9 +804,8 @@ class App():
         # self.root2 = tkinter.Tk()
         # self.root2.geometry('800x480')
         self.root.title("Process")
-        self.lock.acquire()
         self.ClickValue = 10
-        self.lock.release()
+
         self.TextOcrRef()
         self.load_all_value()
 
@@ -805,7 +813,7 @@ class App():
         self.start_time_min2cal=(int(now.hour)*60)+int(now.minute)
         self.start_time=str(now.strftime("%H:%M"))
         self.reset_to_new_process()
-        self.make_tempplate()
+
         self.make_tempplate2_no_pad()
 
 
@@ -1209,64 +1217,6 @@ class App():
             print("error runtime")
             self.vs.stop()
 
-    def start_thread_detect(self):
-        detectThread = threading.Thread(target=self.detect, args=())
-
-        detectThread.daemon = True
-        detectThread.start()
-
-
-    def videoLoop_picamera(self):
-        self.frame_temp()
-        camera = PiCamera()
-        camera.resolution = (640, 480)
-        camera.framerate = 64
-        camera.rotation = 180
-        rawCapture = PiRGBArray(camera, size=(640, 480))
-
-        # time.sleep(0.1)
-        stream = camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)
-
-        # self.frame=f2.array
-        # self.frame=stream[0].array
-
-        self.detectThread = threading.Thread(target=self.detect, args=())
-        self.detectThread.daemon = True
-        self.detectThread.start()
-        try:
-            while not self.stopEvent.is_set():
-
-                for (i, f) in enumerate(stream):
-                    self.frame = f.array
-                    image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
-
-                    self.frameShow = image
-                    if self.ClickValue == 0 or self.ClickValue == 10:
-                        self.Show_panel01_0_0(self.frameShow)
-                    rawCapture.truncate(0)
-
-        except RuntimeError:
-            print("error runtime")
-
-        stream.close()
-        rawCapture.close()
-        camera.close()
-
-    def frame_temp(self):  # frame temp when use videoloop_picamera
-        camera = PiCamera()
-        camera.resolution = (640, 480)
-        camera.framerate = 30
-        camera.rotation = 180
-        rawCapture = PiRGBArray(camera, size=(640, 480))
-
-        time.sleep(0.1)
-        stream = camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)
-        for (i, f) in enumerate(stream):
-            self.frame = np.asarray(f.array)
-            break
-        stream.close()
-        rawCapture.close()
-        camera.close()
 
     def scale(self):
 
@@ -1373,7 +1323,7 @@ class App():
                 self.panel3.configure(image=img)
                 self.panel3.image = img
 
-        self.make_tempplate()
+
         self.make_tempplate2_no_pad()
 
         # self.detect_finish=0
@@ -1411,10 +1361,7 @@ class App():
             Show_panel_vcap03(self.ImgCap)
             # self.Show_panel02_0_1(self.treshImg) ###
             # self.Show_panel03_1_0(self.ImgCap)  #####
-        if self.ClickValue == 5:
-            h1, w1 = result.shape[:2]
-            self.Save_Bbox(h1, w1)
-            self.ClickValue = 0
+
         if self.ClickValue == 2:
             self.TextOCR2_no_loop2(result)
 
@@ -1459,11 +1406,7 @@ class App():
         detectThread.daemon = True
         detectThread.start()
     def loop_for_detect(self):
-        '''frame = self.vs.read()
-        t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-        t1.daemon = True
-        t1.start()
-        i = 0'''
+
         while not self.stopEvent.is_set():
             frame=self.vs.read()
             #self.detect_noloop(frame)
@@ -1471,400 +1414,7 @@ class App():
             t1.daemon = False
             t1.run()
             print(threading.active_count())
-            '''if i == 0 and  t1.isAlive():
-                t2 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t2.daemon = True
-                t2.start()
-                i += 1
-            elif i == 1 and t2.isAlive() and t1.isAlive():
-                t3 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t3.daemon = True
-                t3.run()
 
-                i = 0
-
-            else:
-                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t1.daemon = True
-                t1.start()
-                i = 0'''
-
-    def detect(self):
-
-
-        def Show_panel_vcap02(img):
-            try:
-                img = imutils.resize(img, width=150, height=100)
-            except:
-                img = img
-            img = PIL.Image.fromarray(img)
-            img = PIL.ImageTk.PhotoImage(img)
-            if self.panel2 is None:
-                self.panel2 = tkinter.Label(image=img, width=160, height=120)
-                self.panel2.image = img
-                self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
-            else:
-                self.panel2.configure(image=img)
-                self.panel2.image = img
-
-        def Show_panel_vcap03(img):
-            try:
-                img = imutils.resize(img, width=150, height=100)
-            except:
-                img = img
-            img = PIL.Image.fromarray(img)
-            img = PIL.ImageTk.PhotoImage(img)
-            if self.panel3 is None:
-                self.panel3 = tkinter.Label(image=img, width=160, height=100)
-                self.panel3.image = img
-                self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
-            else:
-                self.panel3.configure(image=img)
-                self.panel3.image = img
-
-        self.make_tempplate()
-        self.make_tempplate2_no_pad()
-
-        #self.detect_finish=0
-        while not self.stopEvent.is_set():
-            # ret,img= self.vs.read()
-            # img=self.frame
-            start_time = time.time()
-            result, image = self.calculate_detect()
-            # result, image = self.calculate_detect_multithread()
-
-            h, w = result.shape[:2]
-
-            if h <= 0 or w <= 0:  # fixed box to tracking
-                result = image
-
-
-
-            self.imgOrigin = result
-            self.ImgCap = result
-            if self.ClickValue == 5:
-                h1, w1 = result.shape[:2]
-                self.Save_Bbox(h1, w1)
-                self.ClickValue = 0
-                
-
-
-            if self.ClickValue == 0:
-                Show_panel_vcap02(self.treshImg)
-                Show_panel_vcap03(self.ImgCap)
-                # self.Show_panel02_0_1(self.treshImg) ###
-                # self.Show_panel03_1_0(self.ImgCap)  #####
-
-            if self.ClickValue == 2:
-                self.TextOCR2_no_loop()
-
-            if self.ClickValue == 10:
-                if self.Detect_flag == 1:
-                    Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                                  )
-
-                    if self.status_flag == 1:
-                        self.TextOCR2_no_loop()
-                    else:
-                        self.Show_panel_proces02(self.ImgCap)
-                else:
-                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                          )
-                    self.no_detect()
-                if self.status_flag == 1 :
-                    Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                          )
-
-
-                elif self.status_flag == 2:
-                    Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5, sticky=W,
-                                                                                          )
-                elif self.status_flag == 3:
-                    Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                                sticky=W, )
-
-                sum_string = str(self.count_sum)
-                Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
-                pass_string = str(self.pass_count)
-                Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
-                fail_string = str(self.fail_count)
-                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
-                # self.sum_state.update()
-            else:
-                #return
-                pass
-            # print(threading.enumerate())
-           # print(threading.active_count())
-            print("--- %s seconds ---" % (time.time() - start_time))
-
-    def show_attibute_onpage(self):
-        def Show_panel_vcap02(img):
-            try:
-                img = imutils.resize(img, width=150, height=100)
-            except:
-                img = img
-            img = PIL.Image.fromarray(img)
-            img = PIL.ImageTk.PhotoImage(img)
-            if self.panel2 is None:
-                self.panel2 = tkinter.Label(image=img, width=160, height=120)
-                self.panel2.image = img
-                self.panel2.grid(row=5, column=1, rowspan=2, columnspan=1, padx=15)
-            else:
-                self.panel2.configure(image=img)
-                self.panel2.image = img
-
-        def Show_panel_vcap03(img):
-            try:
-                img = imutils.resize(img, width=150, height=100)
-            except:
-                img = img
-            img = PIL.Image.fromarray(img)
-            img = PIL.ImageTk.PhotoImage(img)
-            if self.panel3 is None:
-                self.panel3 = tkinter.Label(image=img, width=160, height=100)
-                self.panel3.image = img
-                self.panel3.grid(row=8, column=1, rowspan=2, columnspan=1, padx=15)
-            else:
-                self.panel3.configure(image=img)
-                self.panel3.image = img
-
-        def Show_panel_vloop(img):
-            try:
-                img = imutils.resize(img, width=150, height=100)
-            except:
-                img = img
-            img = PIL.Image.fromarray(img)
-            img = PIL.ImageTk.PhotoImage(img)
-            if self.panel is None:
-                self.panel = tkinter.Label(image=img, width=160, height=120)
-                self.panel.image = img
-                self.panel.grid(row=2, column=1, rowspan=2, columnspan=1, padx=15)
-            else:
-                self.panel.configure(image=img)
-                self.panel.image = img
-        while not self.stopEvent2.is_set():
-            if self.ClickValue == 0:
-
-                Show_panel_vcap02(self.treshImg)
-                Show_panel_vcap03(self.ImgCap)
-                Show_panel_vloop(self.frameShow)
-            if self.ClickValue==2:
-
-                #from def ocr
-                if not self.imgOrigin is None:
-                    self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
-                    self.Show_panel_vcap02(self.img_tmpcnt4select)
-                    self.Show_panel_vcap03(self.img_tmpcnt4process)
-            if self.ClickValue == 10:
-
-                self.Show_panel_proces01(self.frameShow)
-
-                if self.Detect_flag == 1:
-                    self.Show_panel_proces02(self.ImgCap)
-                    Label(self.root, text="พบ   ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,)
-                    ##go to def ocr
-
-                        #self.Show_panel_proces02(self.ImgCap)
-                    if self.status_flag == 1:
-                        Label(self.root, text="ทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                                sticky=W,
-                                                                                                )
-                        if (self.value_algor1 or self.value_algor2):
-                            self.pass_value = 1
-                            Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
-                                                                                                              column=5)
-                        else:
-                            self.fail_value = 1
-                            Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                            column=5)
-                    elif self.status_flag == 2:
-                        Label(self.root, text="พัก", width=10, font=("THSarabunNew", 8)).grid(row=10, column=5,
-                                                                                              sticky=W,
-                                                                                              )
-                    elif self.status_flag == 3:
-                        Label(self.root, text="หยุดทำงาน", width=10, font=("THSarabunNew", 8)).grid(row=10,
-                                                                                                    column=5,
-                                                                                                    sticky=W, )
-
-
-                    try:
-
-                        Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11,
-                                                                                                           column=5,
-                                                                                                           sticky=W,
-                                                                                                           columnspan=2)
-                        Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13,
-                                                                                                          column=5,
-                                                                                                          sticky=S,
-                                                                                                          columnspan=1)
-                    except BaseException as e:
-                        print(str(e)+"[p[opoiojk")
-                        pass
-                else:
-                    Label(self.root, text="ไม่พบ", font=("THSarabunNew", 8)).grid(row=9, column=5, sticky=W,
-                                                                                  )
-
-
-
-                sum_string = str(self.count_sum)
-                Label(self.root, text=sum_string, font=("THSarabunNew", 8)).grid(row=15, column=5)
-                pass_string = str(self.pass_count)
-                Label(self.root, text=pass_string, font=("THSarabunNew", 8)).grid(row=16, column=5)
-                fail_string = str(self.fail_count)
-                Label(self.root, text=fail_string, font=("THSarabunNew", 8)).grid(row=17, column=5)
-
-    def show_attibute_onpage_thread_start(self):
-        self.t1=threading.Thread(target=self.show_attibute_onpage,args=())
-        self.t1.daemon=True
-        self.t1.start()
-    def calculate_detect_multithread(self):
-        pool = ThreadPool(processes=5)
-
-        async_result = pool.apply_async(self.calculate_detect, )  # tuple of args for foo
-        pool.close()
-
-        pool.join()
-        # do some other stuff in the main process
-
-        return_val = async_result.get()
-        return return_val
-
-
-    def calculate_detect(self):
-
-        # self.ret, self.frame = self.vs.read()##change or disble when use picamera
-
-        image = self.frame
-        orig = image.copy()
-        ratio = image.shape[0] / 300.0
-        image = imutils.resize(image, height=300)
-        # chang resolution for fix
-        image_center = (image.shape[0] / 2, image.shape[1] / 2)
-
-        Imin = np.array([self.var.get(), self.var1.get(), self.var2.get()], dtype='uint8')
-        Imax = np.array([255, 255, 255], dtype='uint8')
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        #cv2.imwrite('./screencapture/detect_hsv.png',hsv)
-        masks = cv2.inRange(hsv, Imin, Imax)
-        #cv2.imwrite('./screencapture/detect_masks2.png',masks)
-        blurred = cv2.blur(masks, (5, 5))
-
-        (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
-        #cv2.imwrite('./screencapture/detect_colorselection.png',thresh)
-        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY2.get(), self.rectX2.get()))
-        try:
-
-            sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY2.get(), self.sqX2.get()))
-        except cv2.error as e:
-            # print("error"+str(e))
-            sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (34, 11))
-
-        tophat = cv2.morphologyEx(thresh, cv2.MORPH_TOPHAT, rectKernel)
-        np.seterr(divide='ignore', invalid='ignore')
-        #cv2.imwrite('./screencapture/detect_tophat.png',tophat)
-        gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,
-                          ksize=7)
-        #cv2.imwrite('./screencapture/detect_sobel.png',gradX)
-        gradX = np.absolute(gradX)
-        #cv2.imwrite('./screencapture/detect_sobelabsolute.png', gradX)
-        (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-
-        gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-        #cv2.imwrite('./screencapture/detect_sobelabsolute_minva.png', gradX)
-        gradX = gradX.astype("uint8")
-        #cv2.imwrite('./screencapture/detect_sobelabsolute_full.png', gradX)
-        gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
-        #cv2.imwrite('./screencapture/detect_morpho_rect.png', gradX)
-        thresh = cv2.threshold(gradX, 0, 255,
-                               cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-        #cv2.imwrite('./screencapture/detect_morpho_sq.png', thresh)
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10, 10))
-        #cv2.imwrite('./screencapture/detect_getstruture_kernel.png', kernel)
-        closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-        #cv2.imwrite('./screencapture/detect_closed.png',closed)
-        kernelp = np.ones((15, 15), np.uint8)
-        closed = cv2.erode(closed, None, iterations=4)
-        closed = cv2.dilate(closed, kernelp, iterations=5)
-        #cv2.imwrite('./screencapture/detect_closed_erod_dilate.png',closed)
-        _, cnts, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        # _, cnts2, hierarchy2 = cv2.findContours(gradient.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # c2 = sorted(cnts2, key=cv2.contourArea, reverse=True)[0]
-
-        clone01 = np.dstack([closed.copy()] * 3)
-
-        # rect2 = cv2.minAreaRect(c2)
-        # box2 = cv2.boxPoints(rect2)
-        # box2 = np.int0(box2)
-        if len(cnts) == 0:
-            cnts = np.float32([[[0, 0], [400, 0], [0, 300], [400, 400]]])
-        else:
-            pass
-        c = sorted(cnts, key=cv2.contourArea, reverse=True)[0]
-        # self.cnt_area_check(c)
-        rect = cv2.minAreaRect(c)
-        box = cv2.boxPoints(rect)
-
-        box = np.int0(box)
-        # res = cv2.bitwise_and(image, image, mask=closed)
-
-        box3 = box
-
-        d_min = 1000
-        rect_min = [[0, 0], [0, 0]]
-        rect3 = cv2.boundingRect(box3)
-        pt1 = (rect3[0], rect3[1])
-        c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
-        d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
-        screenCnt = None
-        if d < d_min:
-            d_min = d
-            rect_min = [pt1, (rect3[2], rect3[3])]
-            # screenCnt=[]
-            cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-            # self.cnt_area_check(cnts[0])
-            for c in cnts:
-                # approximate the contour
-                (x, y, w, h) = cv2.boundingRect(c)
-                # self.cnt_area_check(c)
-                peri = cv2.arcLength(c, True)
-                approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-                cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-                # if our approximated contour has four points, then we
-                # can assume that we have found our screen
-                if len(approx) == 4:
-                    self.cnt_area_check(c)
-                    screenCnt = approx
-                    break
-                else:
-                    pass
-        else:
-            pass
-        # screenCnt[1]=screenCnt[1]+20
-        self.treshImg = clone01
-        #cv2.imwrite('./screencapture/detect_clone01_rectangle.png', clone01)
-        if screenCnt is None:
-            screenCnt = np.float32([[0, 0], [300, 0], [0, 300], [300, 300]])
-            pts = screenCnt.reshape(4, 2)
-        else:
-            pts = screenCnt.reshape(4, 2)
-
-        if self.ClickValue == 10:
-            if self.Detect_flag == 0:
-                result = image
-            if self.Detect_flag == 1:
-                result = self.perspactive_transform(orig, pts, ratio)
-            else:
-                pass
-                # result=pool_perspective(orig,pts,ratio,2)
-
-        else:
-            result = self.perspactive_transform(orig, pts, ratio)
-            # result = pool_perspective(orig, pts, ratio, 2)
-        # result = pool_perspective(orig, pts, ratio, 2)
-        return result, image
     def calculate_detect2(self,image):
 
         # self.ret, self.frame = self.vs.read()##change or disble when use picamera
@@ -2011,7 +1561,7 @@ class App():
 
             self.ClickValue = 0
 
-        if not self.HeightBbox is None or not self.WeightBbox is None:
+        if not self.HeightBbox is 0 or not self.WeightBbox is 0:
             if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
                 if self.Detect_flag==0 :
                     self.Detect_flag = 1
@@ -2131,60 +1681,7 @@ class App():
         # cv2.imwrite('./TextRef/Area2.png', area02)
         # cv2.imwrite('./TextRef/Area3.png', area03)
 
-    def make_tempplate(self):
-        make01 = {}
-        make02 = {}
-        make03 = {}
 
-        for idx, digi in enumerate(self.DateValue):
-            if digi == '/':
-                make01[idx] = self.digits_pad[10]
-            else:
-                for (i, img) in enumerate(self.digits_pad):
-                    if int(digi) == int(i):
-                        make01[idx] = self.digits_pad[i]
-
-        area01 = np.hstack((np.asarray(img) for (ik, img) in make01.items()))
-
-        for idx, digi in enumerate(self.NcodeValue):
-            if digi == '/':
-                make02[idx] = self.digits_pad[10]
-            else:
-                for i, img in enumerate(self.digits_pad):
-                    if int(digi) == int(i):
-                        make02[idx] = self.digits_pad[i]
-
-        area02 = np.hstack((np.asarray(img) for (ik, img) in make02.items()))
-
-        for idx, digi in enumerate(self.CcodeValue):
-            if digi == '/':
-                make03[idx] = self.digits_pad[10]
-            elif digi == 'A':
-                make03[idx] = self.digits_pad[11]
-            elif digi == 'B':
-                make03[idx] = self.digits_pad[12]
-            elif digi == 'C':
-                make03[idx] = self.digits_pad[13]
-            else:
-                for i, img in enumerate(self.digits_pad):
-                    if int(digi) == int(i):
-                        make03[idx] = self.digits_pad[i]
-        area03 = np.hstack((np.asarray(img) for (ik, img) in make03.items()))
-
-        # area02 = PIL.Image.fromarray(area02)
-        # area03 = PIL.Image.fromarray(area03)
-        '''area01.save('./TextRef/Area1.png')
-        area02.save('./TextRef/Area2.png')
-        area03.save('./TextRef/Area3.png')'''
-        self.area01 = area01
-        self.area02 = area02
-        self.area03 = area03
-        # self.make01 = make01
-        # self.make02 = make02
-        # self.make03 = make03
-        cv2.imwrite('./TextRef/Area1.png', area01)
-        cv2.imwrite('./TextRef/Area2.png', area02)
-        cv2.imwrite('./TextRef/Area3.png', area03)
 
     def TextOcrRef(self):
         ref = cv2.imread("./TextRef/temp.png", 0)
@@ -2242,448 +1739,6 @@ class App():
         # cv2.imshow("Simple Method", clone)
         # cv2.imshow('roi', self.roi[2])
         # cv2.imshow("test",ref)
-
-    def TextOCR(self):
-        Noimg = cv2.imread('no_detect.png')
-        while not self.stopEvent.is_set():
-            if not self.imgOrigin is None:
-                if self.Detect_flag == 1:
-                    rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY.get(), self.rectX.get()))
-                    sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY.get(), self.sqX.get()))
-                    imgOrigin = self.imgOrigin
-                    # imgOrigin = imutils.resize(imgOrigin, width=150)
-
-                    gray = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2GRAY)
-                    # tophat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, rectKernel)
-                    Imin = np.array([self.var.get(), self.var1.get(), self.varMax4.get()], dtype='uint8')
-                    Imin2 = np.array([self.var.get(), self.var1.get(), self.varMax5.get()], dtype='uint8')
-                    Imax = np.array([self.varMax.get(), self.varMax2.get(), self.varMax3.get()], dtype='uint8')
-                    hsv = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2HSV)
-                    masks = cv2.inRange(hsv, Imin, Imax)
-                    masks2 = cv2.inRange(hsv, Imin2, Imax)
-                    blurred = cv2.blur(masks, (1, 1))
-                    blurred2 = cv2.blur(masks2, (1, 1))
-                    img = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV)[1]
-                    img2 = cv2.threshold(blurred2, 0, 255, cv2.THRESH_BINARY_INV)[1]
-                    imgTocrop = img
-                    imgWrap = img2
-
-                    tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel)
-                    img2 = img
-                    np.seterr(divide='ignore', invalid='ignore')
-                    gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=7)
-                    gradX = np.absolute(gradX)
-                    (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-                    gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-                    gradX = gradX.astype("uint8")
-
-                    gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
-                    thresh = cv2.threshold(gradX, 0, 255,
-                                           cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-                    t2 = thresh
-                    thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-                    cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                            cv2.CHAIN_APPROX_SIMPLE)
-                    cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-                    cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-
-                    locs = []
-                    tmpcnts = {}
-                    clone01 = np.dstack([thresh.copy()] * 3)
-
-                    font = cv2.FONT_HERSHEY_SIMPLEX
-                    tmpcnts3 = {}
-
-                    for (idx, c) in enumerate(cnts):
-                        x, y, w, h = cv2.boundingRect(c)
-                        x -= 15
-                        y -= 8
-                        w += 25
-                        h += 10
-                        # h=h+5
-                        cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                        tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
-                        tmpcnts3[idx] = imgWrap[y:y + h, x:x + w]
-                        #
-
-                        locs.append((x, y, w, h))
-
-                    locs = sorted(locs, key=lambda X: X[0])
-                    # self.lock.acquire()
-                    # self.Img.put(tmpcnts)
-                    # self.lock.release()
-                    # t = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config, lang='eng')
-                    # print(t)
-
-                    img = clone01
-
-                    if self.ClickValue == 2:
-                        self.Show_panel01_0_0(img)
-
-                    output = []
-                    kernel = np.ones((1, 1), np.uint8)
-                    kernel2 = np.ones((2, 2), np.uint8)
-                    kernel3 = np.ones((5, 5), np.uint8)
-                    imgWrap2 = imgWrap
-
-                    text = []
-                    tmpcnts2 = {}
-                    for i in range(len(tmpcnts)):
-                        # text = []
-                        try:
-                            img = tmpcnts[i]
-                            h, w = img.shape[:2]
-                            img = imutils.resize(img, width=int(w / 2), height=int(h / 2))
-                            img = tmpcnts[i]
-                        except:
-                            img = imgTocrop
-
-                        tmpcnts2[i] = img
-                        text.append(i)
-                    if len(tmpcnts) == 0:
-                        self.Detect_flag = 0  ##
-
-                        tmpcnts2[0] = imgTocrop
-                        tmpcnts3[0] = imgWrap
-
-                    imgtest = {}
-                    imgtest2 = {}
-                    charac = 0
-                    for (i, (gX, gY, gW, gH)) in enumerate(locs):
-                        groupOutput = []
-                        img = tmpcnts2[i]
-
-                        rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
-                        sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
-                        tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
-
-                        np.seterr(divide='ignore', invalid='ignore')
-                        gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
-                        gradX = np.absolute(gradX)
-                        (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-                        gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-                        gradX = gradX.astype("uint8")
-
-                        gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
-                        thresh = cv2.threshold(gradX, 0, 255,
-                                               cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-                        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
-                        digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                                     cv2.CHAIN_APPROX_SIMPLE)
-                        digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
-
-                        try:
-                            digitCnts = contours.sort_contours(digitCnts,
-                                                               method="left-to-right")[0]
-                        except:
-                            digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-                        clone02 = np.dstack([thresh.copy()] * 3)
-                        imgtest[i] = clone02
-
-                        for c in digitCnts:
-
-                            (x, y, w, h) = cv2.boundingRect(c)
-                            x -= 3
-
-                            w += 5
-
-                            cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                            roi = tmpcnts3[i][y:y + h, x:x + w]
-                            roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
-                            roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
-                            roi = cv2.dilate(roi, kernel, iterations=1)
-                            try:
-                                roi = cv2.resize(roi, (57, 88))
-                            except:
-                                roi = cv2.resize(img, (57, 88))
-
-                            imgtest2[charac] = roi
-                            charac += 1
-
-                            scores = []
-                            DIGITS = {}
-                            if i == 0:
-                                DIGITS = self.digits1
-                            elif i == 1:
-                                DIGITS = self.digits2
-                            elif i == 2:
-                                DIGITS = self.digits3
-                            else:
-                                DIGITS = self.digits
-
-                            for (digit, digitROI) in DIGITS.items():
-                                result = cv2.matchTemplate(roi, digitROI,
-                                                           cv2.TM_CCOEFF_NORMED)
-                                (_, score, _, _) = cv2.minMaxLoc(result)
-
-                                scores.append(score)
-
-                            try:
-                                if i == 0:
-                                    if str(np.argmax(scores)) == '10':
-                                        groupOutput.append('/')
-                                    else:
-                                        groupOutput.append(str(np.argmax(scores)))
-
-                                elif i == 2:
-                                    if str(np.argmax(scores)) == '0':
-                                        groupOutput.append('A')
-                                    elif str(np.argmax(scores)) == '1':
-                                        groupOutput.append('B')
-                                    else:
-                                        groupOutput.append('C')
-                                else:
-
-                                    groupOutput.append(str(np.argmax(scores)))
-                            except:
-                                pass
-                        gX += 15
-                        gY += 8
-                        gW -= 18
-                        gH -= 10
-
-                        output.append(groupOutput)
-                        '''cv2.rectangle(imgWrap2, (gX - 5, gY - 5),
-                                      (gX + gW + 5, gY + gH + 5), (255, 255, 255), 2)'''
-
-                    img = img2
-                    if self.ClickValue == 2:
-                        self.Show_panel02_0_1(img)
-                        self.Show_panel03_1_0(imgWrap)
-                        try:
-                            self.Show_panel04_1_1(imgtest2[1])
-                        except:
-                            pass
-                    if self.ClickValue == 10:
-                        self.Show_panel01_0_0(self.frameShow)
-                        self.Show_panel05_2_0(tmpcnts2[0])
-                        self.Show_panel03_1_0(self.ImgCap)
-
-                        try:
-                            Label(self.root, text=output[0], width=20, font=("Helvetica", 20)).grid(row=0, column=1)
-                            Label(self.root, text=output[1], width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-                            Label(self.root, text=output[2], width=20, font=("Helvetica", 20)).grid(row=2, column=1)
-                            if self.DateValue == "".join(str(x) for x in output[0]):
-                                # fg = "red"
-
-                                Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=0, column=2,
-                                                                                                        sticky=W)
-                            else:
-                                Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=0, column=2,
-                                                                                                      sticky=W)
-                            if self.NcodeValue == "".join(str(x) for x in output[1]):
-                                # fg = "red"
-                                Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=1, column=2,
-                                                                                                        sticky=W)
-                            else:
-                                Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=1, column=2,
-                                                                                                      sticky=W)
-                            if str(self.CcodeValue) == "".join(str(x) for x in output[2]):
-                                # fg = "red"
-                                Label(self.root, text="TRUE ", font=("Helvetica", 20), fg="green").grid(row=2, column=2,
-                                                                                                        sticky=W)
-                            else:
-                                Label(self.root, text="FAIL ", font=("Helvetica", 20), fg="red").grid(row=2, column=2,
-                                                                                                      sticky=W)
-                        except:
-                            pass
-
-                else:
-                    # img=cv2.imread('no_detect.png')
-                    if self.ClickValue == 2:
-                        self.Show_panel02_0_1(Noimg)
-                        self.Show_panel03_1_0(Noimg)
-                        self.Show_panel04_1_1(Noimg)
-                    if self.ClickValue == 10:
-                        self.Show_panel01_0_0(self.frameShow)
-                        self.Show_panel03_1_0(Noimg)
-                        self.Show_panel05_2_0(Noimg)
-                        Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=0, column=1)
-                        Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=1, column=1)
-                        Label(self.root, text="NONE", width=20, font=("Helvetica", 20)).grid(row=2, column=1)
-
-    def TextOCR2_no_loop(self):
-
-        if not self.imgOrigin is None:
-
-            start_time = time.time()
-            rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY.get(), self.rectX.get()))
-            sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.sqY.get(), self.sqX.get()))
-            imgOrigin = self.imgOrigin
-            # imgOrigin = imutils.resize(imgOrigin, width=150)
-
-            gray = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2GRAY)
-            # tophat = cv2.morphologyEx(gray, cv2.MORPH_TOPHAT, rectKernel)
-            Imin = np.array([self.var.get(), self.var1.get(), self.varMax4.get()], dtype='uint8')
-            Imin2 = np.array([self.var.get(), self.var1.get(), self.varMax5.get()], dtype='uint8')
-            Imax = np.array([self.varMax.get(), self.varMax2.get(), self.varMax3.get()], dtype='uint8')
-            hsv = cv2.cvtColor(imgOrigin, cv2.COLOR_BGR2HSV)
-            masks = cv2.inRange(hsv, Imin, Imax)
-            masks2 = cv2.inRange(hsv, Imin2, Imax)
-            blurred = cv2.blur(masks, (1, 1))
-            blurred2 = cv2.blur(masks2, (1, 1))
-            img = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV)[1]
-            img2 = cv2.threshold(blurred2, 0, 255, cv2.THRESH_BINARY_INV)[1]
-            imgTocrop = img
-            imgWrap = img2
-
-            tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel)
-            img2 = img
-            np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=7)
-            gradX = np.absolute(gradX)
-            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-            gradX = gradX.astype("uint8")
-
-            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel)
-            thresh = cv2.threshold(gradX, 0, 255,
-                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-            t2 = thresh
-            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel)
-            cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                    cv2.CHAIN_APPROX_SIMPLE)
-            cnts = cnts[0] if imutils.is_cv2() else cnts[1]
-            cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-
-            locs = []
-            tmpcnts = {}
-            clone01 = np.dstack([thresh.copy()] * 3)
-
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            tmpcnts3 = {}  # ประมวล
-            for (idx, c) in enumerate(cnts):
-                x, y, w, h = cv2.boundingRect(c)
-                x -= 15
-                y -= 5
-                w += 25
-                h += 10
-                # h=h+5
-                cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
-                tmpcnts3[idx] = imgWrap[y:y + h, x:x + w]
-                #
-
-                locs.append((x, y, w, h))
-
-            locs = sorted(locs, key=lambda X: X[0])
-            # self.lock.acquire()
-            # self.Img.put(tmpcnts)
-            # self.lock.release()
-            # t = pytesseract.image_to_string(PIL.Image.fromarray(img), config=config, lang='eng')
-            # print(t)
-
-            img = clone01
-            self.imgcontoure_selectionSubArea=img
-            if self.ClickValue == 2:
-                self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
-
-            output = []
-            kernel = np.ones((1, 1), np.uint8)
-            kernel2 = np.ones((2, 2), np.uint8)
-            kernel3 = np.ones((5, 5), np.uint8)
-            imgWrap2 = imgWrap
-
-            text = []
-            tmpcnts2 = {}
-
-            for i in range(len(tmpcnts)):
-                # text = []
-                try:
-                    img = tmpcnts[i]
-                    h, w = img.shape[:2]
-                    img = imutils.resize(img, width=int(w / 2), height=int(h / 2))
-                    img = tmpcnts[i]
-                except:
-                    img = imgTocrop
-
-                tmpcnts2[i] = img
-                text.append(i)
-            if len(tmpcnts) == 0:
-                #self.Detect_flag = 0  ##
-                #return
-                tmpcnts2[0] = imgTocrop
-                tmpcnts3[0] = imgWrap
-
-            imgtest = {}
-            imgtest2 = {}
-            charac = 0
-            scores = []
-            total = 0
-            ###
-
-            img = img2
-            self.img_tmpcnt4select=img
-            self.img_tmpcnt4process=imgWrap
-            if self.ClickValue == 2:  ####
-                self.Show_panel_vcap02(img)
-                self.Show_panel_vcap03(imgWrap)
-
-            if self.ClickValue == 10:
-                # self.Show_panel01_0_0(self.frameShow)
-                if len(tmpcnts) != 3:
-                    pass
-                if len(tmpcnts3) > 19:
-                    pass
-                if self.status_flag == 1:
-                    if len(tmpcnts) > 3:
-                        self.fail_value = 1
-                        return
-                    elif len(tmpcnts3) > 19:
-                        self.fail_value = 1
-                        return
-                    else :
-                        output = []
-                        output2 = []
-                        output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
-                        output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
-                        value2 = self.check_algorithm2_2(output2)
-                        value = self.check_algrithm1(output)
-                        self.value_algor1=value
-                        self.value_algor2=value2
-                        if (self.value_algor1 or self.value_algor2):
-                            self.pass_value = 1
-                            Label(self.root, text="PASS", width=5, font=("THSarabunNew", 8), fg="green").grid(row=14,
-                                                                                                              column=5)
-                        else:
-                            self.fail_value = 1
-                            Label(self.root, text="FAIL", width=5, font=("THSarabunNew", 8), fg="red").grid(row=14,
-                                                                                                            column=5)
-
-                else:
-                    pass
-
-                self.Show_panel_proces02(self.ImgCap)
-                try:
-                    out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
-                        str(x) for x in output[2])
-                    self.output_algor1=out
-                    Label(self.root, text=self.output_algor1, font=("THSarabunNew", 8), width=20).grid(row=11, column=5, sticky=S,
-                                                                                        columnspan=3)
-                    Label(self.root, text=str(self.persentage) + " %", font=("THSarabunNew", 8)).grid(row=13, column=5,
-                                                                                                      sticky=S,
-                                                                                                      columnspan=2)
-                except BaseException as e:
-                    print(str(e)+"poppy")
-                    pass
-
-                '''try:
-                    self.Show_panel05_2_0(tmpcnts2[1])
-                except:
-                    pass
-
-                self.Show_panel03_1_0(self.ImgCap)
-
-                try:
-                    Label(self.root, text=output[0], width=25, font=("Helvetica", 16)).grid(row=0, column=1)
-                    Label(self.root, text=output[1], width=25, font=("Helvetica", 16)).grid(row=1, column=1)
-                    Label(self.root, text=output[2], width=25, font=("Helvetica", 16)).grid(row=2, column=1)
-                except BaseException as e:
-                    print(str(e))
-                    pass'''
-            print("---OCR %s seconds ---" % (time.time() - start_time))
-
-        return
     def TextOCR2_no_loop2(self,imgOrigin):
 
         if not imgOrigin is None:
@@ -2973,37 +2028,7 @@ class App():
         # self.Show_panel06_3_0(imgout)
         return output
 
-    def algorithm2_1(self, tmpcnts2, locs, output):
-        # tmpcnts2 input is tmpcnts3
-        for (i, (gX, gY, gW, gH)) in enumerate(locs):
-            groupOutput = []
-            total2 = 0
-            img = tmpcnts2[i]
-            ####algorithm2.1
-            if i == 0:
-                DIGITS = self.area01
-            elif i == 1:
-                DIGITS = self.area02
-            elif i == 2:
-                DIGITS = self.area03
-            else:
-                DIGITS = self.area01
 
-            h, w = DIGITS.shape[:2]
-            try:
-                img = cv2.resize(img, (w, h))
-            except:
-                pass
-            result = cv2.matchTemplate(img, DIGITS,
-                                       cv2.TM_CCORR_NORMED)
-            (_, score, _, _) = cv2.minMaxLoc(result)
-
-            gX += 15
-            gY += 8
-            gW -= 18
-            gH -= 10
-            output.append(int(score * 100))
-        return output
 
     def algorithm2_2(self, tmpcnts2, tmpcnts3, locs, output):
         imgtest2 = {}
@@ -3118,15 +2143,6 @@ class App():
             print(str(e))
             return 0
 
-    def check_algorithm2_1(self, output):
-        try:
-            if int(output[0]) >= 30 and int(output[1]) >= 30 and int(output[2]) >= 30:
-                return 1
-            else:
-                return 0
-        except BaseException as e:
-            print(str(e))
-            return 0
 
     def check_algorithm2_2(self, output):
         all_carec = []
@@ -3156,11 +2172,6 @@ class App():
             print(str(e1))
             return 0
 
-    def ocr_thread(self):
-        ocrthread = threading.Thread(target=self.TextOCR2_no_loop, args=())
-        ocrthread.daemon = True
-        ocrthread.start()
-        ocrthread.join()
 
     def no_detect(self):
 
