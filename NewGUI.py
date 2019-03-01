@@ -220,8 +220,8 @@ class App():
         Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                cursor="hand2").place(x=947,y=10)
         #info_btn.pack()
-        help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",12),cursor="hand2",background='#C4C4C4')  ##command
-        help_btn.place(x=892,y=545)
+        help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",16),cursor="hand2",background='#C4C4C4')  ##command
+        help_btn.place(x=886,y=504)
         well_btn = Label(self.root, text="โปรแกรมตรวจสอบคุณภาพฉลากบนซองบรรจุผลิตภัณฑ์",font=("Noto Sans Thai",30) )
         well_btn.place(x=77,y=89)
         #well_btn.pack()
@@ -233,15 +233,15 @@ class App():
         self.user = Entry(self.root, width=19, textvariable=vartx,background="#C4C4C4",relief=FLAT)  ##data in user no self.user
         self.user.place(x=403,y=303)
         Label(self.root,image=self.user_icon).place(x=330,y=287)
-        login_btn = Button(self.root, text="เข้าสู่ระบบ",relief=FLAT,font=("Noto Sans Thai",12), command=self.well_to_page1,cursor="hand2",background='#26D793')  ##command
+        login_btn = Button(self.root, text="เข้าสู่ระบบ",relief=FLAT,font=("Noto Sans Thai",16), command=self.well_to_page1,cursor="hand2",background='#26D793')  ##command
         login_btn.place(x=469,y=371)
 
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time)
         Label(self.root, height=12).grid(row=7, column=0)
         date.grid(row=8, column=3, sticky=E, columnspan=2)'''
-        Label(self.root,image=self.manual_icon).place(x=915,y=469)
+        Label(self.root,image=self.manual_icon).place(x=915,y=425)
         Button(self.root,text="ปิดโปรแกรม", command=self.close_program,relief=FLAT,
-               font=("Noto Sans Thai",12),cursor="hand2",background='#F85252').place(x=33,y=541)
+               font=("Noto Sans Thai",16),cursor="hand2",background='#F85252').place(x=33,y=504)
 
     def well_to_page1(self):
         user = self.user.get()
@@ -305,7 +305,7 @@ class App():
         Label(self.root,text="Setting",font=("Noto Sans Thai", 16)).place(x=733,y=330)
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=8, column=6, sticky=E, columnspan=2)'''
-        Button(self.root,text="ปิดโปรแกรม",font=("Noto Sans Thai", 16), command=self.close_program,relief=FLAT,cursor="hand2",background='#F85252').place(x=455,y=528)
+        Button(self.root,text="ปิดโปรแกรม",font=("Noto Sans Thai", 16), command=self.close_program,relief=FLAT,cursor="hand2",background='#F85252').place(x=455,y=488)
         '''Label(self.root, width=20, height=8).grid(row=1, column=1)
         Label(self.root, width=10, height=8).grid(row=1, column=3)
         Label(self.root, width=10, height=10).grid(row=5, column=5)'''
@@ -417,7 +417,7 @@ class App():
         if self.panel is None:
             self.panel = tkinter.Label(image=img,width=242, height=109)
             self.panel.image = img
-            self.panel.place(x=77,y=117)
+            self.panel.place(x=77,y=67)
         else:
             self.panel.configure(image=img)
             self.panel.image = img
@@ -432,7 +432,7 @@ class App():
         if self.panel2 is None:
             self.panel2 = tkinter.Label(image=img, width=242, height=109)
             self.panel2.image = img
-            self.panel2.place(x=77,y=256)
+            self.panel2.place(x=77,y=206)
         else:
             self.panel2.configure(image=img)
             self.panel2.image = img
@@ -447,7 +447,7 @@ class App():
         if self.panel3 is None:
             self.panel3 = tkinter.Label(image=img,width=242, height=109)
             self.panel3.image = img
-            self.panel3.place(x=77,y=395)
+            self.panel3.place(x=77,y=345)
         else:
             self.panel3.configure(image=img)
             self.panel3.image = img
@@ -516,7 +516,7 @@ class App():
             Label(self.root, textvariable=MegLabel).place(x=357,y=353)
             MegLabel.set("None")
         else:
-            Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2),relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=491,y=486)
+            Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2),relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=457,y=474)
             #MegLabel.set("Get Image")
             # Nonelabel.destroy()
             Label(self.root, textvariable=MegLabel).place(x=357,y=353)
@@ -540,7 +540,7 @@ class App():
             Label(self.root, text="You do not import Image and install ROI(use default)").place(x=357,y=353)
             self.TextOcrRef()
         if error == 0:
-            Button(self.root, text="OK and Next", command=self.page3_setting_vscap,relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=475,y=534)
+            Button(self.root, text="OK and Next", command=self.page3_setting_vscap,relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=789,y=473)
 
     def reset_bbox(self):
         self.HeightBbox = 0
@@ -578,12 +578,12 @@ class App():
             self.thread.daemon = True
             self.thread.start()
         Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.back3to2,
-               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
+               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=490)
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=11, column=11, sticky=E, columnspan=3)'''
-        Button(self.root, text="Target Area", command=self.Click_ValueBbox,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=600,y=504)
-        Button(self.root, text="Reset", command=self.reset_bbox,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#F85252').place(x=484,y=504)
-        Button(self.root, text="OK and Next", command=self.page3_To_page4,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=504)
+        Button(self.root, text="Apply", command=self.Click_ValueBbox,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=600,y=490)
+        Button(self.root, text="Reset", command=self.reset_bbox,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#F85252').place(x=484,y=490)
+        Button(self.root, text="OK and Next", command=self.page3_To_page4,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=490)
 
     def page3_To_page4(self):
 
@@ -645,18 +645,18 @@ class App():
                                                                                                  padx=5, pady=5,
                                                                                                  columnspan=3)
             Label(self.root, text="ตั้งค่าภาพ", font=("Noto Sans Thai", 30)).place(x=379,y=36)
-            Label(self.root, text="ตั้งค่าสีพื้นหลัง",  font=("Noto Sans Thai", 18)).place(x=419,y=130)
-            Label(self.root, text="ตั้งค่า contours", font=("Noto Sans Thai", 18)).place(x=765,y=127)
+            Label(self.root, text="ตั้งค่าสีพื้นหลัง",  font=("Noto Sans Thai", 18)).place(x=419,y=110)
+            Label(self.root, text="ตั้งค่า contours", font=("Noto Sans Thai", 18)).place(x=765,y=107)
             Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                    cursor="hand2").place(x=947, y=10)
             self.scale2()
             self.scale3()
-            Button(self.root, text="OK and Next", command=self.page4_To_page5,font=("Noto Sans Thai", 14),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=526)
+            Button(self.root, text="OK and Next", command=self.page4_To_page5,font=("Noto Sans Thai", 14),relief=FLAT,cursor="hand2",background='#26D793').place(x=773,y=506)
             info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
                               relief=FLAT, cursor="hand2")  ##command
             info_btn.place(x=922, y=57)
             Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page3_setting_vscap,
-                   relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
+                   relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=490)
             '''help_btn = Button(self.root, text="วิธีใช้", font=("THSarabunNew", 8))  ##command
             help_btn.grid(row=0, column=13, columnspan=2)
             date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
@@ -768,7 +768,7 @@ class App():
         Button(self.root, text="Save", command=self.save_value_input,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=615, y=423)
 
         Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page4_settingDigit,
-               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=554)
+               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=510)
     def save_value_input(self):
 
         DateValue = self.Value1_Entry.get()
@@ -788,7 +788,7 @@ class App():
                 Code_value = open('./Configure/Code_value.txt', "w")
                 Code_value.write(str(CcodeValue))
                 Code_value.close()
-                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#14FF00').place(x=789,y=521)
+                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#14FF00').place(x=789,y=510)
         else:
             # print(str(self.DateValue))
             MsgER = messagebox.showerror("Insert Eror", "No Value , Please insert value")
@@ -837,10 +837,10 @@ class App():
 
         Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                cursor="hand2").place(x=947, y=10)
-        Button(self.root, text="Start",width=100,image=self.start_icon,compound=RIGHT, command=self.add_algorithm1_flag,  font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#08FF03').place(x=347,y=500)
-        Button(self.root, text="Pause",width=100,image=self.pause_icon,compound=RIGHT, command=self.add_algorithm2_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FAFF08').place(x=557,y=500)
-        Button(self.root, text="Stop",width=100,image=self.stop_icon,compound=RIGHT, command=self.add_algorithm3_flag,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF0404').place(x=759,y=500)
-        Button(self.root,text="New value",image=self.edit_icon,compound=RIGHT, command=self.edit_insert,font=("Ekkamai Standard", 16,"bold"),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=122,y=500)
+        Button(self.root, text="Start",width=100, command=self.add_algorithm1_flag,  font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#26D793').place(x=347,y=490)
+        Button(self.root, text="Pause",width=100, command=self.add_algorithm2_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FFD600').place(x=557,y=490)
+        Button(self.root, text="Stop",width=100, command=self.add_algorithm3_flag,font=("ENoto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF3D00').place(x=759,y=490)
+        Button(self.root,text="New value", command=self.edit_insert,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=122,y=490)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 15)).grid(row=0, column=1,
                                                                                                  sticky=W,
@@ -1012,9 +1012,18 @@ class App():
             log = open(path,"w")
             log.write(ms_log)
             log.close()
-            Label(self.root, text=str(path), font=("THSarabunNew", 8)).grid(row=12, column=3,
-                                                                                sticky=W,
-                                                                            columnspan=2)
+            self.ClickValue = 20
+
+            self.stopEvent.set()
+            self.stopEvent2.set()
+            for ele in self.root.winfo_children():
+                ele.destroy()
+                # ele.quit()
+
+            self.panel = None
+            self.panel2 = None
+            self.panel3 = None
+            self.panel4 = None
 
             self.page1_selectOption()
         else:
@@ -1208,7 +1217,7 @@ class App():
         Label(self.root, text="Use default",font=("Noto Sans Thai", 16),background='#F85252').place(x=599,y=296)
 
         Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page1_selectOption,
-               relief=FLAT, cursor="hand2",background='#F2C94C').place(x=40,y=554)
+               relief=FLAT, cursor="hand2",background='#F2C94C').place(x=56,y=474)
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time, font=("THSarabunNew", 8))
         date.grid(row=10, column=6, sticky=E, columnspan=2)'''
         '''Label(self.root, width=38, height=4).grid(row=1, column=1)
@@ -1232,7 +1241,7 @@ class App():
             if self.panel is None:
                 self.panel = tkinter.Label(image=img, width=242, height=109)
                 self.panel.image = img
-                self.panel.place(x=77,y=117)
+                self.panel.place(x=77,y=67)
             else:
                 self.panel.configure(image=img)
                 self.panel.image = img
@@ -1302,14 +1311,14 @@ class App():
         scale4 = Scale(self.root, from_=0, to=255, variable=self.varMax5, label="ความฟุ้ง digits",
                        orient=tkinter.HORIZONTAL, sliderlength=50, length=250)
         scale4.set(self.varMax5.get())
-        scale.place(x=405, y=186)
-        Label(self.root, text="H").place(x=435, y=394)
-        scale1.place(x=480, y=186)
-        Label(self.root, text="S").place(x=510, y=394)
-        scale2.place(x=555, y=186)
-        Label(self.root, text="V").place(x=585, y=394)
-        scale3.place(x=398, y=428)
-        scale4.place(x=672, y=428)
+        scale.place(x=405, y=166)
+        Label(self.root, text="H").place(x=435, y=374)
+        scale1.place(x=480, y=166)
+        Label(self.root, text="S").place(x=510, y=374)
+        scale2.place(x=555, y=166)
+        Label(self.root, text="V").place(x=585, y=374)
+        scale3.place(x=398, y=408)
+        scale4.place(x=672, y=408)
 
     def scale3(self):
         # moregrap scale 20 10 18 10
@@ -1322,10 +1331,10 @@ class App():
         scale2.set(self.sqY.get())
         scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX,  sliderlength=50, length=200)
         scale3.set(self.sqX.get())
-        scale.place(x=730, y=186)
-        scale1.place(x=786, y=186)
-        scale2.place(x=842, y=186)
-        scale3.place(x=898, y=186)
+        scale.place(x=730, y=166)
+        scale1.place(x=786, y=166)
+        scale2.place(x=842, y=166)
+        scale3.place(x=898, y=166)
 
     def scale4(self):  # use vssetting
         # moregrap scale 20 10 18 10
@@ -1355,7 +1364,7 @@ class App():
             if self.panel2 is None:
                 self.panel2 = tkinter.Label(image=img, width=242, height=109)
                 self.panel2.image = img
-                self.panel2.place(x=77,y=256)
+                self.panel2.place(x=77,y=206)
             else:
                 self.panel2.configure(image=img)
                 self.panel2.image = img
@@ -1370,7 +1379,7 @@ class App():
             if self.panel3 is None:
                 self.panel3 = tkinter.Label(image=img, width=242, height=109)
                 self.panel3.image = img
-                self.panel3.place(x=77,y=395)
+                self.panel3.place(x=77,y=345)
             else:
                 self.panel3.configure(image=img)
                 self.panel3.image = img
