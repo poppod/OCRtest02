@@ -57,7 +57,7 @@ class App():
         #self.THsarabun.configure(font=myfont)
         # self.scale()
         # self.scale2()
-        self.root.iconbitmap('./Drawable/icon.ico')
+        #self.root.iconbitmap('./Drawable/icon.ico')
         self.Detect_flag = 0
         self.status_flag = 1
         self.frameShow = None
@@ -231,10 +231,10 @@ class App():
         # print(X)
         vartx = ""
         self.user = Entry(self.root, width=19, textvariable=vartx,background="#C4C4C4",relief=FLAT)  ##data in user no self.user
-        self.user.place(x=403,y=303)
-        Label(self.root,image=self.user_icon).place(x=330,y=287)
+        self.user.place(x=407,y=246)
+        Label(self.root,image=self.user_icon).place(x=334,y=230)
         login_btn = Button(self.root, text="เข้าสู่ระบบ",relief=FLAT,font=("Noto Sans Thai",16), command=self.well_to_page1,cursor="hand2",background='#26D793')  ##command
-        login_btn.place(x=469,y=371)
+        login_btn.place(x=469,y=339)
 
         '''date = Label(self.root, text=self.date_time, textvariable=self.date_time)
         Label(self.root, height=12).grid(row=7, column=0)
@@ -768,7 +768,7 @@ class App():
         Button(self.root, text="Save", command=self.save_value_input,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=615, y=423)
 
         Button(self.root, text="ย้อนกลับ", font=("Noto Sans Thai", 16), command=self.page4_settingDigit,
-               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=510)
+               relief=FLAT, cursor="hand2", background='#F2C94C').place(x=40, y=490)
     def save_value_input(self):
 
         DateValue = self.Value1_Entry.get()
@@ -788,7 +788,7 @@ class App():
                 Code_value = open('./Configure/Code_value.txt', "w")
                 Code_value.write(str(CcodeValue))
                 Code_value.close()
-                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=789,y=510)
+                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=789,y=490)
         else:
             # print(str(self.DateValue))
             MsgER = messagebox.showerror("Insert Eror", "No Value , Please insert value")
@@ -978,8 +978,8 @@ class App():
         self.log=str(log)
 
         self.directory='./log/'
-        Button(self.root,text="Change",command=self.save_dialog,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=370,y=479)
-        Button(self.root, text="OK", command=self.save_logfile,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=611,y=479)
+        Button(self.root,text="Change",width=10,command=self.save_dialog,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=370,y=479)
+        Button(self.root, text="OK", width=10,command=self.save_logfile,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=611,y=479)
     def save_dialog(self):
         directory=filedialog.askdirectory(initialdir = './log/')
         self.directory=directory
