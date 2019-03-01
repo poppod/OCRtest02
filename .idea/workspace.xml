@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a9ce6fd-8657-42ae-b3ab-db2b514b9396" name="Default" comment="01/03/19">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaH.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaH.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/AreaW.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/AreaW.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -102,14 +100,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="19318" />
+          <entry key="py" value="19320" />
           <entry key="txt" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="41" />
-          <entry key="Python" value="19318" />
+          <entry key="Python" value="19320" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -140,8 +138,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1641">
-              <caret line="980" column="131" selection-start-line="980" selection-start-column="131" selection-end-line="980" selection-end-column="138" />
+            <state relative-caret-position="-57">
+              <caret line="542" column="157" selection-start-line="542" selection-start-column="157" selection-end-line="542" selection-end-column="157" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5325#0" />
@@ -203,11 +201,9 @@
                 <element signature="e#17404#17867#0" />
                 <element signature="e#17633#17772#0" />
                 <element signature="e#17799#17867#0" />
-                <element signature="e#17902#19277#0" />
                 <element signature="e#17991#18497#0" />
                 <element signature="e#18247#18392#0" />
                 <element signature="e#18427#18497#0" />
-                <element signature="e#19320#20267#0" />
                 <element signature="e#19467#19911#0" />
                 <element signature="e#19727#19770#0" />
                 <element signature="e#19807#19911#0" />
@@ -721,13 +717,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
     </task>
-    <task id="LOCAL-00026" summary="check">
-      <created>1544369629166</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1544369629166</updated>
-    </task>
     <task id="LOCAL-00027" summary="check">
       <created>1544388790858</created>
       <option name="number" value="00027" />
@@ -1064,7 +1053,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551424860446</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="01/03/19">
+      <created>1551437603638</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1551437603639</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1418,8 +1414,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1641">
-          <caret line="980" column="131" selection-start-line="980" selection-start-column="131" selection-end-line="980" selection-end-column="138" />
+        <state relative-caret-position="-57">
+          <caret line="542" column="157" selection-start-line="542" selection-start-column="157" selection-end-line="542" selection-end-column="157" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5325#0" />
@@ -1481,11 +1477,9 @@
             <element signature="e#17404#17867#0" />
             <element signature="e#17633#17772#0" />
             <element signature="e#17799#17867#0" />
-            <element signature="e#17902#19277#0" />
             <element signature="e#17991#18497#0" />
             <element signature="e#18247#18392#0" />
             <element signature="e#18427#18497#0" />
-            <element signature="e#19320#20267#0" />
             <element signature="e#19467#19911#0" />
             <element signature="e#19727#19770#0" />
             <element signature="e#19807#19911#0" />

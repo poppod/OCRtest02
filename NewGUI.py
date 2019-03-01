@@ -516,7 +516,7 @@ class App():
             Label(self.root, textvariable=MegLabel).place(x=357,y=353)
             MegLabel.set("None")
         else:
-            Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2),relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=457,y=474)
+            Button(self.root, text="Import", command=lambda: self.Save_tempImg(img2),relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 16)).place(x=457,y=474)
             #MegLabel.set("Get Image")
             # Nonelabel.destroy()
             Label(self.root, textvariable=MegLabel).place(x=357,y=353)
@@ -540,7 +540,7 @@ class App():
             Label(self.root, text="You do not import Image and install ROI(use default)").place(x=357,y=353)
             self.TextOcrRef()
         if error == 0:
-            Button(self.root, text="OK and Next", command=self.page3_setting_vscap,relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 10)).place(x=789,y=473)
+            Button(self.root, text="OK and Next", command=self.page3_setting_vscap,relief=FLAT,cursor="hand2",background='#26D793',font=("Noto Sans Thai", 16)).place(x=789,y=473)
 
     def reset_bbox(self):
         self.HeightBbox = 0
@@ -788,7 +788,7 @@ class App():
                 Code_value = open('./Configure/Code_value.txt', "w")
                 Code_value.write(str(CcodeValue))
                 Code_value.close()
-                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#14FF00').place(x=789,y=510)
+                Button(self.root, text="Ok and Next", command=self.page5_to_process,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=789,y=510)
         else:
             # print(str(self.DateValue))
             MsgER = messagebox.showerror("Insert Eror", "No Value , Please insert value")
@@ -837,9 +837,9 @@ class App():
 
         Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                cursor="hand2").place(x=947, y=10)
-        Button(self.root, text="Start",width=100, command=self.add_algorithm1_flag,  font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#26D793').place(x=347,y=490)
-        Button(self.root, text="Pause",width=100, command=self.add_algorithm2_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FFD600').place(x=557,y=490)
-        Button(self.root, text="Stop",width=100, command=self.add_algorithm3_flag,font=("ENoto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF3D00').place(x=759,y=490)
+        Button(self.root, text="Start",width=10, command=self.add_algorithm1_flag,  font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#26D793').place(x=347,y=490)
+        Button(self.root, text="Pause",width=10, command=self.add_algorithm2_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FFD600').place(x=557,y=490)
+        Button(self.root, text="Stop",width=10, command=self.add_algorithm3_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF3D00').place(x=759,y=490)
         Button(self.root,text="New value", command=self.edit_insert,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=122,y=490)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 15)).grid(row=0, column=1,
