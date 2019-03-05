@@ -315,107 +315,17 @@ class App():
                                                    filetypes=(("*png files", "*.png"), ("*jpg files", "*.jpg")))
         self.importImg()
 
-    def Show_panel01_0_0(self, img):
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel is None:
-            self.panel = tkinter.Label(image=img, width=160, height=120)
-            self.panel.image = img
-            self.panel.grid(row=0, column=0)
-        else:
-            self.panel.configure(image=img)
-            self.panel.image = img
 
-    def Show_panel02_0_1(self, img):
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img, width=160, height=120)
-            self.panel2.image = img
-            self.panel2.grid(row=0, column=1)
-        else:
-            self.panel2.configure(image=img)
-            self.panel2.image = img
-
-    def Show_panel03_1_0(self, img):
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel3 is None:
-            self.panel3 = tkinter.Label(image=img, width=160, height=120)
-            self.panel3.image = img
-            self.panel3.grid(row=1, column=0)
-        else:
-            self.panel3.configure(image=img)
-            self.panel3.image = img
-
-    def Show_panel04_1_1(self, img):
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel4 is None:
-            self.panel4 = tkinter.Label(image=img, width=160, height=120)
-            self.panel4.image = img
-
-            self.panel4.grid(row=1, column=1)
-        else:
-            self.panel4.configure(image=img)
-            self.panel4.image = img
-
-    def Show_panel05_2_0(self, img):
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel5 is None:
-            self.panel5 = tkinter.Label(image=img, width=160, height=120)
-            self.panel5.image = img
-            self.panel5.grid(row=2, column=0)
-        else:
-            self.panel5.configure(image=img)
-            self.panel5.image = img
-
-    def Show_panel06_3_0(self, img):
-
-        try:
-            img = imutils.resize(img, width=150, height=100)
-        except:
-            img = img
-        img = PIL.Image.fromarray(img)
-        img = PIL.ImageTk.PhotoImage(img)
-        if self.panel6 is None:
-            self.panel6 = tkinter.Label(image=img)  ###fix w,h
-            self.panel6.image = img
-            self.panel6.grid(row=3, column=0)
-        else:
-            self.panel6.configure(image=img)
-            self.panel6.image = img
 
     def Show_panel_vloop(self, img):
         try:
-            img = imutils.resize(img, width=242, height=109)
+            img = imutils.resize(img, width=240, height=135)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel is None:
-            self.panel = tkinter.Label(image=img,width=242, height=109)
+            self.panel = tkinter.Label(image=img,width=240, height=135)
             self.panel.image = img
             self.panel.place(x=77,y=67)
         else:
@@ -424,13 +334,13 @@ class App():
 
     def Show_panel_vcap02(self, img):
         try:
-            img = imutils.resize(img, width=242, height=109)
+            img = imutils.resize(img, width=240, height=135)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img, width=242, height=109)
+            self.panel2 = tkinter.Label(image=img,width=240, height=135)
             self.panel2.image = img
             self.panel2.place(x=77,y=206)
         else:
@@ -439,13 +349,13 @@ class App():
 
     def Show_panel_vcap03(self, img):
         try:
-            img = imutils.resize(img, width=242, height=109)
+            img = imutils.resize(img, width=240, height=135)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel3 is None:
-            self.panel3 = tkinter.Label(image=img,width=242, height=109)
+            self.panel3 = tkinter.Label(image=img,width=240, height=135)
             self.panel3.image = img
             self.panel3.place(x=77,y=345)
         else:
@@ -454,13 +364,13 @@ class App():
 
     def Show_panel_proces01(self, img):
         try:
-            img = imutils.resize(img, width=242, height=109)
+            img = imutils.resize(img, width=240, height=135)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img,width=242, height=109)
+            self.panel2 = tkinter.Label(image=img,width=240, height=135)
             self.panel2.image = img
             self.panel2.place(x=174,y=116)
         else:
@@ -469,13 +379,13 @@ class App():
 
     def Show_panel_proces02(self, img):
         try:
-            img = imutils.resize(img, width=242, height=109)
+            img = imutils.resize(img, width=240, height=135)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel3 is None:
-            self.panel3 = tkinter.Label(image=img,width=242, height=109)
+            self.panel3 = tkinter.Label(image=img,width=240, height=135)
             self.panel3.image = img
             self.panel3.place(x=567,y=116)
         else:
@@ -1233,13 +1143,13 @@ class App():
     def videoLoop(self):
         def Show_panel_vloop(img):
             try:
-                img = imutils.resize(img, width=242, height=109)
+                img = imutils.resize(img, width=240, height=135)
             except:
                 img = img
             img = PIL.Image.fromarray(img)
             img = PIL.ImageTk.PhotoImage(img)
             if self.panel is None:
-                self.panel = tkinter.Label(image=img, width=242, height=109)
+                self.panel = tkinter.Label(image=img,width=240, height=135)
                 self.panel.image = img
                 self.panel.place(x=77,y=67)
             else:
@@ -1366,13 +1276,13 @@ class App():
     def detect_noloop(self,image):
         def Show_panel_vcap02(img):
             try:
-                img = imutils.resize(img, width=242, height=109)
+                img = imutils.resize(img, width=240, height=135)
             except:
                 img = img
             img = PIL.Image.fromarray(img)
             img = PIL.ImageTk.PhotoImage(img)
             if self.panel2 is None:
-                self.panel2 = tkinter.Label(image=img, width=242, height=109)
+                self.panel2 = tkinter.Label(image=img, width=240, height=135)
                 self.panel2.image = img
                 self.panel2.place(x=77,y=206)
             else:
@@ -1381,13 +1291,13 @@ class App():
 
         def Show_panel_vcap03(img):
             try:
-                img = imutils.resize(img, width=242, height=109)
+                img = imutils.resize(img, width=240, height=135)
             except:
                 img = img
             img = PIL.Image.fromarray(img)
             img = PIL.ImageTk.PhotoImage(img)
             if self.panel3 is None:
-                self.panel3 = tkinter.Label(image=img, width=242, height=109)
+                self.panel3 = tkinter.Label(image=img,width=240, height=135)
                 self.panel3.image = img
                 self.panel3.place(x=77,y=345)
             else:
@@ -1915,8 +1825,8 @@ class App():
                     else:
                         output = []
                         output2 = []
-                        output = self.algorithm1_original_ocr(tmpcnts3, tmpcnts3, locs, output)
-                        output2 = self.algorithm2_2(tmpcnts3, tmpcnts3, locs, output2)
+                        output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
+                        output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
                         value2 = self.check_algorithm2_2(output2)
                         value = self.check_algrithm1(output)
                         self.value_algor1 = value
@@ -1972,7 +1882,7 @@ class App():
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=1)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -2085,7 +1995,7 @@ class App():
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=7)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=1)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
