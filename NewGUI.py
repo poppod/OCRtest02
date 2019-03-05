@@ -116,6 +116,8 @@ class App():
         self.HeightBbox = 0
         self.WeightBbox = 0
 
+        self.rect_cnt_crop=None
+
         # self.box=queue.Queue()
         # self.cnts=queue.Queue()
         self.imgOrigin = None
@@ -364,13 +366,13 @@ class App():
 
     def Show_panel_proces01(self, img):
         try:
-            img = imutils.resize(img, width=240, height=135)
+            img = imutils.resize(img, width=384, height=216)
         except:
             img = img
         img = PIL.Image.fromarray(img)
         img = PIL.ImageTk.PhotoImage(img)
         if self.panel2 is None:
-            self.panel2 = tkinter.Label(image=img,width=240, height=135)
+            self.panel2 = tkinter.Label(image=img,width=384, height=216)
             self.panel2.image = img
             self.panel2.place(x=174,y=116)
         else:
@@ -455,7 +457,7 @@ class App():
     def reset_bbox(self):
         self.HeightBbox = 0
         self.WeightBbox = 0
-
+        self.load_all_except_target()
     def page3_setting_vscap(self):
         self.panel = None
         self.panel2 = None
@@ -747,10 +749,10 @@ class App():
 
         Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                cursor="hand2").place(x=947, y=10)
-        Button(self.root, text="Start",width=10, command=self.add_algorithm1_flag,  font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#26D793').place(x=347,y=490)
-        Button(self.root, text="Pause",width=10, command=self.add_algorithm2_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FFD600').place(x=557,y=490)
-        Button(self.root, text="Stop",width=10, command=self.add_algorithm3_flag,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#FF3D00').place(x=759,y=490)
-        Button(self.root,text="New value", command=self.edit_insert,font=("Noto Sans Thai", 16,"bold"),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=122,y=490)
+        Button(self.root, text="START",width=8, command=self.add_algorithm1_flag,  font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=180,y=475)
+        Button(self.root, text="PAUSE",width=8, command=self.add_algorithm2_flag,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#FFD600').place(x=315,y=475)
+        Button(self.root, text="STOP",width=8, command=self.add_algorithm3_flag,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#FF3D00').place(x=451,y=475)
+        Button(self.root,text="New value", command=self.edit_insert,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#56CCF2').place(x=629,y=475)
         user = self.user
         Label(self.root, text="ชื่อผู้ใช้ : " + str(user),font=("Noto Sans Thai", 15)).grid(row=0, column=1,
                                                                                                  sticky=W,
@@ -760,16 +762,16 @@ class App():
         Label(self.root, text="ประมวลผลภาพ",font=("Noto Sans Thai", 30)).place(x=385,y=44)
         Label(self.root,
               text="ค่าที่ป้อน :  " + str(self.DateValue) + "," + str(self.NcodeValue) + "," + str(self.CcodeValue),
-              font=("Noto Sans Thai", 16)).place(x=124, y=267)
-        Label(self.root, text="การตรวจจับ :",font=("Noto Sans Thai", 16)).place(x=124, y=309)
-        Label(self.root, text="สถานะ :", font=("Noto Sans Thai", 16)).place(x=124, y=349)
-        Label(self.root, text="ค่าที่อ่านได้ :", font=("Noto Sans Thai", 16)).place(x=567, y=267)
-        Label(self.root, text="ค่าความถูกต้อง : 70 %",font=("Noto Sans Thai", 16)).place(x=567, y=309)
-        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("Noto Sans Thai", 16)).place(x=567, y=343)
-        Label(self.root, text="ผลลัพธ์ :",font=("Noto Sans Thai", 16)).place(x=124, y=389)
-        Label(self.root, text="ทั้งหมด :",font=("Noto Sans Thai", 16)).place(x=124, y=434)
-        Label(self.root, text="ผ่าน :",  fg="green",font=("Noto Sans Thai", 16)).place(x=384, y=434)
-        Label(self.root, text="ไม่ผ่าน :", fg="red",font=("Noto Sans Thai", 16)).place(x=625, y=434)
+              font=("Noto Sans Thai", 13)).place(x=167, y=337)
+        Label(self.root, text="การตรวจจับ :",font=("Noto Sans Thai", 16)).place(x=586, y=294)
+        Label(self.root, text="สถานะ :", font=("Noto Sans Thai", 16)).place(x=586, y=267)
+        Label(self.root, text="ค่าที่อ่านได้ :", font=("Noto Sans Thai", 13)).place(x=167, y=413)
+        Label(self.root, text="ค่าความถูกต้อง : 70 %",font=("Noto Sans Thai", 13)).place(x=167, y=361)
+        Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("Noto Sans Thai", 13)).place(x=167, y=385)
+        Label(self.root, text="ผลลัพธ์ :",font=("Noto Sans Thai", 16)).place(x=586, y=330)
+        Label(self.root, text="ทั้งหมด :",font=("Noto Sans Thai", 16)).place(x=586, y=364)
+        Label(self.root, text="ผ่าน :",  fg="#219653",font=("Noto Sans Thai", 16)).place(x=586, y=424)
+        Label(self.root, text="ไม่ผ่าน :", fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=586, y=394)
         info_btn = Button(self.root, text="เกี่ยวกับโปรแกรม", font=("Noto Sans Thai", 9), command=self.information,
                           relief=FLAT, cursor="hand2")  ##command
         info_btn.place(x=922, y=57)
@@ -830,8 +832,7 @@ class App():
     def save_log_page(self):
         self.ClickValue = 20
 
-        self.stopEvent.set()
-        self.stopEvent2.set()
+
         for ele in self.root.winfo_children():
             ele.destroy()
             # ele.quit()
@@ -886,7 +887,8 @@ class App():
 
 
         self.log=str(log)
-
+        self.stopEvent.set()
+        self.stopEvent2.set()
         self.directory='./log/'
         Button(self.root,text="Change",width=10,command=self.save_dialog,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#3BB4F7').place(x=370,y=479)
         Button(self.root, text="OK", width=10,command=self.save_logfile,font=("Noto Sans Thai", 16),relief=FLAT,cursor="hand2",background='#26D793').place(x=611,y=479)
@@ -1183,7 +1185,16 @@ class App():
                 if self.ClickValue == 0:
                     Show_panel_vloop(self.frameShow)
                 if self.ClickValue == 10:
-                    self.Show_panel_proces01(self.frameShow)
+                    if self.Detect_flag==1 :
+                        crop=self.frameShow
+                        x=self.rect_cnt_crop[0]+60
+                        y=self.rect_cnt_crop[1]+45
+                        w=self.rect_cnt_crop[2]+144
+                        h=self.rect_cnt_crop[3]+81
+                        cv2.rectangle(crop, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        self.Show_panel_proces01(crop)
+                    else:
+                        self.Show_panel_proces01(self.frameShow)
         except RuntimeError as e:
             print("error runtime")
             self.vs.stop()
@@ -1209,11 +1220,11 @@ class App():
 
     def scale2(self):
 
-        scale = Scale(self.root, from_=0, to=255, variable=self.varMax,  sliderlength=50, length=200)
+        scale = Scale(self.root, from_=255, to=0, variable=self.varMax,  sliderlength=50, length=200)
         scale.set(self.varMax.get())
-        scale1 = Scale(self.root, from_=0, to=255, variable=self.varMax2,  sliderlength=50, length=200)
+        scale1 = Scale(self.root, from_=255, to=0, variable=self.varMax2,  sliderlength=50, length=200)
         scale1.set(self.varMax2.get())
-        scale2 = Scale(self.root, from_=0, to=255, variable=self.varMax3,  sliderlength=50, length=200)
+        scale2 = Scale(self.root, from_=255, to=0, variable=self.varMax3,  sliderlength=50, length=200)
         scale2.set(self.varMax3.get())
         scale3 = Scale(self.root, from_=0, to=255, variable=self.varMax4, label="ความฟุ้ง contours",
                        orient=tkinter.HORIZONTAL, sliderlength=50, length=250)
@@ -1233,13 +1244,13 @@ class App():
     def scale3(self):
         # moregrap scale 20 10 18 10
 
-        scale = Scale(self.root, from_=1, to=100, variable=self.rectY, sliderlength=50, length=200)
+        scale = Scale(self.root, from_=100, to=1, variable=self.rectY, sliderlength=50, length=200)
         scale.set(self.rectY.get())
-        scale1 = Scale(self.root, from_=1, to=100, variable=self.rectX,  sliderlength=50, length=200)
+        scale1 = Scale(self.root, from_=100, to=1, variable=self.rectX,  sliderlength=50, length=200)
         scale1.set(self.rectX.get())
-        scale2 = Scale(self.root, from_=1, to=100, variable=self.sqY, sliderlength=50, length=200)
+        scale2 = Scale(self.root, from_=100, to=1, variable=self.sqY, sliderlength=50, length=200)
         scale2.set(self.sqY.get())
-        scale3 = Scale(self.root, from_=1, to=100, variable=self.sqX,  sliderlength=50, length=200)
+        scale3 = Scale(self.root, from_=100, to=1, variable=self.sqX,  sliderlength=50, length=200)
         scale3.set(self.sqX.get())
         scale.place(x=730, y=166)
         scale1.place(x=786, y=166)
@@ -1348,33 +1359,33 @@ class App():
 
         if self.ClickValue == 10:
             if self.Detect_flag == 1:
-                Label(self.root, text="พบ   ",  fg="green",font=("Noto Sans Thai", 16)).place(x=251, y=309)
+                Label(self.root, text="พบ   ",  fg="#219653",font=("Noto Sans Thai", 16)).place(x=710, y=294)
 
                 if self.status_flag == 1:
                     self.TextOCR2_no_loop2(result)
                 else:
                     self.Show_panel_proces02(self.ImgCap)
             else:
-                Label(self.root, text="ไม่พบ", fg="red", font=("Noto Sans Thai", 16)).place(x=251, y=309)
-                Label(self.root, text="                     ",width=100, font=("Noto Sans Thai", 16)).place(x=676, y=267)
-                Label(self.root, text="           ",width=100, font=("Noto Sans Thai", 16)).place(x=788, y=343)
+                Label(self.root, text="ไม่พบ", fg="#FF0404", font=("Noto Sans Thai", 16)).place(x=710, y=294)
+                Label(self.root, text="           ",width=20, font=("Noto Sans Thai", 13)).place(x=257, y=410)
+                Label(self.root, text="           ",width=10, font=("Noto Sans Thai", 13)).place(x=347, y=382)
                 self.no_detect()
             if self.status_flag == 1:
-                Label(self.root, text="ทำงาน",  fg="green", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
+                Label(self.root, text="ทำงาน",  fg="#219653", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
 
 
             elif self.status_flag == 2:
-                Label(self.root, text="พัก", fg="red", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
+                Label(self.root, text="พัก", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
             elif self.status_flag == 3:
-                Label(self.root, text="หยุดทำงาน", fg="red", width=10,font=("Noto Sans Thai", 16)).place(x=200, y=349)
+                Label(self.root, text="หยุดทำงาน", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
 
             sum_string = str(self.count_sum)
-            Label(self.root, text=sum_string, font=("Noto Sans Thai", 16)).place(x=251, y=434)
+            Label(self.root, text=sum_string, font=("Noto Sans Thai", 16)).place(x=670, y=365)
             pass_string = str(self.pass_count)
-            Label(self.root, text=pass_string,  fg="green",font=("Noto Sans Thai", 16)).place(x=437, y=434)
+            Label(self.root, text=pass_string,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=640, y=424)
             fail_string = str(self.fail_count)
-            Label(self.root, text=fail_string, fg="red",font=("Noto Sans Thai", 16)).place(x=702, y=434)
-            # self.sum_state.update()
+            Label(self.root, text=fail_string, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=663, y=394)
+            # self.sum_state.update().
         else:
             pass
         # print(threading.enumerate())
@@ -1488,17 +1499,17 @@ class App():
             # approximate the contour
             (x, y, w, h) = cv2.boundingRect(c)
             # self.cnt_area_check(c)
-            '''peri = cv2.arcLength(c, True)
-            approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-            crop = clone01[y:y + h, x:x + w]
-            crop = cv2.dilate(crop, kernelp, iterations=5)'''
+
             cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            '''peri = cv2.arcLength(crop, True)
-            approx = cv2.approxPolyDP(crop, 0.02 * peri, True)'''
+            self.rect_cnt_crop=[x,y,w,h]
+            peri = cv2.arcLength(c, True)
+            approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
             self.cnt_area_check(c)
-            #screenCnt = approx
-            screenCnt=np.float32([[x, y], [x+w, y], [x, y+h], [x+w, y+h]])
+            if (len(approx)==4):
+                screenCnt = approx
+            else:
+                screenCnt=np.float32([[x, y], [x+w, y], [x, y+h], [x+w, y+h]])
         else:pass
 
         # screenCnt[1]=screenCnt[1]+20
@@ -1833,10 +1844,10 @@ class App():
                         self.value_algor2 = value2
                         if (self.value_algor1 or self.value_algor2):
                             self.pass_value = 1
-                            Label(self.root, text="PASS", width=5,  fg="green",font=("Noto Sans Thai", 16)).place(x=215, y=389)
+                            Label(self.root, text="PASS", width=5,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=670, y=330)
                         else:
                             self.fail_value = 1
-                            Label(self.root, text="FAIL", width=5, fg="red",font=("Noto Sans Thai", 16)).place(x=215, y=389)
+                            Label(self.root, text="FAIL", width=5, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=670, y=330)
 
                 else:
                     pass
@@ -1846,8 +1857,8 @@ class App():
                     out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
                         str(x) for x in output[2])
                     self.output_algor1 = out
-                    Label(self.root, text=self.output_algor1,width=20, font=("Noto Sans Thai", 16)).place(x=676, y=267)
-                    Label(self.root, text=str(self.persentage) + " %",width=5,  font=("Noto Sans Thai", 16)).place(x=788, y=343)
+                    Label(self.root, text=self.output_algor1,width=20, font=("Noto Sans Thai", 13)).place(x=257, y=410)
+                    Label(self.root, text=str(self.persentage) + " %",width=5,  font=("Noto Sans Thai", 13)).place(x=347, y=382)
                 except BaseException as e:
                     print(str(e) + "poppy")
                     pass
