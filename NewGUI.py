@@ -1567,37 +1567,30 @@ class App():
 
         box3 = box
 
-        d_min = 1000
-        rect_min = [[0, 0], [0, 0]]
-        rect3 = cv2.boundingRect(box3)
-        pt1 = (rect3[0], rect3[1])
-        c = (rect3[0] + rect3[2] * 1 / 2, rect3[1] + rect3[3] * 1 / 2)
-        d = np.sqrt((c[0] - image_center[0]) ** 2 + (c[1] - image_center[1]) ** 2)
-        screenCnt = None
-        if d < d_min:
-            d_min = d
-            rect_min = [pt1, (rect3[2], rect3[3])]
-            # screenCnt=[]
-            cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-            # self.cnt_area_check(cnts[0])
-            for c in cnts:
-                # approximate the contour
-                (x, y, w, h) = cv2.boundingRect(c)
-                # self.cnt_area_check(c)
-                peri = cv2.arcLength(c, True)
-                approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-                cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-                # if our approximated contour has four points, then we
-                # can assume that we have found our screen
-                if len(approx) == 4:
-                    self.cnt_area_check(c)
-                    screenCnt = approx
-                    break
-                else:
-                    pass
-        else:
-            pass
+        screenCnt = None
+
+        cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
+
+        # self.cnt_area_check(cnts[0])
+        if len(cnts) != 0:
+            c = max(cnts, key=cv2.contourArea)
+            # approximate the contour
+            (x, y, w, h) = cv2.boundingRect(c)
+            # self.cnt_area_check(c)
+            '''peri = cv2.arcLength(c, True)
+            approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+            crop = clone01[y:y + h, x:x + w]
+            crop = cv2.dilate(crop, kernelp, iterations=5)'''
+            cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            '''peri = cv2.arcLength(crop, True)
+            approx = cv2.approxPolyDP(crop, 0.02 * peri, True)'''
+
+            self.cnt_area_check(c)
+            #screenCnt = approx
+            screenCnt=np.float32([[x, y], [x+w, y], [x, y+h], [x+w, y+h]])
+        else:pass
+
         # screenCnt[1]=screenCnt[1]+20
         self.treshImg = clone01
         #cv2.imwrite('./screencapture/detect_clone01_rectangle.png', clone01)
@@ -1670,23 +1663,6 @@ class App():
         self.detect_timestamp=0.000
         self.no_detect_timestamp=0.000
 
-    def check_target_area(self):
-        image = self.imgOrigin
-        h, w = image.shape[:2]
-
-        if not self.HeightBbox is None or not self.WeightBbox is None:
-            if h - 20 <= self.HeightBbox <= h + 40:
-                if w - 20 <= self.WeightBbox <= w + 40:
-                    return 1
-
-                else:
-                    return 0
-            else:
-                # print("fu")
-                return 0
-        else:
-            return 0
-            # pass
 
     def onClose(self):
         # cv2.imwrite("capture.png", self.imgOrigin)
@@ -1860,7 +1836,7 @@ class App():
             tmpcnts = {}
             clone01 = np.dstack([thresh.copy()] * 3)
 
-            font = cv2.FONT_HERSHEY_SIMPLEX
+
             tmpcnts3 = {}  # ประมวล
             for (idx, c) in enumerate(cnts):
                 x, y, w, h = cv2.boundingRect(c)
@@ -1889,10 +1865,7 @@ class App():
                 self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
 
             output = []
-            kernel = np.ones((1, 1), np.uint8)
-            kernel2 = np.ones((2, 2), np.uint8)
-            kernel3 = np.ones((5, 5), np.uint8)
-            imgWrap2 = imgWrap
+
 
             text = []
             tmpcnts2 = {}
@@ -1915,11 +1888,7 @@ class App():
                 tmpcnts2[0] = imgTocrop
                 tmpcnts3[0] = imgWrap
 
-            imgtest = {}
-            imgtest2 = {}
-            charac = 0
-            scores = []
-            total = 0
+
             ###
 
             img = img2
@@ -1946,8 +1915,8 @@ class App():
                     else:
                         output = []
                         output2 = []
-                        output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
-                        output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
+                        output = self.algorithm1_original_ocr(tmpcnts3, tmpcnts3, locs, output)
+                        output2 = self.algorithm2_2(tmpcnts3, tmpcnts3, locs, output2)
                         value2 = self.check_algorithm2_2(output2)
                         value = self.check_algrithm1(output)
                         self.value_algor1 = value
@@ -2111,12 +2080,12 @@ class App():
             groupOutput = []
             total2 = 0
             img = tmpcnts2[i]
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 50))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=3)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=7)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -2168,6 +2137,7 @@ class App():
                     roi = cv2.resize(img, (57, 88))
                 roi2=roi.copy()
                 roi = self.digit_cnt_sobel(roi)
+
                 try:
                     roi = cv2.resize(roi, (57, 88))
                 except:
