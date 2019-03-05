@@ -1357,11 +1357,11 @@ class App():
         scale1.place(x=786,y=186)
         scale2.place(x=842,y=186)
         scale3.place(x=898,y=186)
-        Label(self.root, text="(Size)").place(x=700, y=374)
-        Label(self.root, text="Y1").place(x=760, y=374)
-        Label(self.root, text="X1").place(x=816, y=374)
-        Label(self.root, text="Y2").place(x=872, y=374)
-        Label(self.root, text="X2").place(x=928, y=374)
+        Label(self.root, text="(Size)").place(x=700, y=444)
+        Label(self.root, text="Y1").place(x=760, y=444)
+        Label(self.root, text="X1").place(x=816, y=444)
+        Label(self.root, text="Y2").place(x=872, y=444)
+        Label(self.root, text="X2").place(x=928, y=444)
 
     def detect_noloop(self,image):
         def Show_panel_vcap02(img):
