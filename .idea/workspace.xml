@@ -8,11 +8,8 @@
       <change beforePath="$PROJECT_DIR$/Configure/R_scale.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_ImgWarp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/R_scale2_for_Imgtocrop.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectX.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/rectX2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectX2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/rectY.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configure/rectY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/rectY2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configure/sqY2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Configure/sqY2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/NewGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,7 +70,7 @@
     <session id="480488181">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="75" />
+          <entry key="project.closed" value="76" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="11" />
           <entry key="project.open.time.11" value="6" />
@@ -98,9 +95,9 @@
           <entry key="project.open.time.32" value="1" />
           <entry key="project.open.time.36" value="1" />
           <entry key="project.open.time.53" value="1" />
-          <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="10" />
-          <entry key="project.opened" value="79" />
+          <entry key="project.opened" value="80" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -111,14 +108,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="20048" />
+          <entry key="py" value="20237" />
           <entry key="txt" value="62" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="74" />
-          <entry key="Python" value="20048" />
+          <entry key="Python" value="20237" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -149,8 +146,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="2008" column="77" selection-start-line="2008" selection-start-column="77" selection-end-line="2008" selection-end-column="77" />
+            <state relative-caret-position="119">
+              <caret line="1890" column="56" lean-forward="true" selection-start-line="1890" selection-start-column="56" selection-end-line="1890" selection-end-column="66" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5359#0" />
@@ -483,7 +480,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -500,6 +496,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -692,13 +689,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
-    </task>
-    <task id="LOCAL-00034" summary="check">
-      <created>1545208471289</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1545208471289</updated>
     </task>
     <task id="LOCAL-00035" summary="check">
       <created>1545218331609</created>
@@ -1036,7 +1026,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551808771407</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="fix UI and reset">
+      <created>1552212714393</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1552212714394</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1057,7 +1054,7 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.67782736" visible="true" weight="0.16183986" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.67782736" visible="true" weight="0.0017035775" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8020833" weight="0.12776831" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1124,7 +1121,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/NewGUI.py</url>
-          <line>2244</line>
+          <line>2243</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1323,109 +1320,43 @@
     <entry file="file://$PROJECT_DIR$/screencapture/detect_tophat.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt2[0].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt3[0].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[213   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[186   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[185   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[184   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[179   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[159   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[146   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[132   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[111   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[107   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[106   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[88  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[87  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[83  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[82  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[75  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[64  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[15  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[38  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[14  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt[0].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[46  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[39  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[17  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[16  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[232   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[214   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[47  0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[239   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[240   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screencapture/[[238   0]].png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt2[0].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt3[0].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[213   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[186   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[185   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[184   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[179   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[159   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[146   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[132   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[111   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[107   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[106   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[88  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[87  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[83  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[82  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[75  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[64  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[15  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[38  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[14  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/tmpcnt[0].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[46  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[39  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[17  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[16  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[232   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[214   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[47  0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[239   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[240   0]].png" />
+    <entry file="file://$PROJECT_DIR$/screencapture/[[238   0]].png" />
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="2008" column="77" selection-start-line="2008" selection-start-column="77" selection-end-line="2008" selection-end-column="77" />
+        <state relative-caret-position="119">
+          <caret line="1890" column="56" lean-forward="true" selection-start-line="1890" selection-start-column="56" selection-end-line="1890" selection-end-column="66" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5359#0" />

@@ -1888,12 +1888,12 @@ class App():
             groupOutput = []
             img = tmpcnts2[i]
 
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=1)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=3)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -1957,7 +1957,7 @@ class App():
 
                 for (digit, digitROI) in DIGITS.items():
                     result = cv2.matchTemplate(roi, digitROI,
-                                               cv2.TM_SQDIFF)
+                                               cv2.TM_SQDIFF_NORMED)
                     (_, score, _, _) = cv2.minMaxLoc(result)
 
                     scores.append(score)
@@ -2001,12 +2001,12 @@ class App():
             groupOutput = []
             total2 = 0
             img = tmpcnts2[i]
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=1)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=3)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -2075,7 +2075,7 @@ class App():
                     # digitROI = cv2.resize(digitROI, (57, 88))
                     # for (digit, digitROI) in DIGITS.items():
                     result = cv2.matchTemplate(roi, digitROI,
-                                               cv2.TM_CCOEFF_NORMED)
+                                               cv2.TM_CCORR_NORMED)
                     (_, score, _, _) = cv2.minMaxLoc(result)
 
                     scores.append(int(score * 100))
@@ -2111,7 +2111,7 @@ class App():
     def check_algorithm2_2(self, output):
         all_carec = []
         len_carec = []
-        e = 0
+
 
         try:
             for (idx, i) in enumerate(output):
@@ -2119,17 +2119,16 @@ class App():
                 for j in i:
                     all_carec.append(j)
                 # print(all_carec)
-            min = i[0]
-            for (dx, i) in enumerate(all_carec):
 
-                if min >= i:
-                    min = i
+            v_max=max(all_carec)
+            v_min=min(all_carec)
 
-            if min >= 70:
+            everage=sum(all_carec)/len(all_carec)
+            if v_min >= 70:
                 e = 1
             else:
                 e = 0
-            self.persentage = min
+            self.persentage = int(v_min)
             return e
         except BaseException as e1:
             print(all_carec)
