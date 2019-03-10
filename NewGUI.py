@@ -1888,8 +1888,8 @@ class App():
             groupOutput = []
             img = tmpcnts2[i]
 
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
-            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
@@ -1919,16 +1919,16 @@ class App():
 
                 (x, y, w, h) = cv2.boundingRect(c)
                 ####pad
-                x -= 3
+                #x -= 3
 
-                w += 5
+                #w += 5
 
                 ###pad
                 '''x -= 15
                 y -= 8
                 w += 25
                 h += 10'''
-                cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 roi = tmpcnts3[i][y:y + h, x:x + w]
                 roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
                 roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
@@ -1961,7 +1961,7 @@ class App():
                     (_, score, _, _) = cv2.minMaxLoc(result)
 
                     scores.append(score)
-
+                #cv2.imwrite("./screencapture/"+str(c[0])+".png",roi)
                 try:
                     if i == 0:
                         if str(np.argmin(scores)) == '10':
@@ -2001,8 +2001,8 @@ class App():
             groupOutput = []
             total2 = 0
             img = tmpcnts2[i]
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
-            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
@@ -2042,12 +2042,12 @@ class App():
 
                 (x, y, w, h) = cv2.boundingRect(c)
                 ####pad
-                x -= 3
+                #x -= 3
 
-                w += 5
+                #w += 5
                 ###pad
 
-                cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 roi = tmpcnts3[i][y:y + h, x:x + w]
                 roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
                 roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
