@@ -1402,9 +1402,14 @@ class App():
         while not self.stopEvent.is_set():
             frame=self.vs.read()
             #self.detect_noloop(frame)
-            t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-            t1.daemon = False
-            t1.run()
+            if(threading.active_count()>=8):
+                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+                t1.daemon = True
+                t1.start()
+            else:
+                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+                t1.daemon = True
+                t1.run()
             print(threading.active_count())
 
     def calculate_detect2(self,image):
