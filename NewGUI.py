@@ -1402,7 +1402,7 @@ class App():
         while not self.stopEvent.is_set():
             frame=self.vs.read()
             #self.detect_noloop(frame)
-            if(int(threading.active_count())<8):
+            if(int(threading.active_count())<7):
                 t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
                 t1.daemon = True
                 t1.start()
@@ -1893,12 +1893,12 @@ class App():
             groupOutput = []
             img = tmpcnts2[i]
 
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=3)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -2006,12 +2006,12 @@ class App():
             groupOutput = []
             total2 = 0
             img = tmpcnts2[i]
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
+            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
             tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=3)
+            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))

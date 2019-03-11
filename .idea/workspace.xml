@@ -101,14 +101,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="20268" />
+          <entry key="py" value="20273" />
           <entry key="txt" value="62" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="74" />
-          <entry key="Python" value="20268" />
+          <entry key="Python" value="20273" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -139,8 +139,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="1404" column="44" selection-start-line="1404" selection-start-column="44" selection-end-line="1404" selection-end-column="44" />
+            <state relative-caret-position="354">
+              <caret line="1900" column="77" selection-start-line="1900" selection-start-column="77" selection-end-line="1900" selection-end-column="77" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5359#0" />
@@ -352,10 +352,8 @@
                 <element signature="e#77914#78359#0" />
                 <element signature="e#78423#78471#0" />
                 <element signature="e#78489#79106#1" />
-                <element signature="e#79276#83501#0" />
                 <element signature="e#80564#80687#0" />
                 <element signature="e#80978#80985#0" />
-                <element signature="e#83575#87462#0" />
               </folding>
             </state>
           </provider>
@@ -683,13 +681,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
-    </task>
-    <task id="LOCAL-00037" summary="check">
-      <created>1545510071364</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1545510071365</updated>
     </task>
     <task id="LOCAL-00038" summary="check">
       <created>1545510106625</created>
@@ -1027,7 +1018,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552285843470</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="fix UI and reset">
+      <created>1552286633431</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1552286633431</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1349,8 +1347,8 @@
     <entry file="file://$PROJECT_DIR$/screencapture/[[238   0]].png" />
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="1404" column="44" selection-start-line="1404" selection-start-column="44" selection-end-line="1404" selection-end-column="44" />
+        <state relative-caret-position="354">
+          <caret line="1900" column="77" selection-start-line="1900" selection-start-column="77" selection-end-line="1900" selection-end-column="77" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5359#0" />
@@ -1562,10 +1560,8 @@
             <element signature="e#77914#78359#0" />
             <element signature="e#78423#78471#0" />
             <element signature="e#78489#79106#1" />
-            <element signature="e#79276#83501#0" />
             <element signature="e#80564#80687#0" />
             <element signature="e#80978#80985#0" />
-            <element signature="e#83575#87462#0" />
           </folding>
         </state>
       </provider>
