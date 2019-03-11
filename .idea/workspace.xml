@@ -101,14 +101,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="12" />
-          <entry key="py" value="20261" />
+          <entry key="py" value="20268" />
           <entry key="txt" value="62" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="74" />
-          <entry key="Python" value="20261" />
+          <entry key="Python" value="20268" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -139,8 +139,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NewGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="1406" column="32" selection-start-line="1406" selection-start-column="32" selection-end-line="1406" selection-end-column="32" />
+            <state relative-caret-position="225">
+              <caret line="1404" column="44" selection-start-line="1404" selection-start-column="44" selection-end-line="1404" selection-end-column="44" />
               <folding>
                 <element signature="e#540#575#0" />
                 <element signature="e#745#5359#0" />
@@ -684,13 +684,6 @@
       <option name="presentableId" value="Default" />
       <updated>1516604664547</updated>
     </task>
-    <task id="LOCAL-00036" summary="check">
-      <created>1545415218741</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1545415218742</updated>
-    </task>
     <task id="LOCAL-00037" summary="check">
       <created>1545510071364</created>
       <option name="number" value="00037" />
@@ -1027,7 +1020,14 @@
       <option name="project" value="LOCAL" />
       <updated>1552243083735</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="fix UI and reset">
+      <created>1552285843470</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1552285843470</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1048,7 +1048,7 @@
       <window_info id="Structure" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49479166" weight="0.32786885" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.67782736" weight="0.0017035775" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.67782736" visible="true" weight="0.17717206" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8020833" weight="0.12776831" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1349,8 +1349,8 @@
     <entry file="file://$PROJECT_DIR$/screencapture/[[238   0]].png" />
     <entry file="file://$PROJECT_DIR$/NewGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="1406" column="32" selection-start-line="1406" selection-start-column="32" selection-end-line="1406" selection-end-column="32" />
+        <state relative-caret-position="225">
+          <caret line="1404" column="44" selection-start-line="1404" selection-start-column="44" selection-end-line="1404" selection-end-column="44" />
           <folding>
             <element signature="e#540#575#0" />
             <element signature="e#745#5359#0" />
