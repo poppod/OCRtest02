@@ -1402,7 +1402,7 @@ class App():
         while not self.stopEvent.is_set():
             frame=self.vs.read()
             #self.detect_noloop(frame)
-            if(int(threading.active_count())<7):
+            if(int(threading.active_count())<8):
                 t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
                 t1.daemon = True
                 t1.start()
