@@ -4,6 +4,7 @@ import os
 import io
 from tkinter import *
 from tkinter import filedialog, messagebox
+from gpiozero import LED
 from tkinter.font import Font
 import pytesseract
 import cv2
@@ -17,16 +18,16 @@ import datetime
 from  camera_detect import WebcamVideoStream
 from itertools import product
 from imutils import contours
+from how2 import Howtouse
 from multiprocessing.pool import ThreadPool
 #from pivideostream import PiVideoStream
 from skimage.filters import threshold_local
 
 
-####enable when use picamera module
-# from picamera.array import PiRGBArray
-# from picamera import PiCamera
-####enable when use picamera module
-# import imu
+###### enable for raspi3
+'''led_green=LED(20)
+led_red=LED(21)'''
+######
 
 class App():
     def __init__(self, ):
@@ -39,6 +40,7 @@ class App():
         self.root = tkinter.Tk()
         self.default_font = tkinter.font.Font(family="Ekkamai Standard")
         self.root.option_add("*font",self.default_font)
+
         #self.THsarabun = tkinter.Text(self.root)
         #### time
         self.now = datetime.datetime.now()
@@ -68,6 +70,9 @@ class App():
         self.frame = None
         self.thread = None
         self.t1=None
+        self.algorithm1_chk_value_low1=0
+        self.algorithm1_chk_value_low2 = 0
+        self.algorithm1_chk_value_low3 = 0
 
         #####disble when use videoloop_picamera
         #self.ret, self.frameTemp = self.vs.read()
@@ -182,7 +187,7 @@ class App():
         # self.scale()
         # self.TextOCR()
 
-        self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
+        self.root.wm_protocol("WM_DELETE_WINDOW", self.close_program)
     def load_icon(self):
         icon_list=['./Drawable/play_icon.png','./Drawable/pause_icon.png','./Drawable/stop_icon.png','./Drawable'
                     '/power_icon.ico','./Drawable/launch_icon.ico','./Drawable/setting_icon.ico','./Drawable'
@@ -222,8 +227,9 @@ class App():
         Button(self.root, image=self.setting_small_icon, command=self.information, relief=FLAT,
                cursor="hand2").place(x=947,y=10)
         #info_btn.pack()
-        help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",16),cursor="hand2",background='#C4C4C4')  ##command
+        help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",16),cursor="hand2",background='#C4C4C4',command=self.tool_box)  ##command
         help_btn.place(x=886,y=504)
+
         well_btn = Label(self.root, text="โปรแกรมตรวจสอบคุณภาพฉลากบนซองบรรจุผลิตภัณฑ์",font=("Noto Sans Thai",30) )
         well_btn.place(x=77,y=89)
         #well_btn.pack()
@@ -244,6 +250,17 @@ class App():
         Label(self.root,image=self.manual_icon).place(x=915,y=425)
         Button(self.root,text="ปิดโปรแกรม", command=self.close_program,relief=FLAT,
                font=("Noto Sans Thai",16),cursor="hand2",background='#F85252').place(x=33,y=504)
+
+    def tool_box(self):
+        H=Howtouse(Toplevel(self.root))
+        H.load_img()
+        H.view()
+
+
+
+
+
+
 
     def well_to_page1(self):
         user = self.user.get()
@@ -766,7 +783,7 @@ class App():
         Label(self.root, text="การตรวจจับ :",font=("Noto Sans Thai", 16)).place(x=586, y=294)
         Label(self.root, text="สถานะ :", font=("Noto Sans Thai", 16)).place(x=586, y=267)
         Label(self.root, text="ค่าที่อ่านได้ :", font=("Noto Sans Thai", 13)).place(x=167, y=413)
-        Label(self.root, text="ค่าความถูกต้อง : 70 %",font=("Noto Sans Thai", 13)).place(x=167, y=361)
+        #Label(self.root, text="ค่าความถูกต้อง : 70 %",font=("Noto Sans Thai", 13)).place(x=167, y=361)
         Label(self.root, text="ความถูกต้องที่อ่านได้ :", font=("Noto Sans Thai", 13)).place(x=167, y=385)
         Label(self.root, text="ผลลัพธ์ :",font=("Noto Sans Thai", 16)).place(x=586, y=330)
         Label(self.root, text="ทั้งหมด :",font=("Noto Sans Thai", 16)).place(x=586, y=364)
@@ -1369,6 +1386,7 @@ class App():
                 Label(self.root, text="ไม่พบ", fg="#FF0404", font=("Noto Sans Thai", 16)).place(x=710, y=294)
                 Label(self.root, text="           ",width=20, font=("Noto Sans Thai", 13)).place(x=257, y=410)
                 Label(self.root, text="           ",width=10, font=("Noto Sans Thai", 13)).place(x=347, y=382)
+                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
                 self.no_detect()
             if self.status_flag == 1:
                 Label(self.root, text="ทำงาน",  fg="#219653", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
@@ -1376,8 +1394,10 @@ class App():
 
             elif self.status_flag == 2:
                 Label(self.root, text="พัก", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
+                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
             elif self.status_flag == 3:
                 Label(self.root, text="หยุดทำงาน", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
+                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
 
             sum_string = str(self.count_sum)
             Label(self.root, text=sum_string, font=("Noto Sans Thai", 16)).place(x=670, y=365)
@@ -1388,6 +1408,10 @@ class App():
             # self.sum_state.update().
         else:
             pass
+        #####enable for raspi3
+        '''led_green.off()
+        led_red.off()'''
+        #####
         # print(threading.enumerate())
         #print(threading.active_count())
         print("--- %s seconds ---" % (time.time() - start_time))
@@ -1579,11 +1603,19 @@ class App():
 
             self.count_sum += 1
             if self.pass_value == 1:
+                #### for raspi
+                #led_green.on()
+                #led_red.off()
                 self.pass_count += 1
             else:
                 self.fail_count += 1
+                #led_red.on()
+                #led_green.off()
             self.pass_value = 0
             self.fail_value = 0
+            self.algorithm1_chk_value_low3=0
+            self.algorithm1_chk_value_low2=0
+            self.algorithm1_chk_value_low1=0
         else:
             pass
         self.detect_timestamp=0.000
@@ -1849,10 +1881,10 @@ class App():
                         self.value_algor2 = value2
                         if (self.value_algor1 or self.value_algor2):
                             self.pass_value = 1
-                            Label(self.root, text="PASS", width=5,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                            Label(self.root, text="PASSED", width=5,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=670, y=330)
                         else:
                             self.fail_value = 1
-                            Label(self.root, text="FAIL", width=5, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                            Label(self.root, text="FAILED", width=5, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=670, y=330)
 
                 else:
                     pass
@@ -2102,9 +2134,15 @@ class App():
     def check_algrithm1(self, output):
 
         try:
-            if (str(self.DateValue) == "".join(str(x) for x in output[0])) and (
-                    str(self.NcodeValue) == "".join(str(x) for x in output[1])) and (
-                    str(self.CcodeValue) == "".join(str(x) for x in output[2])):
+            if (str(self.DateValue) == "".join(str(x) for x in output[0]) ):
+                self.algorithm1_chk_value_low1=1
+                #return 1
+            if ( str(self.NcodeValue) == "".join(str(x) for x in output[1])):
+                self.algorithm1_chk_value_low2=1
+            if (str(self.CcodeValue) == "".join(str(x) for x in output[2])):
+                self.algorithm1_chk_value_low3=1
+
+            if ((self.algorithm1_chk_value_low1+self.algorithm1_chk_value_low2+self.algorithm1_chk_value_low3)==3):
                 return 1
             else:
                 return 0
@@ -2252,8 +2290,11 @@ class App():
         self.stopEvent.set()
         self.root.destroy()
 
+def main():
 
-if __name__ == '__main__':
+    if __name__ == '__main__':
 
-    t = App()
-    t.root.mainloop()
+        t = App()
+        t.root.mainloop()
+
+main()
