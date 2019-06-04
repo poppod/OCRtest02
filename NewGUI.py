@@ -1,10 +1,12 @@
+#!/usr/bin/python3
+from how2 import Howtouse
 import tkinter
 import time
 import os
+from gpiozero import LED
 import io
 from tkinter import *
 from tkinter import filedialog, messagebox
-from gpiozero import LED
 from tkinter.font import Font
 import pytesseract
 import cv2
@@ -18,16 +20,17 @@ import datetime
 from  camera_detect import WebcamVideoStream
 from itertools import product
 from imutils import contours
-from how2 import Howtouse
 from multiprocessing.pool import ThreadPool
 #from pivideostream import PiVideoStream
 from skimage.filters import threshold_local
 
-
-###### enable for raspi3
-'''led_green=LED(20)
-led_red=LED(21)'''
-######
+#led_green=LED(20)
+#led_red=LED(21)
+####enable when use picamera module
+# from picamera.array import PiRGBArray
+# from picamera import PiCamera
+####enable when use picamera module
+# import imu
 
 class App():
     def __init__(self, ):
@@ -40,7 +43,6 @@ class App():
         self.root = tkinter.Tk()
         self.default_font = tkinter.font.Font(family="Ekkamai Standard")
         self.root.option_add("*font",self.default_font)
-
         #self.THsarabun = tkinter.Text(self.root)
         #### time
         self.now = datetime.datetime.now()
@@ -62,6 +64,7 @@ class App():
         #self.root.iconbitmap('./Drawable/icon.ico')
         self.Detect_flag = 0
         self.status_flag = 1
+        self.before_flag = 0
         self.frameShow = None
         self.imgcontoure_selectionSubArea=None
         self.img_tmpcnt4select=None
@@ -71,9 +74,8 @@ class App():
         self.thread = None
         self.t1=None
         self.algorithm1_chk_value_low1=0
-        self.algorithm1_chk_value_low2 = 0
-        self.algorithm1_chk_value_low3 = 0
-
+        self.algorithm1_chk_value_low2=0
+        self.algorithm1_chk_value_low3=0
         #####disble when use videoloop_picamera
         #self.ret, self.frameTemp = self.vs.read()
         #####
@@ -156,7 +158,17 @@ class App():
         self.area01 = None
         self.area02 = None
         self.area03 = None
-
+        
+        
+        self.HeightBbox_area1=0
+        self.WeightBbox_area1=0
+        self.HeightBbox_area2=0
+        self.WeightBbox_area2=0
+        self.HeightBbox_area3=0
+        self.WeightBbox_area3=0
+        
+        
+        
         self.digits_pad = {}
         self.thresh = queue.Queue()
         self.result = queue.Queue()
@@ -229,7 +241,6 @@ class App():
         #info_btn.pack()
         help_btn = Button(self.root, text="วิธีการใช้งาน",relief=FLAT,font=("Noto Sans Thai",16),cursor="hand2",background='#C4C4C4',command=self.tool_box)  ##command
         help_btn.place(x=886,y=504)
-
         well_btn = Label(self.root, text="โปรแกรมตรวจสอบคุณภาพฉลากบนซองบรรจุผลิตภัณฑ์",font=("Noto Sans Thai",30) )
         well_btn.place(x=77,y=89)
         #well_btn.pack()
@@ -250,18 +261,10 @@ class App():
         Label(self.root,image=self.manual_icon).place(x=915,y=425)
         Button(self.root,text="ปิดโปรแกรม", command=self.close_program,relief=FLAT,
                font=("Noto Sans Thai",16),cursor="hand2",background='#F85252').place(x=33,y=504)
-
     def tool_box(self):
         H=Howtouse(Toplevel(self.root))
         H.load_img()
         H.view()
-
-
-
-
-
-
-
     def well_to_page1(self):
         user = self.user.get()
         if (user):
@@ -637,6 +640,24 @@ class App():
             sqX = open('./Configure/sqX.txt', 'w')
             sqX.write(str(self.sqX.get()))
             sqX.close()
+            H_area1=open('./Configure/H_area1.txt', "w")
+            H_area1.write(str(self.HeightBbox_area1))
+            H_area1.close()
+            W_area1=open('./Configure/W_area1.txt', "w")
+            W_area1.write(str(self.WeightBbox_area1))
+            W_area1.close()
+            H_area2=open('./Configure/H_area2.txt', "w")
+            H_area2.write(str(self.HeightBbox_area2))
+            H_area2.close()
+            W_area2=open('./Configure/W_area2.txt', "w")
+            W_area2.write(str(self.WeightBbox_area2))
+            W_area2.close()
+            H_area3=open('./Configure/H_area3.txt', "w")
+            H_area3.write(str(self.HeightBbox_area3))
+            H_area3.close()
+            W_area3=open('./Configure/W_area3.txt', "w")
+            W_area3.write(str(self.WeightBbox_area3))
+            W_area3.close()
 
             #self.ClickValue = 3
             self.page5_Insert_Value()
@@ -779,7 +800,7 @@ class App():
         Label(self.root, text="ประมวลผลภาพ",font=("Noto Sans Thai", 30)).place(x=385,y=44)
         Label(self.root,
               text="ค่าที่ป้อน :  " + str(self.DateValue) + "," + str(self.NcodeValue) + "," + str(self.CcodeValue),
-              font=("Noto Sans Thai", 13)).place(x=167, y=337)
+              font=("Noto Sans Thai", 13)).place(x=167, y=361)
         Label(self.root, text="การตรวจจับ :",font=("Noto Sans Thai", 16)).place(x=586, y=294)
         Label(self.root, text="สถานะ :", font=("Noto Sans Thai", 16)).place(x=586, y=267)
         Label(self.root, text="ค่าที่อ่านได้ :", font=("Noto Sans Thai", 13)).place(x=167, y=413)
@@ -1026,6 +1047,25 @@ class App():
         sqX2 = open('./Configure/sqX2.txt', 'r')
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
+        
+        H_area1 = open('./Configure/H_area1.txt', "r")
+        self.HeightBbox_area1 = int(H_area1.read())
+        H_area1.close()
+        W_area1 = open('./Configure/W_area1.txt', "r")
+        self.WeightBbox_area1 = int(W_area1.read())
+        W_area1.close()
+        H_area2 = open('./Configure/H_area2.txt', "r")
+        self.HeightBbox_area2 = int(H_area2.read())
+        H_area2.close()
+        W_area2 = open('./Configure/W_area2.txt', "r")
+        self.WeightBbox_area2 = int(W_area2.read())
+        W_area2.close()
+        H_area3 = open('./Configure/H_area3.txt', "r")
+        self.HeightBbox_area3 = int(H_area3.read())
+        H_area3.close()
+        W_area3 = open('./Configure/W_area3.txt', "r")
+        self.WeightBbox_area3 = int(W_area3.read())
+        W_area3.close()
 
     def load_all_except_target(self):
 
@@ -1090,6 +1130,25 @@ class App():
         sqX2 = open('./Configure/sqX2.txt', 'r')
         self.sqX.set(int(sqX2.read()))
         sqX2.close()
+        
+        H_area1 = open('./Configure/H_area1.txt', "r")
+        self.HeightBbox_area1 = int(H_area1.read())
+        H_area1.close()
+        W_area1 = open('./Configure/W_area1.txt', "r")
+        self.WeightBbox_area1 = int(W_area1.read())
+        W_area1.close()
+        H_area2 = open('./Configure/H_area2.txt', "r")
+        self.HeightBbox_area2 = int(H_area2.read())
+        H_area2.close()
+        W_area2 = open('./Configure/W_area2.txt', "r")
+        self.WeightBbox_area2 = int(W_area2.read())
+        W_area2.close()
+        H_area3 = open('./Configure/H_area3.txt', "r")
+        self.HeightBbox_area3 = int(H_area3.read())
+        H_area3.close()
+        W_area3 = open('./Configure/W_area3.txt', "r")
+        self.WeightBbox_area3 = int(W_area3.read())
+        W_area3.close()
 
     def back3to2(self):
         self.ClickValue = 23
@@ -1204,11 +1263,11 @@ class App():
                 if self.ClickValue == 10:
                     if self.Detect_flag==1 :
                         crop=self.frameShow
-                        x=self.rect_cnt_crop[0]+60
+                        '''x=self.rect_cnt_crop[0]+60
                         y=self.rect_cnt_crop[1]+45
                         w=self.rect_cnt_crop[2]+144
                         h=self.rect_cnt_crop[3]+81
-                        cv2.rectangle(crop, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        cv2.rectangle(crop, (x, y), (x + w, y + h), (0, 255, 0), 2)'''
                         self.Show_panel_proces01(crop)
                     else:
                         self.Show_panel_proces01(self.frameShow)
@@ -1274,10 +1333,10 @@ class App():
         scale2.place(x=842, y=166)
         scale3.place(x=898, y=166)
         Label(self.root, text="(Size)").place(x=700, y=374)
-        Label(self.root, text="Y1").place(x=760, y=374)
-        Label(self.root, text="X1").place(x=816, y=374)
-        Label(self.root, text="Y2").place(x=872, y=374)
-        Label(self.root, text="X2").place(x=928, y=374)
+        Label(self.root, text="X1").place(x=760, y=374)
+        Label(self.root, text="Y1").place(x=816, y=374)
+        Label(self.root, text="X2").place(x=872, y=374)
+        Label(self.root, text="Y2").place(x=928, y=374)
 
     def scale4(self):  # use vssetting
         # moregrap scale 20 10 18 10
@@ -1296,10 +1355,10 @@ class App():
         scale2.place(x=842,y=186)
         scale3.place(x=898,y=186)
         Label(self.root, text="(Size)").place(x=700, y=444)
-        Label(self.root, text="Y1").place(x=760, y=444)
-        Label(self.root, text="X1").place(x=816, y=444)
-        Label(self.root, text="Y2").place(x=872, y=444)
-        Label(self.root, text="X2").place(x=928, y=444)
+        Label(self.root, text="X1").place(x=760, y=444)
+        Label(self.root, text="Y1").place(x=816, y=444)
+        Label(self.root, text="X2").place(x=872, y=444)
+        Label(self.root, text="Y2").place(x=928, y=444)
 
     def detect_noloop(self,image):
         def Show_panel_vcap02(img):
@@ -1379,14 +1438,18 @@ class App():
                 Label(self.root, text="พบ   ",  fg="#219653",font=("Noto Sans Thai", 16)).place(x=710, y=294)
 
                 if self.status_flag == 1:
-                    self.TextOCR2_no_loop2(result)
+                    t9 = threading.Thread(target=self.TextOCR2_no_loop2, args=(result,))
+                    t9.daemon = True
+                    t9.start()
+                    #t9.join()
+                    #self.TextOCR2_no_loop2(result)
                 else:
                     self.Show_panel_proces02(self.ImgCap)
             else:
                 Label(self.root, text="ไม่พบ", fg="#FF0404", font=("Noto Sans Thai", 16)).place(x=710, y=294)
                 Label(self.root, text="           ",width=20, font=("Noto Sans Thai", 13)).place(x=257, y=410)
                 Label(self.root, text="           ",width=10, font=("Noto Sans Thai", 13)).place(x=347, y=382)
-                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                Label(self.root, text="          ", width=7, font=("Noto Sans Thai", 16)).place(x=670, y=330)
                 self.no_detect()
             if self.status_flag == 1:
                 Label(self.root, text="ทำงาน",  fg="#219653", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
@@ -1394,10 +1457,10 @@ class App():
 
             elif self.status_flag == 2:
                 Label(self.root, text="พัก", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
-                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                Label(self.root, text="          ", width=7, font=("Noto Sans Thai", 16)).place(x=670, y=330)
             elif self.status_flag == 3:
                 Label(self.root, text="หยุดทำงาน", fg="#FF0404", width=10,font=("Noto Sans Thai", 16)).place(x=663, y=267)
-                Label(self.root, text="          ", width=5, font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                Label(self.root, text="          ", width=7, font=("Noto Sans Thai", 16)).place(x=670, y=330)
 
             sum_string = str(self.count_sum)
             Label(self.root, text=sum_string, font=("Noto Sans Thai", 16)).place(x=670, y=365)
@@ -1408,12 +1471,10 @@ class App():
             # self.sum_state.update().
         else:
             pass
-        #####enable for raspi3
-        '''led_green.off()
-        led_red.off()'''
-        #####
         # print(threading.enumerate())
         #print(threading.active_count())
+        #led_green.off()
+        #led_red.off()
         print("--- %s seconds ---" % (time.time() - start_time))
 
     def multi_loop_for_detect(self):
@@ -1425,15 +1486,16 @@ class App():
 
         while not self.stopEvent.is_set():
             frame=self.vs.read()
-            #self.detect_noloop(frame)
-            if(int(threading.active_count())<8):
-                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t1.daemon = True
-                t1.start()
-            else:
-                t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
-                t1.daemon = True
-                t1.run()
+            self.detect_noloop(frame)
+            '''if(int(threading.active_count())<8):
+                t = threading.Thread(target=self.detect_noloop, args=(frame,))
+                t.daemon = True
+                t.start()
+            else:'''
+            '''t1 = threading.Thread(target=self.detect_noloop, args=(frame,))
+            t1.daemon = True
+            t1.run()'''
+            
             print(threading.active_count())
 
     def calculate_detect2(self,image):
@@ -1455,7 +1517,7 @@ class App():
         #cv2.imwrite('./screencapture/detect_masks2.png',masks)
         blurred = cv2.blur(masks, (5, 5))
 
-        (_, thresh) = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY_INV)
+        (_, thresh) = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY_INV)
         #cv2.imwrite('./screencapture/detect_colorselection.png',thresh)
         rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (self.rectY2.get(), self.rectX2.get()))
         try:
@@ -1469,7 +1531,7 @@ class App():
         np.seterr(divide='ignore', invalid='ignore')
         #cv2.imwrite('./screencapture/detect_tophat.png',tophat)
         gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,
-                          ksize=7)
+                          ksize=5)
         #cv2.imwrite('./screencapture/detect_sobel.png',gradX)
         gradX = np.absolute(gradX)
         #cv2.imwrite('./screencapture/detect_sobelabsolute.png', gradX)
@@ -1524,21 +1586,40 @@ class App():
 
         # self.cnt_area_check(cnts[0])
         if len(cnts) != 0:
-            c = max(cnts, key=cv2.contourArea)
+            if self.ClickValue==10:
+                for i in cnts :
+                    hh=self.cnt_area_check(i)
+                    if hh==1 :
+
+                        (x, y, w, h) = cv2.boundingRect(i)
+                        cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        self.rect_cnt_crop = [x+15, y+15, w-15, h-15]
+                        peri = cv2.arcLength(i, True)
+                        approx = cv2.approxPolyDP(i, 0.02 * peri, True)
+
+                        self.cnt_area_check(i)
+                        if (len(approx) == 4):
+                            screenCnt = approx
+                        else:
+                            screenCnt = np.float32([[x, y], [x + w, y], [x, y + h], [x + w, y + h]])
+                        break
+                    else:pass
+            else :
+                c = max(cnts, key=cv2.contourArea)
             # approximate the contour
-            (x, y, w, h) = cv2.boundingRect(c)
+                (x, y, w, h) = cv2.boundingRect(c)
             # self.cnt_area_check(c)
 
-            cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            self.rect_cnt_crop=[x,y,w,h]
-            peri = cv2.arcLength(c, True)
-            approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+                cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                self.rect_cnt_crop=[x,y,w,h]
+                peri = cv2.arcLength(c, True)
+                approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
-            self.cnt_area_check(c)
-            if (len(approx)==4):
-                screenCnt = approx
-            else:
-                screenCnt=np.float32([[x, y], [x+w, y], [x, y+h], [x+w, y+h]])
+                self.cnt_area_check(c)
+                if (len(approx)==4):
+                    screenCnt = approx
+                else:
+                    screenCnt=np.float32([[x, y], [x+w, y], [x, y+h], [x+w, y+h]])
         else:pass
 
         # screenCnt[1]=screenCnt[1]+20
@@ -1576,11 +1657,12 @@ class App():
             self.ClickValue = 0
 
         if not self.HeightBbox is 0 or not self.WeightBbox is 0:
-            if h - 20 <= self.HeightBbox <= h + 40 and w - 20 <= self.WeightBbox <= w + 40:
+            if h - 20 <= self.HeightBbox <= h + 30 and w - 20 <= self.WeightBbox <= w + 30:
                 if self.Detect_flag==0 :
                     self.Detect_flag = 1
                     self.detect_timestamp = time.time()
                     print(self.detect_timestamp)
+                    #self.change_state2()
                 self.Detect_flag = 1
             else:
                 if self.Detect_flag == 1:
@@ -1593,35 +1675,67 @@ class App():
                 #self.no_detect_timestamp=datetime.datetime.now().second
 
 
-
+        return self.Detect_flag 
         print(self.Detect_flag)
 
     def change_state(self):
+        
         def_time=self.no_detect_timestamp-self.detect_timestamp
         print(def_time)
-        if self.status_flag == 1 and abs(def_time) >=0.8:
-
+        if self.status_flag == 1 and abs(def_time) >=0.8 :
+            t=int(threading.active_count())
+            while(t>4 ):
+                t=int(threading.active_count())
+                if self.pass_value == 1:
+                    break
             self.count_sum += 1
             if self.pass_value == 1:
-                #### for raspi
                 #led_green.on()
                 #led_red.off()
                 self.pass_count += 1
+                self.before_flag = 2
             else:
                 self.fail_count += 1
                 #led_red.on()
                 #led_green.off()
+                self.before_flag = 1
             self.pass_value = 0
             self.fail_value = 0
-            self.algorithm1_chk_value_low3=0
-            self.algorithm1_chk_value_low2=0
             self.algorithm1_chk_value_low1=0
-        else:
+            self.algorithm1_chk_value_low2=0
+            self.algorithm1_chk_value_low3=0
+            self.detect_timestamp=0.000
+            self.no_detect_timestamp=0.000
+            
+        else :
+            self.detect_timestamp=0.000
+            self.no_detect_timestamp=0.000
             pass
+        self.pass_value = 0
+        self.fail_value = 0
+        self.algorithm1_chk_value_low1=0
+        self.algorithm1_chk_value_low2=0
+        self.algorithm1_chk_value_low3=0
         self.detect_timestamp=0.000
         self.no_detect_timestamp=0.000
+        
 
-
+    def change_state2(self):
+        if self.pass_value == 1 and self.status_flag ==1:
+            if self.before_flag == 1 :
+                self.count_sum -= 1
+                #led_green.on()
+                #led_red.off()
+                self.pass_count += 1
+                self.fail_count -= 1
+                self.before_flag = 2
+            self.pass_value = 0
+            self.fail_value = 0
+            self.algorithm1_chk_value_low1=0
+            self.algorithm1_chk_value_low2=0
+            self.algorithm1_chk_value_low3=0
+        self.detect_timestamp=0.000
+        self.no_detect_timestamp=0.000
     def onClose(self):
         # cv2.imwrite("capture.png", self.imgOrigin)
         self.stopEvent.set()
@@ -1774,7 +1888,7 @@ class App():
             tophat = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel)
             img2 = img
             np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=7)
+            gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=7)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -1792,6 +1906,7 @@ class App():
 
             locs = []
             tmpcnts = {}
+            Area={}
             clone01 = np.dstack([thresh.copy()] * 3)
 
 
@@ -1805,6 +1920,7 @@ class App():
                 # h=h+5
                 cv2.rectangle(clone01, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 tmpcnts[idx] = imgTocrop[y:y + h, x:x + w]
+                Area[idx]=(w,h)
                 tmpcnts3[idx] = imgWrap[y:y + h, x:x + w]
                 #
 
@@ -1820,6 +1936,18 @@ class App():
             img = clone01
             self.imgcontoure_selectionSubArea = img
             if self.ClickValue == 2:
+                try :
+                    w,h=Area[0]
+                    self.WeightBbox_area1=w
+                    self.HeightBbox_area1=h
+                    w, h = Area[1]
+                    self.WeightBbox_area2 = w
+                    self.HeightBbox_area2 = h
+                    w, h = Area[2]
+                    self.WeightBbox_area3 = w
+                    self.HeightBbox_area3 = h
+                except:
+                    pass
                 self.Show_panel_vloop(self.imgcontoure_selectionSubArea)
 
             output = []
@@ -1859,46 +1987,53 @@ class App():
             if self.ClickValue == 10:
                 # self.Show_panel01_0_0(self.frameShow)
                 self.Show_panel_proces02(self.ImgCap)
-                if len(tmpcnts) != 3:
-                    return
-                if len(tmpcnts3) > 19:
-                    return
+                
                 if self.status_flag == 1:
-                    if len(tmpcnts) > 3:
-                        self.fail_value = 1
-                        pass
-                    elif len(tmpcnts3) > 19:
-                        self.fail_value = 1
-                        pass
+                    
+                    output = []
+                    output2 = []
+                    output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
+                    output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
+                    value2 = self.check_algorithm2_2(output2)
+                    value = self.check_algrithm1(output)
+                    self.value_algor1 = value
+                    self.value_algor2 = value2
+                    if (self.value_algor1 or self.value_algor2):
+                        self.pass_value = 1
+                        Label(self.root, text="PASSED", width=7,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=670, y=330)
                     else:
-                        output = []
-                        output2 = []
-                        output = self.algorithm1_original_ocr(tmpcnts2, tmpcnts3, locs, output)
-                        output2 = self.algorithm2_2(tmpcnts2, tmpcnts3, locs, output2)
-                        value2 = self.check_algorithm2_2(output2)
-                        value = self.check_algrithm1(output)
-                        self.value_algor1 = value
-                        self.value_algor2 = value2
-                        if (self.value_algor1 or self.value_algor2):
-                            self.pass_value = 1
-                            Label(self.root, text="PASSED", width=5,  fg="#219653",font=("Noto Sans Thai", 16)).place(x=670, y=330)
-                        else:
-                            self.fail_value = 1
-                            Label(self.root, text="FAILED", width=5, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=670, y=330)
-
-                else:
-                    pass
+                        self.fail_value = 1
+                        Label(self.root, text="FAILED", width=7, fg="#FF0404",font=("Noto Sans Thai", 16)).place(x=670, y=330)
+                
+                
 
 
-                try:
-                    out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
-                        str(x) for x in output[2])
-                    self.output_algor1 = out
+                    if len(output)==3 :
+                        out = "".join(str(x) for x in output[0]) + "," + "".join(str(x) for x in output[1]) + "," + "".join(
+                            str(x) for x in output[2])
+                        self.output_algor1 = out
+                    elif len(output)==2 :
+                        output.append([0])
+                        out = "".join(str(x) for x in output[0]) + "," + "".join(
+                            str(x) for x in output[1]) + "," + "".join(
+                            str(x) for x in output[2])
+                        self.output_algor1 = out
+                    elif len(output)==1:
+                        output.append([0])
+                        output.append([0])
+                        out = "".join(str(x) for x in output[0]) + "," + "".join(
+                            str(x) for x in output[1]) + "," + "".join(
+                            str(x) for x in output[2])
+                        self.output_algor1 = out
+                    elif len(output)==0 :
+                        out="None"
+                        self.output_algor1 = out
+                    else:
+                        pass
                     Label(self.root, text=self.output_algor1,width=20, font=("Noto Sans Thai", 13)).place(x=257, y=410)
                     Label(self.root, text=str(self.persentage) + " %",width=5,  font=("Noto Sans Thai", 13)).place(x=347, y=382)
-                except BaseException as e:
-                    print(str(e) + "poppy")
-                    pass
+                else:
+                    pass   
 
                 '''try:
                     self.Show_panel05_2_0(tmpcnts2[1])
@@ -1924,108 +2059,121 @@ class App():
         for (i, (gX, gY, gW, gH)) in enumerate(locs):
             groupOutput = []
             img = tmpcnts2[i]
-
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
-            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
-            tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
-
-            np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
-            gradX = np.absolute(gradX)
-            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-            gradX = gradX.astype("uint8")
-
-            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
-            thresh = cv2.threshold(gradX, 0, 255,
-                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
-            digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                         cv2.CHAIN_APPROX_SIMPLE)
-            digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
-
-            try:
-                digitCnts = contours.sort_contours(digitCnts,
-                                                   method="left-to-right")[0]
-            except:
-                digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-            clone02 = np.dstack([thresh.copy()] * 3)
-            # imgtest[i] = clone02
-
-            for c in digitCnts:
-
-                (x, y, w, h) = cv2.boundingRect(c)
-                ####pad
-                #x -= 3
-
-                #w += 5
-
-                ###pad
-                '''x -= 15
-                y -= 8
-                w += 25
-                h += 10'''
-                #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                roi = tmpcnts3[i][y:y + h, x:x + w]
-                roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
-                roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
-                roi = cv2.dilate(roi, kernel, iterations=1)
-                try:
-                    roi = cv2.resize(roi, (57, 88))
-                except:
-                    pass
-                    roi = cv2.resize(img, (57, 88))
-                imgtest2[charac] = roi
-                roi = self.digit_cnt_sobel(roi)
-                roi = cv2.resize(roi, (57, 88))
-
-                charac += 1
-
-                scores = []
-                DIGITS = {}
-                if i == 0:
-                    DIGITS = self.digits1
-                elif i == 1:
-                    DIGITS = self.digits2
-                elif i == 2:
-                    DIGITS = self.digits3
+            chk=self.check_Bbox_area(gW,gH)
+            #img = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+            #roi = cv2.dilate(roi, kernel, iterations=2)
+            if chk>=1 :
+                if chk==1 :
+                    
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 60))
+                    #2 3
                 else:
-                    DIGITS = self.digits
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
+                    
+                sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+                tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
-                for (digit, digitROI) in DIGITS.items():
-                    result = cv2.matchTemplate(roi, digitROI,
-                                               cv2.TM_SQDIFF_NORMED)
-                    (_, score, _, _) = cv2.minMaxLoc(result)
+                np.seterr(divide='ignore', invalid='ignore')
+                gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
+                gradX = np.absolute(gradX)
+                (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+                gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+                gradX = gradX.astype("uint8")
 
-                    scores.append(score)
-                #cv2.imwrite("./screencapture/"+str(c[0])+".png",roi)
+                gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
+                thresh = cv2.threshold(gradX, 0, 255,
+                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+                thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
+                digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                             cv2.CHAIN_APPROX_SIMPLE)
+                digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+
                 try:
-                    if i == 0:
-                        if str(np.argmin(scores)) == '10':
-                            groupOutput.append('/')
-                        else:
-                            groupOutput.append(str(np.argmin(scores)))
-
-                    elif i == 2:
-                        if str(np.argmin(scores)) == '0':
-                            groupOutput.append('A')
-                        elif str(np.argmin(scores)) == '1':
-                            groupOutput.append('B')
-                        else:
-                            groupOutput.append('C')
-                    else:
-
-                        groupOutput.append(str(np.argmin(scores)))
+                    digitCnts = contours.sort_contours(digitCnts,
+                                                       method="left-to-right")[0]
                 except:
-                    pass
-            gX += 15
-            gY += 8
-            gW -= 18
-            gH -= 10
+                    digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+                clone02 = np.dstack([thresh.copy()] * 3)
+                # imgtest[i] = clone02
 
-            output.append(groupOutput)
-        # imgout=self.digit_cnt_sobel(imgtest2[11])
-        # self.Show_panel06_3_0(imgout)
+                for c in digitCnts:
+
+                    (x, y, w, h) = cv2.boundingRect(c)
+                    ####pad
+                    #x -= 3
+
+                    #w += 5
+
+                    ###pad
+                    '''x -= 15
+                    y -= 8
+                    w += 25
+                    h += 10'''
+                    #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    roi = tmpcnts3[i][y:y + h, x:x + w]
+                    '''roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
+                    roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
+                    roi = cv2.dilate(roi, kernel, iterations=1)'''
+                    
+                    try:
+                        
+                        roi = cv2.resize(roi, (57, 88))
+                    except:
+                        pass
+                        roi = cv2.resize(img, (57, 88))
+                    imgtest2[charac] = roi
+                    roi = self.digit_cnt_sobel(roi)
+                    roi = cv2.resize(roi, (57, 88))
+
+                    charac += 1
+
+                    scores = []
+                    DIGITS = {}
+                    if i == 0:
+                        DIGITS = self.digits1
+                    elif i == 1:
+                        DIGITS = self.digits2
+                    elif i == 2:
+                        DIGITS = self.digits3
+                    else:
+                        DIGITS = self.digits
+
+                    for (digit, digitROI) in DIGITS.items():
+                        result = cv2.matchTemplate(roi, digitROI,
+                                                   cv2.TM_SQDIFF_NORMED)
+                        (_, score, _, _) = cv2.minMaxLoc(result)
+
+                        scores.append(score)
+                    #cv2.imwrite("./screencapture/"+str(c[0])+".png",roi)
+                    try:
+                        if i == 0:
+                            if str(np.argmin(scores)) == '10':
+                                groupOutput.append('/')
+                            else:
+                                groupOutput.append(str(np.argmin(scores)))
+
+                        elif i == 2:
+                            if str(np.argmin(scores)) == '0':
+                                groupOutput.append('A')
+                            elif str(np.argmin(scores)) == '1':
+                                groupOutput.append('B')
+                            else:
+                                groupOutput.append('C')
+                        else:
+
+                            groupOutput.append(str(np.argmin(scores)))
+                    except:
+                        pass
+                gX += 15
+                gY += 8
+                gW -= 18
+                gH -= 10
+
+                output.append(groupOutput)
+            # imgout=self.digit_cnt_sobel(imgtest2[11])
+            # self.Show_panel06_3_0(imgout)
+            else :
+                continue
         return output
 
 
@@ -2038,97 +2186,106 @@ class App():
             groupOutput = []
             total2 = 0
             img = tmpcnts2[i]
-            rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
-            sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
-            tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
+            chk=self.check_Bbox_area(gW,gH)
+            if chk>=1 :
+                if chk==1 :
 
-            np.seterr(divide='ignore', invalid='ignore')
-            gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
-            gradX = np.absolute(gradX)
-            (minVal, maxVal) = (np.min(gradX), np.max(gradX))
-            gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
-            gradX = gradX.astype("uint8")
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 60))
+                else:
+                    rectKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 60))
+                sqKernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 60))
+                tophat2 = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, rectKernel2)
 
-            gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
-            thresh = cv2.threshold(gradX, 0, 255,
-                                   cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-            thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
-            digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                         cv2.CHAIN_APPROX_SIMPLE)
-            digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
+                np.seterr(divide='ignore', invalid='ignore')
+                gradX = cv2.Sobel(tophat2, ddepth=cv2.CV_32F, dx=0, dy=1, ksize=1)
+                gradX = np.absolute(gradX)
+                (minVal, maxVal) = (np.min(gradX), np.max(gradX))
+                gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+                gradX = gradX.astype("uint8")
 
-            try:
-                digitCnts = contours.sort_contours(digitCnts,
-                                                   method="left-to-right")[0]
-            except:
-                digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
-            clone02 = np.dstack([thresh.copy()] * 3)
-            # imgtest[i] = clone02
-            DIGITS = {}
-            if i == 0:
-                DIGITS = self.make01
-            elif i == 1:
-                DIGITS = self.make02
-            elif i == 2:
-                DIGITS = self.make03
-            else:
-                DIGITS = self.digits
-
-            # j=0
-            for (j, c) in enumerate(digitCnts):
-
-                (x, y, w, h) = cv2.boundingRect(c)
-                ####pad
-                #x -= 3
-
-                #w += 5
-                ###pad
-
-                #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                roi = tmpcnts3[i][y:y + h, x:x + w]
-                roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
-                roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
-                roi = cv2.dilate(roi, kernel, iterations=1)
-                try:
-                    roi = cv2.resize(roi, (57, 88))
-                except:
-                    roi = cv2.resize(img, (57, 88))
-                roi2=roi.copy()
-                roi = self.digit_cnt_sobel(roi)
+                gradX = cv2.morphologyEx(gradX, cv2.MORPH_CLOSE, rectKernel2)
+                thresh = cv2.threshold(gradX, 0, 255,
+                                       cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+                thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, sqKernel2)
+                digitCnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                                             cv2.CHAIN_APPROX_SIMPLE)
+                digitCnts = digitCnts[0] if imutils.is_cv2() else digitCnts[1]
 
                 try:
-                    roi = cv2.resize(roi, (57, 88))
+                    digitCnts = contours.sort_contours(digitCnts,
+                                                       method="left-to-right")[0]
                 except:
-                    roi = cv2.resize(roi2, (57, 88))
-                imgtest2[charac] = roi
-                charac += 1
-                total = 0
-                scores = []
+                    digitCnts = sorted(digitCnts, key=cv2.contourArea, reverse=True)
+                clone02 = np.dstack([thresh.copy()] * 3)
+                # imgtest[i] = clone02
+                DIGITS = {}
+                if i == 0:
+                    DIGITS = self.make01
+                elif i == 1:
+                    DIGITS = self.make02
+                elif i == 2:
+                    DIGITS = self.make03
+                else:
+                    DIGITS = self.digits
 
-                try:
-                    digitROI = DIGITS[j]
+                # j=0
+                for (j, c) in enumerate(digitCnts):
 
-                    # digitROI=DIGITS[0]
-                    # digitROI = cv2.resize(digitROI, (57, 88))
-                    # for (digit, digitROI) in DIGITS.items():
-                    result = cv2.matchTemplate(roi, digitROI,
-                                               cv2.TM_CCORR_NORMED)
-                    (_, score, _, _) = cv2.minMaxLoc(result)
+                    (x, y, w, h) = cv2.boundingRect(c)
+                    ####pad
+                    #x -= 3
+        
+                    #w += 5
+                    ###pad
 
-                    scores.append(int(score * 100))
-                    total += int(score * 100)
-                    groupOutput.append(int(total / int(len(scores))))
-                    total2 += (total / int(len(scores)))
-                except:
-                    pass
-                # j+=1
-            gX += 15
-            gY += 8
-            gW -= 18
-            gH -= 10
-            output.append(groupOutput)
-            # cv2.imshow("test2",imgtest2[0])
-        # self.Show_panel06_3_0(imgtest2[8])
+                    #cv2.rectangle(clone02, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    roi = tmpcnts3[i][y:y + h, x:x + w]
+                    '''roi = cv2.morphologyEx(roi, cv2.MORPH_OPEN, kernel)
+                    roi = cv2.morphologyEx(roi, cv2.MORPH_CLOSE, kernel)
+                    roi = cv2.dilate(roi, kernel, iterations=1)'''
+                    
+                    try:
+                        roi = cv2.resize(roi, (57, 88))
+                    except:
+                        roi = cv2.resize(img, (57, 88))
+                    roi2=roi.copy()
+                    roi = self.digit_cnt_sobel(roi)
+
+                    try:
+                        roi = cv2.resize(roi, (57, 88))
+                    except:
+                        roi = cv2.resize(roi2, (57, 88))
+                    imgtest2[charac] = roi
+                    charac += 1
+                    total = 0
+                    scores = []
+
+                    try:
+                        digitROI = DIGITS[j]
+
+                        # digitROI=DIGITS[0]
+                        # digitROI = cv2.resize(digitROI, (57, 88))
+                        # for (digit, digitROI) in DIGITS.items():
+                        result = cv2.matchTemplate(roi, digitROI,
+                                                   cv2.TM_CCORR_NORMED)
+                        (_, score, _, _) = cv2.minMaxLoc(result)
+
+                        scores.append(int(score * 100))
+                        total += int(score * 100)
+                        groupOutput.append(int(total / int(len(scores))))
+                        total2 += (total / int(len(scores)))
+                    except:
+                        pass
+                    # j+=1
+                gX += 15
+                gY += 8
+                gW -= 18
+                gH -= 10
+                output.append(groupOutput)
+                # cv2.imshow("test2",imgtest2[0])
+            # self.Show_panel06_3_0(imgtest2[8])
+            else :
+                continue
         return output
 
     def check_algrithm1(self, output):
@@ -2141,7 +2298,7 @@ class App():
                 self.algorithm1_chk_value_low2=1
             if (str(self.CcodeValue) == "".join(str(x) for x in output[2])):
                 self.algorithm1_chk_value_low3=1
-
+            
             if ((self.algorithm1_chk_value_low1+self.algorithm1_chk_value_low2+self.algorithm1_chk_value_low3)==3):
                 return 1
             else:
@@ -2166,12 +2323,15 @@ class App():
             v_max=max(all_carec)
             v_min=min(all_carec)
 
-            everage=sum(all_carec)/len(all_carec)
-            if v_min >= 70:
-                e = 1
-            else:
-                e = 0
-            self.persentage = int(v_min)
+            everage=sum(all_carec)/19
+            if len(all_carec)==19:
+                if v_min >= 70:
+                    e = 1
+                else:
+                    e = 0
+                self.persentage = int(v_min)
+            else :
+                e=0
             return e
         except BaseException as e1:
             print(all_carec)
@@ -2245,6 +2405,18 @@ class App():
         cv2.circle(thresh, bottommost, 2, (255, 255, 0), -1)'''
 
         return thresh
+        
+    def check_Bbox_area(self,w,h):
+        if h - 45 <= self.HeightBbox_area1 <= h + 45 and w - 45 <= self.WeightBbox_area1 <= w + 45:
+            return 1
+        elif h - 45 <= self.HeightBbox_area2 <= h + 45 and w - 45 <= self.WeightBbox_area2 <= w + 45:
+              return 2
+        elif h - 15 <= self.HeightBbox_area3 <= h + 15 and w - 15 <= self.WeightBbox_area3 <= w + 15:
+            return 3
+        else:
+            return 0
+
+
 
     def perspactive_transform(self, orig, cnts, ratio):
         pts = cnts
@@ -2290,11 +2462,8 @@ class App():
         self.stopEvent.set()
         self.root.destroy()
 
-def main():
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
 
-        t = App()
-        t.root.mainloop()
-
-main()
+    t = App()
+    t.root.mainloop()

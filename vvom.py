@@ -1,26 +1,19 @@
-from tkinter import *
-import time
-import threading
+from camera_detect import WebcamVideoStream
+import cv2
+camera=WebcamVideoStream(src=1).start()
 
-class ScaleValue:
-    def __init__(self):
-        self.value1 = None
-        self.value2 = None
+while True:
+    (frame) = camera.read()
+    # image = frame
 
-def tkinter_loop(scale):
-    root=Tk()
-    s1 = Scale(root, from_=0, to=42, tickinterval=8, command=lambda v: setattr(scale, 'value1', v))
-    s1.set(19)
-    s1.pack()
-    s2 = Scale(root, from_=0, to=200, length=600, tickinterval=10, orient=HORIZONTAL, command=lambda v: setattr(scale, 'value2', v))
-    s2.set(23)
-    s2.pack()
-    root.mainloop()
 
-scale = ScaleValue()
-threading.Thread(target=tkinter_loop, args=(scale,)).start()
 
-# ROP
-while 1:
-    #time.sleep(0.1)
-    print (scale.value1, scale.value2)
+    # image_center = (image.shape[0] / 2, image.shape[1] / 2)
+
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord("q"):
+        break
+    # cv2.cv2.drawContours()
+camera.release()
+cv2.destroyAllWindows()
